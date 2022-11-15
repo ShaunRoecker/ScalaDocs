@@ -1,0 +1,25 @@
+[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E006] Not Found Error: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/scalawalkabout/src/main/scala/02_Strings/Strings.scala:24:8 [0m[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m24 |[0m        stringA = [31m"Hello"[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m   |[0m        ^^^^^^^[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m        Not found: stringA[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m longer explanation available when compiling with `-explain`[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E006] Not Found Error: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/scalawalkabout/src/main/scala/02_Strings/Strings.scala:25:8 [0m[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m25 |[0m        stringB = [31m"hello"[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m   |[0m        ^^^^^^^[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m        Not found: stringB[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m longer explanation available when compiling with `-explain`[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E006] Not Found Error: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/scalawalkabout/src/main/scala/02_Strings/Strings.scala:27:8 [0m[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m27 |[0m        stringA.toUpperCase == stringB.toUpperCase [34m// true[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m   |[0m        ^^^^^^^[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m        Not found: stringA[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m longer explanation available when compiling with `-explain`[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E006] Not Found Error: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/scalawalkabout/src/main/scala/02_Strings/Strings.scala:31:8 [0m[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m31 |[0m        stringA.equalsIgnoreCase(stringB)[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m   |[0m        ^^^^^^^[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m        Not found: stringA[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m longer explanation available when compiling with `-explain`[0m
+[0m[[0m[31merror[0m] [0m[0mfour errors found[0m
