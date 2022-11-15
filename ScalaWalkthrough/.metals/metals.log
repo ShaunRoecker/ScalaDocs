@@ -1,0 +1,35 @@
+2022.11.14 22:24:51 INFO  tracing is disabled for protocol LSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/.metals/lsp.trace.json or /Users/shaunroecker/Library/Caches/org.scalameta.metals/lsp.trace.json
+2022.11.14 22:24:51 INFO  logging to file /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/.metals/metals.log
+2022.11.14 22:24:51 INFO  Started: Metals version 0.11.9 in workspace '/Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough' for client Visual Studio Code 1.70.1.
+2022.11.14 22:24:51 WARN  Can't instantiate JavaInteractiveSemanticdb (version: JdkVersion(8), jdkHome: /Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home, javac exists: false)
+2022.11.14 22:24:52 INFO  time: initialize in 1.16s
+2022.11.14 22:24:53 WARN  Build server is not auto-connectable.
+2022.11.14 22:24:59 INFO  running '/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/java -Djline.terminal=jline.UnsupportedTerminal -Dsbt.log.noformat=true -Dfile.encoding=UTF-8 -jar /var/folders/29/__cvxw3s4v52h9qvvtkyfq600000gn/T/metals4982292609402648437/sbt-launch.jar -Dbloop.export-jar-classifiers=sources bloopInstall'
+2022.11.14 22:25:01 INFO  [info] welcome to sbt 1.7.3 (Oracle Corporation Java 1.8.0_321)
+2022.11.14 22:25:04 INFO  [info] loading settings for project scalawalkthrough-build-build from metals.sbt ...
+2022.11.14 22:25:04 INFO  [info] loading project definition from /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/project/project
+2022.11.14 22:25:07 INFO  [info] loading settings for project scalawalkthrough-build from metals.sbt ...
+2022.11.14 22:25:07 INFO  [info] loading project definition from /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/project
+2022.11.14 22:25:09 INFO  [success] Generated .bloop/scalawalkthrough-build.json
+2022.11.14 22:25:09 INFO  [warn] Removed stale /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/project/.bloop/scalawalkabout-build.json
+2022.11.14 22:25:09 INFO  [success] Total time: 2 s, completed Nov 14, 2022 10:25:10 PM
+2022.11.14 22:25:11 INFO  [info] loading settings for project root from build.sbt ...
+2022.11.14 22:25:11 INFO  [info] set current project to scalawalkabout (in build file:/Users/shaunroecker/SCR/gitHub/Scala%20Development/ScalaWalkthrough/)
+2022.11.14 22:25:11 INFO  [success] Generated .bloop/root.json
+2022.11.14 22:25:11 INFO  [success] Generated .bloop/root-test.json
+2022.11.14 22:25:11 INFO  [success] Total time: 0 s, completed Nov 14, 2022 10:25:11 PM
+2022.11.14 22:25:11 INFO  time: ran 'sbt bloopInstall' in 11s
+2022.11.14 22:25:11 INFO  Attempting to connect to the build server...
+2022.11.14 22:25:11 INFO  Bloop uses /Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home defined at /Users/shaunroecker/.bloop/bloop.json
+2022.11.14 22:25:11 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/.metals/bsp.trace.json or /Users/shaunroecker/Library/Caches/org.scalameta.metals/bsp.trace.json
+2022.11.14 22:25:11 INFO  Attempting to connect to the build server...
+2022.11.14 22:25:11 INFO  Bloop uses /Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home defined at /Users/shaunroecker/.bloop/bloop.json
+2022.11.14 22:25:11 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/project/.metals/bsp.trace.json or /Users/shaunroecker/Library/Caches/org.scalameta.metals/bsp.trace.json
+2022.11.14 22:25:11 INFO  time: Connected to build server in 0.46s
+2022.11.14 22:25:11 INFO  Connected to Build server: Bloop v1.5.4
+2022.11.14 22:25:14 WARN  Could not find java sources in /Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/src.zip, /Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/lib/src.zip, /Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/src.zip, /Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/lib/src.zip. Java symbols will not be available.
+2022.11.14 22:25:17 WARN  Could not find java sources in /Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/src.zip, /Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/lib/src.zip, /Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/src.zip, /Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/lib/src.zip. Java symbols will not be available.
+2022.11.14 22:25:17 WARN  Could not find java sources in /Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/src.zip, /Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/lib/src.zip, /Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/src.zip, /Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/lib/src.zip. Java symbols will not be available.
+2022.11.14 22:25:17 INFO  time: indexed workspace in 4.97s
+Nov 14, 2022 10:26:02 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace

@@ -1,1 +1,21 @@
-[0m[[0m[0mdebug[0m] [0m[0mJar uptodate: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/scalawalkabout/target/scala-3.2.0/scalawalkabout_3-0.1.0-SNAPSHOT.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mPackaging /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/target/scala-3.2.0/scalawalkabout_3-0.1.0-SNAPSHOT.jar ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Strings$Person$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/target/scala-3.2.0/classes/Strings$Person$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Strings.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/target/scala-3.2.0/classes/Strings.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Strings.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/target/scala-3.2.0/classes/Strings.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Strings$Person$3$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/target/scala-3.2.0/classes/Strings$Person$3$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Strings$PersonInterpolator$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/target/scala-3.2.0/classes/Strings$PersonInterpolator$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	NumbersAndDates.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/target/scala-3.2.0/classes/NumbersAndDates.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Strings$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/target/scala-3.2.0/classes/Strings$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	NumbersAndDates.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/target/scala-3.2.0/classes/NumbersAndDates.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	NumbersAndDates$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/target/scala-3.2.0/classes/NumbersAndDates$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mDone packaging.[0m

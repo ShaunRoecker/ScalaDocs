@@ -1,4 +1,4 @@
-[0m[[0m[0mdebug[0m] [0m[0m[scalawalkabout-build] Classpath dependencies List()[0m
-[0m[[0m[0mdebug[0m] [0m[0m[scalawalkabout-build] Dependencies from configurations List()[0m
-[0m[[0m[0mdebug[0m] [0m[0mBloop wrote the configuration of project 'scalawalkabout-build' to '/Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/scalawalkabout/project/.bloop/scalawalkabout-build.json'[0m
-[0m[[0m[32msuccess[0m] [0m[0mGenerated .bloop/scalawalkabout-build.json[0m
+[0m[[0m[0mdebug[0m] [0m[0m[scalawalkthrough-build] Classpath dependencies List()[0m
+[0m[[0m[0mdebug[0m] [0m[0m[scalawalkthrough-build] Dependencies from configurations List()[0m
+[0m[[0m[0mdebug[0m] [0m[0mBloop wrote the configuration of project 'scalawalkthrough-build' to '/Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/project/.bloop/scalawalkthrough-build.json'[0m
+[0m[[0m[32msuccess[0m] [0m[0mGenerated .bloop/scalawalkthrough-build.json[0m
