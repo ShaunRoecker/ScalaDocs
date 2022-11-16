@@ -1,7 +1,2 @@
-[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E006] Not Found Error: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/src/main/scala/03_NumbersAndDates/NumbersAndDates.scala:328:57 [0m[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m328 |[0m        [33mval[0m [36mformatter2[0m = NumberFormat.getIntegerInstance(locale.GERMANY)[0m
-[0m[[0m[31merror[0m] [0m[0m[31m[31m    |[0m                                                         ^^^^^^[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m    |[0m                                                     Not found: locale[0m
-[0m[[0m[31merror[0m] [0m[0m[31m    |[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m    |[0m longer explanation available when compiling with `-explain`[0m
-[0m[[0m[31merror[0m] [0m[0mone error found[0m
+[0m[[0m[33mwarn[0m] [0m[0mthere was 1 deprecation warning; re-run with -deprecation for details[0m
+[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m

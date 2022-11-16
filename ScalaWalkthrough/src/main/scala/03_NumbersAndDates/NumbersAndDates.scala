@@ -343,8 +343,68 @@ object NumbersAndDates extends App {
         deFormatter.setCurrency(deCurrency)
 
         println(deFormatter.format(123.456789)) // €123.46
-        println(deFormatter.format(1_234.456789)) // €123.46
-        println(deFormatter.format(1_123_567.456789)) // €123.46
+        println(deFormatter.format(1_234.456789)) // €1,234.46
+        println(deFormatter.format(1_123_567.456789)) // €1,123,567.46
+
+        //  If you don't use a currency library, you can use BigDecimal
+        //import java.text.NumberFormat
+        import scala.math.BigDecimal.RoundingMode
+        import scala.math.BigDecimal.RoundingMode
+
+        val a = BigDecimal("10000.995")
+        val b = a.setScale(2, RoundingMode.DOWN)
+        val formatterA = NumberFormat.getCurrencyInstance
+        println(formatterA.format(b)) //$10,000.99
+
+        val c = BigDecimal("1234567.891").setScale(2, RoundingMode.DOWN)
+        println(c) // 1234567.89
+        println(deFormatter.format(c)) //€1,234,567.89
+
+        val ukFormatter = NumberFormat.getCurrencyInstance(Locale.UK)
+        println(ukFormatter.format(c)) // £1,234,567.89
+
+        // Custom Formatting Patterns
+        import java.text.DecimalFormat
+        
+        val df = DecimalFormat("0.##")
+        println(df.format(123.35)) //123.35
+        println(df.format(123.355)) //123.36
+        println(df.format(.1234355)) //0.12
+
+        val df2 = DecimalFormat("0.####")
+        println(df2.format(123.35)) //123.35
+        println(df2.format(123.35543535)) //123.36
+        println(df2.format(.1234355)) //0.12
+
+        val df3 = DecimalFormat("#,###,##0.00")
+        println(df3.format(122)) //122.00
+        println(df3.format(123.46)) //123.46
+        println(df3.format(1_234.567889)) //1,234.57
+
+        //Reference: "https://oreil.ly/nvJda"
+
+        // LOCALES  Ref: https://oreil.ly/fjQXp
+        // java.util.Locale
+        // Locale("en-AU", "AU")
+        // Locale("pt-BR","BR")
+
+        // Demonstrate how to use
+        // India
+        import java.util.{Currency, Locale}
+
+        val indiaLocale = Currency.getInstance(Locale("hi-IN", "IN"))
+        val formatterIn = java.text.NumberFormat.getCurrencyInstance
+        formatterIn.setCurrency(indiaLocale)
+        println(formatterIn.format(123.456789)) //₹123.46
+        println(formatterIn.format(1_234.456789)) //₹1,234.46
+
+        // Set a default locale
+        val default = Locale.getDefault
+        val formatterDefault = NumberFormat.getInstance(default)
+
+        println(formatterDefault.format(12.34)) //12.34
+        println(formatterDefault.format(1_200.34)) //1,200.34
+        println(formatterDefault.format(1_245_656.34)) //1,245,656.34
         
     }
 }
