@@ -319,6 +319,32 @@ object NumbersAndDates extends App {
         // Commas, Locales, and Integers
         // import java.text.NumberFormat
         val formatter = NumberFormat.getIntegerInstance
-        println(formatter.format(10_000))  //
+        println(formatter.format(10_000))  //10,000
+        println(formatter.format(1_000_000))  //1,000,000
+
+        import java.util.Locale
+        
+        // Switch formats to locales, such as US or Europe
+        val formatter2 = NumberFormat.getIntegerInstance(Locale.GERMANY)
+        println(formatter2.format(1_000))  //1.000
+        println(formatter2.format(1_000_000)) //1.000.000
+
+        // CURRENCY
+        val formatterCurrency = NumberFormat.getCurrencyInstance
+        println(formatterCurrency.format(10_000)) // $10,000.00
+        println(formatterCurrency.format(1_000_000)) // $1,000,000.00
+        println(formatterCurrency.format(1_123_567.54)) // $1,123,567.54
+
+        // Use Locale to format international currency
+        import java.util.{Currency, Locale}
+
+        val deCurrency = Currency.getInstance(Locale.GERMANY)
+        val deFormatter = java.text.NumberFormat.getCurrencyInstance
+        deFormatter.setCurrency(deCurrency)
+
+        println(deFormatter.format(123.456789)) // €123.46
+        println(deFormatter.format(1_234.456789)) // €123.46
+        println(deFormatter.format(1_123_567.456789)) // €123.46
+        
     }
 }
