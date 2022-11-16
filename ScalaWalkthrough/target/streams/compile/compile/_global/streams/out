@@ -1,25 +1,9 @@
-[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E006] Not Found Error: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/scalawalkabout/src/main/scala/02_Strings/Strings.scala:24:8 [0m[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m24 |[0m        stringA = [31m"Hello"[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m[31m   |[0m        ^^^^^^^[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0m        Not found: stringA[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0m longer explanation available when compiling with `-explain`[0m
-[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E006] Not Found Error: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/scalawalkabout/src/main/scala/02_Strings/Strings.scala:25:8 [0m[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m25 |[0m        stringB = [31m"hello"[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m[31m   |[0m        ^^^^^^^[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0m        Not found: stringB[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0m longer explanation available when compiling with `-explain`[0m
-[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E006] Not Found Error: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/scalawalkabout/src/main/scala/02_Strings/Strings.scala:27:8 [0m[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m27 |[0m        stringA.toUpperCase == stringB.toUpperCase [34m// true[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m[31m   |[0m        ^^^^^^^[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0m        Not found: stringA[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0m longer explanation available when compiling with `-explain`[0m
-[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E006] Not Found Error: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/scalawalkabout/src/main/scala/02_Strings/Strings.scala:31:8 [0m[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m31 |[0m        stringA.equalsIgnoreCase(stringB)[0m
-[0m[[0m[31merror[0m] [0m[0m[31m[31m   |[0m        ^^^^^^^[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0m        Not found: stringA[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0m longer explanation available when compiling with `-explain`[0m
-[0m[[0m[31merror[0m] [0m[0mfour errors found[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m-- Error: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/src/main/scala/03_NumbersAndDates/NumbersAndDates.scala:261:60 [0m[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m261 |[0m        [33mval[0m [36mfloats[0m = [33mfor[0m i <- [31m1[0m to [31m5[0m [33myield[0m rando1.nextFloat([31m2[0m) [0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m    |[0m                                                            ^[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m    |[0m    too many arguments for [33mmethod[0m [35mnextFloat[0m in [33mclass[0m [35mRandom[0m: (): Float[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m-- Error: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/src/main/scala/03_NumbersAndDates/NumbersAndDates.scala:264:62 [0m[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m264 |[0m        [33mval[0m [36mdoubles[0m = [33mfor[0m i <- [31m1[0m to [31m5[0m [33myield[0m rando1.nextDouble([31m2[0m) [0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m    |[0m                                                              ^[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m    |[0m  too many arguments for [33mmethod[0m [35mnextDouble[0m in [33mclass[0m [35mRandom[0m: (): Double[0m
+[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m

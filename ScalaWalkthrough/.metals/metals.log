@@ -33,3 +33,102 @@
 2022.11.14 22:25:17 INFO  time: indexed workspace in 4.97s
 Nov 14, 2022 10:26:02 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
 INFO: Unsupported notification method: $/setTrace
+2022.11.14 22:30:09 WARN  no build target for: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/src/main/03_NumbersAndDates/NumbersAndDates.scala
+2022.11.14 22:34:43 WARN  no build target for: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/src/main/03_NumbersAndDates/NumbersAndDates.scala
+2022.11.14 22:35:50 WARN  no build target for: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/src/main/03_NumbersAndDates/NumbersAndDates.scala
+2022.11.14 22:37:41 WARN  no build target for: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/src/main/03_NumbersAndDates/NumbersAndDates.scala
+Nov 14, 2022 10:38:17 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 571
+Nov 14, 2022 10:38:59 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 657
+Nov 14, 2022 10:38:59 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 660
+Nov 14, 2022 10:38:59 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 663
+Nov 14, 2022 10:39:13 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 685
+2022.11.14 22:45:01 WARN  no build target for: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/src/main/03_NumbersAndDates/NumbersAndDates.scala
+Nov 14, 2022 10:47:24 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1701
+2022.11.14 22:48:54 WARN  no build target for: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/src/main/03_NumbersAndDates/NumbersAndDates.scala
+2022.11.14 22:49:21 WARN  no build target for: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/src/main/03_NumbersAndDates/NumbersAndDates.scala
+2022.11.14 22:51:18 INFO  compiling root (2 scala sources)
+2022.11.14 22:51:18 INFO  time: compiled root in 0.93s
+Nov 14, 2022 10:51:46 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 1872
+2022.11.14 22:51:57 INFO  compiling root (1 scala source)
+2022.11.14 22:51:57 INFO  time: compiled root in 0.21s
+2022.11.14 22:53:33 INFO  compiling root (2 scala sources)
+2022.11.14 22:53:33 INFO  time: compiled root in 0.47s
+Nov 14, 2022 11:04:48 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 2250
+Nov 14, 2022 11:05:18 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 2336
+2022.11.14 23:09:41 INFO  compiling root (1 scala source)
+2022.11.14 23:09:41 INFO  time: compiled root in 0.37s
+Nov 14, 2022 11:11:01 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 3124
+2022.11.14 23:11:55 INFO  compiling root (2 scala sources)
+2022.11.14 23:11:55 INFO  time: compiled root in 0.56s
+2022.11.14 23:14:02 INFO  compiling root (1 scala source)
+2022.11.14 23:14:02 INFO  time: compiled root in 0.23s
+2022.11.14 23:14:20 INFO  compiling root (1 scala source)
+2022.11.14 23:14:20 INFO  time: compiled root in 0.32s
+2022.11.14 23:14:47 INFO  compiling root (1 scala source)
+2022.11.14 23:14:47 INFO  time: compiled root in 0.21s
+Nov 14, 2022 11:17:46 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 3702
+2022.11.14 23:19:07 INFO  compiling root (2 scala sources)
+2022.11.14 23:19:07 INFO  time: compiled root in 0.26s
+2022.11.14 23:20:34 INFO  compiling root (2 scala sources)
+2022.11.14 23:20:34 INFO  time: compiled root in 0.2s
+2022.11.14 23:20:52 INFO  compiling root (2 scala sources)
+2022.11.14 23:20:52 INFO  time: compiled root in 0.45s
+2022.11.14 23:21:44 INFO  compiling root (1 scala source)
+2022.11.14 23:21:44 INFO  time: compiled root in 0.12s
+Nov 14, 2022 11:21:55 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 4014
+Nov 15, 2022 2:10:00 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 4283
+2022.11.15 14:11:40 INFO  compiling root (1 scala source)
+2022.11.15 14:11:40 INFO  time: compiled root in 0.82s
+2022.11.15 14:12:01 INFO  compiling root (1 scala source)
+2022.11.15 14:12:01 INFO  time: compiled root in 0.43s
+Nov 15, 2022 7:27:56 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 4663
+2022.11.15 19:31:39 INFO  compiling root (2 scala sources)
+2022.11.15 19:31:39 INFO  time: compiled root in 0.7s
+Nov 15, 2022 7:31:49 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 5320
+2022.11.15 19:31:58 INFO  compiling root (2 scala sources)
+2022.11.15 19:31:58 INFO  time: compiled root in 0.38s
+2022.11.15 19:33:22 INFO  compiling root (2 scala sources)
+2022.11.15 19:33:22 INFO  time: compiled root in 0.54s
+2022.11.15 19:35:14 INFO  compiling root (1 scala source)
+2022.11.15 19:35:14 INFO  time: compiled root in 0.3s
+Nov 15, 2022 7:43:25 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 5959
+2022.11.15 19:45:25 INFO  compiling root (2 scala sources)
+2022.11.15 19:45:25 INFO  time: compiled root in 0.46s
+2022.11.15 19:45:46 INFO  compiling root (1 scala source)
+2022.11.15 19:45:46 INFO  time: compiled root in 0.26s
+2022.11.15 19:47:28 INFO  compiling root (1 scala source)
+2022.11.15 19:47:28 INFO  time: compiled root in 0.29s
+2022.11.15 19:49:02 INFO  compiling root (1 scala source)
+2022.11.15 19:49:02 INFO  time: compiled root in 0.28s
+Nov 15, 2022 7:52:46 PM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 6704
+2022.11.15 19:54:12 INFO  compiling root (1 scala source)
+2022.11.15 19:54:12 INFO  time: compiled root in 0.24s
+2022.11.15 19:54:53 INFO  compiling root (1 scala source)
+2022.11.15 19:54:53 INFO  time: compiled root in 0.25s
+2022.11.15 19:59:07 INFO  compiling root (1 scala source)
+2022.11.15 19:59:07 INFO  time: compiled root in 0.23s
+2022.11.15 19:59:30 INFO  compiling root (1 scala source)
+2022.11.15 19:59:30 INFO  time: compiled root in 0.24s
+2022.11.15 20:00:03 INFO  compiling root (1 scala source)
+2022.11.15 20:00:03 INFO  time: compiled root in 0.34s
+2022.11.15 20:00:09 INFO  compiling root (1 scala source)
+2022.11.15 20:00:09 INFO  time: compiled root in 0.29s
+2022.11.15 20:04:56 INFO  compiling root (1 scala source)
+2022.11.15 20:04:56 INFO  time: compiled root in 0.25s

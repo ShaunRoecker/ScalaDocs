@@ -14,11 +14,14 @@ object NumbersAndDates extends App {
         // parsingANumberFromAString()
         // convertingBetweenNumericTypes_Casting()
         // comparingFloatingPointNumbers()
-        //handlingLargeNumbers()
+        // handlingLargeNumbers()
+        // generatingRandomNumbers()
+        formattingNumbersAndCurrency()
+
 
     }
     scalaNumDate()
-    
+    //
     def underScoresInNumericLiterals(): Unit = {
         // Can use underscore to represent numeric literals
 
@@ -61,7 +64,7 @@ object NumbersAndDates extends App {
 
         // for complex numbers, check out "https://typelevel.org/spire"      
     }
-
+    //
     def parsingANumberFromAString(): Unit = {
         //Problem: You want to convert a string to one of Scala's numeric types
         "1".toByte
@@ -103,7 +106,7 @@ object NumbersAndDates extends App {
         def makeIntFP_try(s: String): Try[Int] = Try(s.toInt)
 
     }
-
+    //
     def convertingBetweenNumericTypes_Casting(): Unit = {
         // Problem: You want to convert from one numeric type to another
         val b: Byte = 1
@@ -116,14 +119,14 @@ object NumbersAndDates extends App {
 
         // x.asInstanceOf[Float]
     }
-
+    //
     def overridingTheDefaultNumericType(): Unit = {
         // Problem: When using an implicit type declaration style, Scala automatically assigns
         // types based on their numeric values, and you need to override the default type declaration   
         // when you create a numeric field.
 
     }
-
+    //
     def comparingFloatingPointNumbers(): Unit = {
         val a = 0.1 + 0.2
         println(a)  // 0.30000000000000004
@@ -190,7 +193,7 @@ object NumbersAndDates extends App {
         // What every programmer should know about floating-point arithmatic -"Dogs, to the layperson"
         
     }
-
+    //
     def handlingLargeNumbers(): Unit = {
         // Problem: You're writting an application and need to use very large integer or decimal numbers
         println("HANDLING LARGE NUMBERS")
@@ -209,5 +212,113 @@ object NumbersAndDates extends App {
 
 
         
+    }
+    // Generating Random Numbers
+    def generatingRandomNumbers(): Unit = {
+        println("GENERATING RANDOM NUMBERS")
+        val r = scala.util.Random
+
+        // Random Integers
+        println(r.nextInt) //-1225422615
+        println(r.nextInt) // -572260221
+
+        // Returns a value between 0.0 and 1.0 
+        println(r.nextDouble) //0.48162503555225866
+        println(r.nextDouble) // 0.006933981711459314
+        // Returns a value between 0.0 and 1.0 
+        println(r.nextFloat)  // 0.543987
+        println(r.nextFloat) // 0.006444633
+
+        // Set a seed when creating a new instance of Random
+        // (I seed is a way to gernerate the same random number at different times)
+        val rando1 = scala.util.Random(31)
+        println(rando1)
+        // You can update the seed after you already have a Random instance
+        rando1.setSeed(1_000L)
+
+        //   Limit the integers to a maximum value
+        println(rando1.nextInt(6)) // max is 5
+        // when setting a maximum value on nextInt, the Int returned is between 0 (inclusive),
+        // and the value you specify, so specifying 100 returnan integer from 0 to 99
+
+        // You can also create random length ranges:
+        0 to rando1.nextInt(10) // range 0 to 9
+
+        // You can always convert a range to another sequence type
+        println((0 to rando1.nextInt(10)).toList)
+        println((0 to rando1.nextInt(10)).toVector)
+        // A random size LazyList
+        val llr = (0 to rando1.nextInt(1_000_000)).to(LazyList) 
+        println(llr) // LazyList(<not computed>)
+
+        // A for/yield loop gives you a nice way to modify the values in a sequence
+        println(for i <- 0 to rando1.nextInt(10) yield i*10) //Vector(0, 10, 20, 30, 40, 50, 60, 70, 80, 90)
+
+        // Fixed-Length ranges with random values
+        val seq = for i <- 1 to 5 yield rando1.nextInt(2) 
+        println(seq)  //Vector(0, 1, 0, 0, 0)
+
+        // You can do the same thing with nextFloat and nextDouble
+        val floats = for i <- 1 to 5 yield rando1.nextFloat() 
+        println(floats)  // Vector(0.04350257, 0.60081404, 0.41084892, 0.5503761, 0.51346815)
+
+        val doubles = for i <- 1 to 5 yield rando1.nextDouble() 
+        println(doubles)  //Vector(0.6580583901495688, 0.9744965039734514, 0.6300783865329214, 0.848943650191653, 0.35625029673016806)
+
+        // Shuffling an existing Sequence
+        import scala.util.Random
+        val x = List(1, 2, 3)
+
+        println(Random.shuffle(x)) // List(2, 3, 1)
+
+        // Getting a random element from a sequence
+        def getRandomElement[A](list: Seq[A], random: Random): A =
+            list(random.nextInt(list.length))
+
+        val ran = scala.util.Random
+
+        // integers
+        val ints = (1 to 100).toList
+        
+        println(getRandomElement(ints, ran)) // Int = 77
+        println(getRandomElement(ints, ran)) // Int = 89
+
+        // strings
+        val names = List("Hala", "Helia", "Hannah", "Hope")
+        println(getRandomElement(names, ran)) // Hannah
+        println(getRandomElement(names, ran)) // Hope
+
+
+    }
+    // Formatting Numbers and Currency
+    def formattingNumbersAndCurrency(): Unit = {
+        import java.text.NumberFormat
+
+        println(NumberFormat.getInstance)
+        NumberFormat.getIntegerInstance
+        NumberFormat.getCurrencyInstance
+        NumberFormat.getPercentInstance
+
+        val pi = scala.math.Pi
+        println(f"${pi}%1.2f")  //3.14
+        println(f"${pi}%1.3f")  //3.142
+        println(f"${pi}%1.5f")  //3.14159
+        println(f"${pi}%6.2f")  //   3.14
+        println(f"${pi}%06.2f")  //003.14
+
+        // whole numbers
+        val x = 10_000
+        println(f"${x}%d") //10000
+        println(f"${x}%2d") //10000
+        println(f"${x}%8d") //
+        println(f"${x}%-8d") //
+        
+        // another version of format, hey just like Python
+        println("%06.2f".format(pi))  //003.14
+
+        // Commas, Locales, and Integers
+        // import java.text.NumberFormat
+        val formatter = NumberFormat.getIntegerInstance
+        println(formatter.format(10_000))  //
     }
 }
