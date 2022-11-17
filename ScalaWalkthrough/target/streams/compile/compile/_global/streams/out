@@ -1,2 +1,19 @@
-[0m[[0m[33mwarn[0m] [0m[0mthere was 1 deprecation warning; re-run with -deprecation for details[0m
-[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E006] Not Found Error: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/src/main/scala/04_ControlStructures/ControlStructures.scala:45:26 [0m[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m45 |[0m        [33mval[0m [36mabsValue[0m = [33mif[0m a < [31m0[0m [33mthen[0m -a [33melse[0m a[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m   |[0m                          ^[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m                          Not found: a[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m longer explanation available when compiling with `-explain`[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E006] Not Found Error: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/src/main/scala/04_ControlStructures/ControlStructures.scala:45:38 [0m[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m45 |[0m        [33mval[0m [36mabsValue[0m = [33mif[0m a < [31m0[0m [33mthen[0m -a [33melse[0m a[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m   |[0m                                      ^[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m                                      Not found: a[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m longer explanation available when compiling with `-explain`[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E006] Not Found Error: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/src/main/scala/04_ControlStructures/ControlStructures.scala:45:45 [0m[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m45 |[0m        [33mval[0m [36mabsValue[0m = [33mif[0m a < [31m0[0m [33mthen[0m -a [33melse[0m a[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m   |[0m                                             ^[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m                                             Not found: a[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m   |[0m longer explanation available when compiling with `-explain`[0m
+[0m[[0m[31merror[0m] [0m[0mthree errors found[0m
