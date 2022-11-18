@@ -1,6 +1,6 @@
 [0m[[0m[0mdebug[0m] [0m[0m[zinc] IncrementalCompile -----------[0m
 [0m[[0m[0mdebug[0m] [0m[0mIncrementalCompile.incrementalCompile[0m
-[0m[[0m[0mdebug[0m] [0m[0mprevious = Stamps for: 9 products, 3 sources, 2 libraries[0m
+[0m[[0m[0mdebug[0m] [0m[0mprevious = Stamps for: 12 products, 3 sources, 2 libraries[0m
 [0m[[0m[0mdebug[0m] [0m[0mcurrent source = Set(${BASE}/src/main/scala/02_Strings/Strings.scala, ${BASE}/src/main/scala/03_NumbersAndDates/NumbersAndDates.scala, ${BASE}/src/main/scala/04_ControlStructures/ControlStructures.scala)[0m
 [0m[[0m[0mdebug[0m] [0m[0m> initialChanges = InitialChanges(Changes(added = Set(), removed = Set(), changed = Set(${BASE}/src/main/scala/04_ControlStructures/ControlStructures.scala), unmodified = ...),Set(),Set(),API Changes: Set())[0m
 [0m[[0m[0mdebug[0m] [0m[0m[0m
@@ -22,13 +22,13 @@
 [0m[[0m[0mdebug[0m] [0m[0mcompilation cycle 1[0m
 [0m[[0m[0minfo[0m] [0m[0mcompiling 1 Scala source to /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/target/scala-3.2.0/classes ...[0m
 [0m[[0m[0mdebug[0m] [0m[0mReturning already retrieved and compiled bridge: /Users/shaunroecker/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala3-sbt-bridge/3.2.0/scala3-sbt-bridge-3.2.0.jar.[0m
-[0m[[0m[0mdebug[0m] [0m[0m[zinc] Running cached compiler 3e3fa541 for Scala Compiler version 3.2.0[0m
+[0m[[0m[0mdebug[0m] [0m[0m[zinc] Running cached compiler 1c5bb839 for Scala Compiler version 3.2.0[0m
 [0m[[0m[0mdebug[0m] [0m[0m[zinc] The Scala compiler is invoked with:[0m
 [0m[[0m[0mdebug[0m] [0m[0m	-bootclasspath[0m
 [0m[[0m[0mdebug[0m] [0m[0m	/Users/shaunroecker/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala3-library_3/3.2.0/scala3-library_3-3.2.0.jar:/Users/shaunroecker/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/2.13.8/scala-library-2.13.8.jar[0m
 [0m[[0m[0mdebug[0m] [0m[0m	-classpath[0m
 [0m[[0m[0mdebug[0m] [0m[0m	/Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/target/scala-3.2.0/classes[0m
-[0m[[0m[0mdebug[0m] [0m[0mScala compilation took 0.664182349 s[0m
+[0m[[0m[0mdebug[0m] [0m[0mScala compilation took 0.556206663 s[0m
 [0m[[0m[0mdebug[0m] [0m[0mdone compiling[0m
 [0m[[0m[0mdebug[0m] [0m[0mNew invalidations:[0m
 [0m[[0m[0mdebug[0m] [0m[0mInitial set of included nodes: [0m

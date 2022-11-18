@@ -1,19 +1,15 @@
-[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E006] Not Found Error: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/src/main/scala/04_ControlStructures/ControlStructures.scala:45:26 [0m[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m45 |[0m        [33mval[0m [36mabsValue[0m = [33mif[0m a < [31m0[0m [33mthen[0m -a [33melse[0m a[0m
-[0m[[0m[31merror[0m] [0m[0m[31m[31m   |[0m                          ^[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0m                          Not found: a[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0m longer explanation available when compiling with `-explain`[0m
-[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E006] Not Found Error: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/src/main/scala/04_ControlStructures/ControlStructures.scala:45:38 [0m[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m45 |[0m        [33mval[0m [36mabsValue[0m = [33mif[0m a < [31m0[0m [33mthen[0m -a [33melse[0m a[0m
-[0m[[0m[31merror[0m] [0m[0m[31m[31m   |[0m                                      ^[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0m                                      Not found: a[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0m longer explanation available when compiling with `-explain`[0m
-[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E006] Not Found Error: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/src/main/scala/04_ControlStructures/ControlStructures.scala:45:45 [0m[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m45 |[0m        [33mval[0m [36mabsValue[0m = [33mif[0m a < [31m0[0m [33mthen[0m -a [33melse[0m a[0m
-[0m[[0m[31merror[0m] [0m[0m[31m[31m   |[0m                                             ^[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0m                                             Not found: a[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m   |[0m longer explanation available when compiling with `-explain`[0m
-[0m[[0m[31merror[0m] [0m[0mthree errors found[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E161] Naming Error: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/src/main/scala/04_ControlStructures/ControlStructures.scala:325:12 [0m[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m325 |[0m        [33mdef[0m [36mabs[0m([36mx[0m: [35mInt[0m) =[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m    |[0m        ^[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m    |[0mabs is already defined as [33mmethod[0m [35mabs[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m    |[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m    |[0mNote that overloaded methods must all be defined in the same group of toplevel definitions[0m
+[0m[[0m[31merror[0m] [0m[0m[31m326 |[0m            [33mif[0m x >= [31m0[0m [33mthen[0m x [33melse[0m -x[0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E161] Naming Error: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/src/main/scala/04_ControlStructures/ControlStructures.scala:328:12 [0m[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m328 |[0m        [33mdef[0m [36mmax[0m([36ma[0m: [35mInt[0m, [36mb[0m: [35mInt[0m) = [0m
+[0m[[0m[31merror[0m] [0m[0m[31m[31m    |[0m        ^[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m    |[0mmax is already defined as [33mmethod[0m [35mmax[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m    |[0m[0m
+[0m[[0m[31merror[0m] [0m[0m[31m    |[0mNote that overloaded methods must all be defined in the same group of toplevel definitions[0m
+[0m[[0m[31merror[0m] [0m[0m[31m329 |[0m            [33mif[0m a > b [33mthen[0m a [33melse[0m b[0m
+[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m

@@ -20,7 +20,13 @@ object ControlStructures extends App {
         // usingForLoopsWithMultipleCounters()
         // usingAForLoopWithEmbeddedIfStatements()
         // creatingANewCollectionFromAnExistingCollectionWithForYield()
-        usingTheIfConstructLikeATernaryOperator()
+        // usingTheIfConstructLikeATernaryOperator()
+        // usingAMatchExpressionLikeASwitchStatement()
+        // matchingMultipleConditionsWithOneCaseStatement()
+        // assigningTheResultOfTheMatchExpressionToAVariable()
+        accessingTheValueOfTheDefaultCaseInAMatchExpression()
+
+
     }
     scalaControlStructures()
 
@@ -304,7 +310,254 @@ object ControlStructures extends App {
             // int absValue = (a < 0) ? -a : a;
         // and you'd like to know what the scala equivalent is.
 
+        // Trick problem: there isn't one, just use if/else/then expression:
+        val a = 1
+        val absValue = if a < 0 then -a else a
+        println(absValue) // 1
+
+        // because an if expression returns a value, you can embed it in a print statement
+        println(if a < 0 then -a else a) // 1
+
+        // you can also use it in another expression, such as this portion of a hashCode method:
+        // hash = hash * prime + (if name == null then 0 else name.hashCode)
+
+        // The fact that if/else expressions return a value also lets you write concise methods
+        // Version 1: one-line style
+        def abs1(x: Int) = if x >= 0 then x else -x
+        def max1(a: Int, b: Int) = if a > b then a else b
+        
+        // Version  2: the method body on a separate line, if you prefer
+        def abs2(x: Int) =
+            if x >= 0 then x else -x
+        
+        def max2(a: Int, b: Int) = 
+            if a > b then a else b
+        
+    }
+    // Using a Match Expression Like a Switch Statement
+    def usingAMatchExpressionLikeASwitchStatement(): Unit = {
+        println("Using a Match Expression Like a Switch Statement")
+        // Problem: You have a situation where you want to create something like a simple java 
+        // integer-based 'switch' statement, such as matching the days in a week, the months
+        // in a year, and other situations where an integer maps to a result
+
+        // return a value from a match expression:
+        import scala.annotation.switch
+
+        // 'i' is an integer
+        val i = 1
+        val day = (i: @switch) match
+            case 0 => "Sunday"
+            case 1 => "Monday"
+            case 2 => "Tuesday"
+            case 3 => "Wednesday"
+            case 4 => "Thursday"
+            case 5 => "Friday"
+            case 6 => "Saturday"
+            case 7 => "invalid day"
+        // When writing simple match expressions like this, its recommended to use the
+        // @switch annotation, as shown. This annotation provides a warning at compile time 
+        // if the switch statement cant be compiled to a 'tableswitch' or 'lookupswitch'. 
+        // Compiling your match expressions to a 'tableswitch' or 'lookupswitch' is better
+        // for performance because it results in a branch table rather than a decision tree.  
+        // When a value is given to the expression, it can jump directly to the result rather
+        // than working through the decision tree
+
+        // Scala @switch docs: https://oreil.ly/rrNBP
+
+        // tableswitch optimization example pg.100
+            // import scala.annotation.switch
+
+            // class SwitchDemo:
+            //     val i = 1
+            //     val one = 1
+            //     val x = (i: @switch) match 
+            //         case one => "One"
+            //         case 2 => "Two"
+            //         case 3 => "Three"
+            //         case _ => "Other"
+
+        // The following conditions must be true for Scala to apply the 'tableswitch' optimization
+            // 1. The matched value must be a known integer
+            // 2. The matched expression must be "simple". It cant contain any type checks, if statements
+            //     or extractors
+            // 3. The expression must have its value available at compile time
+            // 4. There should be more than two 'case' statements
+         
+        //  if not concerned with the value of the default case:
+            //  case _ => println("Got a default case")
+        // If you are interested what fell down to the default case :
+            // case default => println(default)
+        // Note, name doesnt have to be default, can be any legal name
+            //  case oops => println(oops)
+        //  you can generate a MatchError if you don't handle the default case, 
+            // so unless writing a partial function, handle the damn default case.
+        
+        // Note: you may not need a match expression for examples like these, for example
+        // any time you are just mapping one value to another, it may be preferable to 
+        // use a Map(Python dictionary, still getting used to that)
+
+        val days = Map(
+            0 -> "Sun", 
+            1 -> "Mon",
+            2 -> "Tue", 
+            3 -> "Wed", 
+            4 -> "Thu", 
+            5 -> "Fri", 
+            6 -> "Sat"
+        )
+        println(days.get(3)) // Some(Wed)
+        println(days(3)) // Wed
+        
+        // JVM switches: https://oreil.ly/oUcwX
+        // Diff between tableswitch and lookupswitch: https://oreil.ly/JvE3P
+        // basically 
+            // tableswitch: tableswitch uses a table with labels only. 
+                    // (O(1) operation)
+            // lookupswitch uses a table with keys and labels
+                    //  (O(log n) operation)
+            // hence we want to optimize by using tableswitch with our 
+            // switch expressions where possible
 
     }
+    // Matching Multiple Conditions With One Case Statement
+    def matchingMultipleConditionsWithOneCaseStatement(): Unit = {
+        println("Matching Multiple Conditions With One Case Statement")
+        // Problem: You have a situation where several 'match' conditions 
+        // require that the same business logic be executed, and rather than 
+        // repeating your business logic for each case, you'd like to use 
+        // one copy of the business logic for the matching conditions
+
+        //  separate them with pipe '|'
+        val i = 1
+        i match
+            case 1 | 3 | 5 | 7 | 9 => println("odd")
+            case 2 | 4 | 6 | 8 | 10 => println("even")
+            case _ => println("too big")
+        
+        // "odd"
+
+        // same works for String matching
+        val cmd = "stop"
+        cmd match
+            case "start" | "go" => println("starting...")
+            case "stop" | "quit" | "exit" => println("stopping...")
+            case _ => println("doing nothing")
+        
+        // "stopping..."
+
+        // this example shows how to match multiple objects on each 'case' statement:
+        
+        enum Command:
+            case Start, Go, Stop, Whoa
+
+        import Command.*
+        def executeCommand(cmd: Command): Unit = cmd match
+            case Start | Go => println("start")
+            case Stop | Whoa => println("stop")
+
+        executeCommand(Start)
+
+        // As demonstrated, the ability to define multiple possible matches for each case statement
+        // can simplify your code
+
+    }
+    // Assigning the Result of a Match Expression to a Variable
+    def assigningTheResultOfTheMatchExpressionToAVariable(): Unit = {
+        println("Assigning the Result of a Match Expression to a Variable")
+        // Problem: You want to return a value from a match expression and assign it 
+        // to a variable, or use a match expression as the body of a method
+        
+        val someNumber = scala.util.Random.nextInt()
+        val evenOrOdd = someNumber match
+            case 1 | 3 | 5 | 7 | 9 => "odd"
+            case 2 | 4 | 6 | 8 | 10 => "even"
+            case _ => "other"
+
+        println(s"Number $someNumber is ${evenOrOdd.toUpperCase}")
+
+        def isTrue(a: Matchable): Boolean = a match 
+            case false | 0 | "" => false
+            case _ => true
+        
+        println(isTrue(42)) // true
+
+        // You may hear that Scala is an "expression-oriented programming (EOP) language"
+        // EOP means that every construct is an expression, yields a value, and doesn't have
+        // a side effect. Unlike other languages, in Scala every construct like if, match, for
+        // and try returns a value.
+
+    }
+    // Accessing the Value of the Default Case in a Match Expression
+    def accessingTheValueOfTheDefaultCaseInAMatchExpression(): Unit = {
+        println("Accessing the Value of the Default Case in a Match Expression")
+        // Problem: You want to access the value of the default "catch all" case when using a 
+        // match expression , but you can't access the value when you match it with the
+        // _ wildcard syntax
+
+        // solution: use a name like default in place of the wildcard
+        val i = 2
+        val newMatch: String = i match
+            case 1 => "one"
+            case default => "default"
+        
+        println(newMatch)
+
+        i match
+            case 0 => println("1")
+            case 1 => println("2")
+            case default => println(s"You gave me: ${default}")
+
+    }
+    // Using Pattern Matching in Match Expressions
+    def usingPatternMatchingInMatchExpressions(): Unit = {
+        println("usingPatternMatchingInMatchExpressions")
+        // Problem: You need to match one or more patterns in a match expression,
+        // and the pattern may be a constant pattern, variable pattern, constructor pattern,
+        // sequence pattern, tuple pattern, or type pattern. 
+
+        // many different types of patterns you can use in a match expressions:
+        def test(x: Matchable): String = x match
+            // Constant Patterns
+            case 0 => "zero"
+            case true => "true"
+            case "hello" => "you said 'hello'"
+            case Nil => "an empty list"
+
+            // Sequence Patterns
+            case List(0, _, _) => "a 3-element list with 0 as the first element"
+            case List(1, _*) => "list, starts with 1, has any number of elements"
+
+            // Tuple Patterns
+            case (a, b) => s"got ${a} and ${b}"
+            case (a, b, c) => s"got ${a}, ${b}, and ${c}"
+
+            // Constructor Patterns
+            case Person(first, "Alexander") => s"Alexander, first name = ${first}"
+            case Dog("Zeus") => s"found a dog named Zeus"
+
+            // Typed Patterns
+            case s: String => s"got a string: ${s}"
+            case i: Int => s"got an int: ${i}"
+            case f: Float => s"got a float: ${f}"
+            case a: Array[Int] => s"array of int: ${a.mkString(",")}"
+            case as: Array[String] => s"array of strings: ${as.mkString(",")}"
+            case d: Dog => s"dog: ${d.name}"
+            case list: List[_] => s"got a list: ${list}"
+            case m: Map[_, _] => m.toString
+            
+            // The Default Wildcard Pattern
+            case _ => "Unknown"
+        
+        end test
+
+        
+            
+            
+
+
+
+    }
+
 
 }
