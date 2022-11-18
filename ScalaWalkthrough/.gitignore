@@ -1,0 +1,16 @@
+build.sbt
+metals.sbt
+*.iml
+target/
+.idea/
+.idea_modules/
+.DS_STORE
+.metals
+.vscode
+.cache
+.settings
+.project
+.classpath
+.bsp/
+tmp/
+.bloop
