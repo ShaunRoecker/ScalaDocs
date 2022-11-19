@@ -1,6 +1,0 @@
-[0m[[0m[0mdebug[0m] [0m[0m> Exec(run, Some(b3a70ab0-4504-40a8-91dc-ce0ff71367b1), Some(CommandSource(console0)))[0m
-[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: Compile / run[0m
-[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
-[0m[[0m[0minfo[0m] [0m[0mcompiling 1 Scala source to /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/scalawalkabout/target/scala-3.2.0/classes ...[0m
-[0m[[0m[32msuccess[0m] [0m[0mTotal time: 2 s, completed Nov 14, 2022, 8:17:27 AM[0m
-[0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m
