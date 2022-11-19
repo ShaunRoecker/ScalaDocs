@@ -24,7 +24,11 @@ object ControlStructures extends App {
         // usingAMatchExpressionLikeASwitchStatement()
         // matchingMultipleConditionsWithOneCaseStatement()
         // assigningTheResultOfTheMatchExpressionToAVariable()
-        accessingTheValueOfTheDefaultCaseInAMatchExpression()
+        // accessingTheValueOfTheDefaultCaseInAMatchExpression()
+        // usingPatternMatchingInMatchExpressions()
+        // usingEnumsAndCaseClassesInMatchExpressions()
+        // addingIfExpressionsGuardsToCaseStatements()
+        usingAMatchExpressionInsteadOfisInatanceOf()
 
 
     }
@@ -511,7 +515,7 @@ object ControlStructures extends App {
     }
     // Using Pattern Matching in Match Expressions
     def usingPatternMatchingInMatchExpressions(): Unit = {
-        println("usingPatternMatchingInMatchExpressions")
+        println("Using Pattern Matching In Match Expressions")
         // Problem: You need to match one or more patterns in a match expression,
         // and the pattern may be a constant pattern, variable pattern, constructor pattern,
         // sequence pattern, tuple pattern, or type pattern. 
@@ -527,14 +531,15 @@ object ControlStructures extends App {
             // Sequence Patterns
             case List(0, _, _) => "a 3-element list with 0 as the first element"
             case List(1, _*) => "list, starts with 1, has any number of elements"
+            case list @ List(2, _*) => s"list, starts with 1. This is the whole list: ${list}"
 
             // Tuple Patterns
             case (a, b) => s"got ${a} and ${b}"
             case (a, b, c) => s"got ${a}, ${b}, and ${c}"
 
             // Constructor Patterns
-            case Person(first, "Alexander") => s"Alexander, first name = ${first}"
-            case Dog("Zeus") => s"found a dog named Zeus"
+            //case Person(first, "Alexander") => s"Alexander, first name = ${first}"
+            //case Dog("Zeus") => s"found a dog named Zeus"
 
             // Typed Patterns
             case s: String => s"got a string: ${s}"
@@ -542,7 +547,7 @@ object ControlStructures extends App {
             case f: Float => s"got a float: ${f}"
             case a: Array[Int] => s"array of int: ${a.mkString(",")}"
             case as: Array[String] => s"array of strings: ${as.mkString(",")}"
-            case d: Dog => s"dog: ${d.name}"
+            //case d: Dog => s"dog: ${d.name}"
             case list: List[_] => s"got a list: ${list}"
             case m: Map[_, _] => m.toString
             
@@ -551,13 +556,274 @@ object ControlStructures extends App {
         
         end test
 
+        // pg. 106
+        // Note that the List and Map expressions could have been written like this:
+            // case m: Map[A, B] => m.toString
+            // case list: List[X] => s"thanks for the list: ${list}"
         
-            
-            
+        // /////////////////////////////////////////////////////////////////////////
+        // Patterns
 
+        // Constant Patterns
+        // A constant pattern can only match itself. Any literal may be used as a constant.
+        // If you specify a 0 as the literal, only an Int value of 0 will be matched
+        // Examples include:
+        // case 0 => "zero"
+        // case true => "true"
 
+        // Variable Patterns
+        // This was not shown in the large match example in the Solution ^^^ , 
+        // but a variable pattern matches any object, just like the _ wildcard character.  
+        // Scala binds the variable to whatever the object is, which lets you use the variable 
+        // on the right side of the case statement. for example, at the end of a match 
+        // expression you can use the _ wildcard character like this to catch anything else.
+        
+        // case _ => s"Hmm, you gave me something..."
+        // but with a variable pattern you can write this instead...
+        // case foo => s"Hmm, you gave me a ${foo}"
+
+        // Constructor Pattern
+        // The constructor pattern lets you match a constructor in a case statement. 
+        // As shown in the examples, you can specify constants or variable patterns 
+        // as needed in the constructor pattern:
+        // 
+        // case Person(first, "Alexander") => s"found an Alexander, first name = $first"
+        // case Dog("Zeus") => s"found a dog named Zeus"
+
+        // Sequence Patterns
+        // You can match against sequences like List, Array, Vector, etc. 
+        // Use the _ character to stand for one element in the sequence, and use _* to 
+        // stand for zero or more elements
+            //  case List(0, _, _) => "a 3-element list with 0 as the first element"
+            // case List(1, _*) => "list, starts with 1, has any number of elements"
+        
+        // Tuple patterns
+        // As shown in the examples, you can match tuple patterns and access the value 
+        // of each element in the tuple: You can use the _ wildcard if you're not interested 
+        // in the value of an element:
+            // case (a, b) => s"got ${a} and ${b}"
+            // case (a, b, c, _) => s"4 element tuple: got ${a}, ${b}, and ${c}"
+        
+        // Typed Patterns
+        // In the following example, str: String is a typed pattern, and str is a pattern variable:
+            // case str: String => s"you gave me this string: ${str}"
+        // As shown in the examples, you can acces the pattern variable on the right side of the expression
+        // after declaring it.
+  
+        // Variable-binding patterns
+        // At times you may want to add a variable to a pattern. You can do this with the following general syntax:
+            // case variableName @ pattern => ...
+        // This is called a 'variable-binding' pattern. When it's used, the input variable to the match expression
+        // is compared to the pattern, and if it matches, the input variable is bound to 'variableName'.
+
+        // The usefulness of this is best shown by demonstrating the problem it solves. 
+        // Suppose you had the List pattern that was shown earlier:
+            // case List(1, _*) => "list, starts with 1, has any number of elements"
+        // This works, but we can't use the match pattern on the right side of the pattern with this approach,
+        // to allow us to use the match pattern as a variable do this:
+            // case list @ List(1, _*) => "list, starts with 1. This is the whole list: ${list}"
+
+        // The following code demonstrates this ^^^ example and the usefulness of this approach:
+        case class Person(firstName: String, lastName: String)
+
+        def matchType(x: Matchable): String = x match
+            //case x: List(1, _*) = > s"${x}"  // doesn't compile
+            case x @ List(1, _*) => s"${x}" // prints the list
+
+            // case Some(_) => "got a Some"  // works, but we cant access the variable
+            // case Some(x) => s"${x}" // returns "foo"
+            case x @ Some(_) => s"${x}" // returns "Some(foo)"
+
+            case p @ Person(first, "Doe") => s"${p}" //returns "Person(John, Doe)"
+
+            case default => s"You only get what you give: ${default}"
+        end matchType
+
+        println(matchType(List(1,2,3))) //List(1, 2, 3)
+        println(matchType(Some("foo"))) //Some(foo)
+
+        val john = Person("John", "Doe")
+        val jane = Person("Jane", "Doe")
+        val otherGuy = Person("Other", "Guy")
+
+        println(matchType(john)) //Person(John,Doe)
+        println(matchType(jane)) //Person(Jane,Doe)
+        println(matchType(otherGuy)) //doesn't match our Person Search for "Doe" -> defaults
+        // very cool
+
+        // Using "Some" and "None"/////////////////////////////////////////////////////
+        // To round out these examples, you'll often use Some and None with match expressions. 
+        // For instance, when you attempt to create a number from a string with a method like
+        // toIntOption, you can handle the result in a match expression:
+        val s = "42"
+
+        // later in the code
+        s.toIntOption match 
+            case Some(i) => println(i)
+            case None => println("That was not an integer")
+        
+        // Further Reading: Type Erasure:
+            // http://bit.ly/15odxST
+            // http://bit.ly/139WrFj
 
     }
+    // Using Enums and Case Classes in Match Expressions
+    def usingEnumsAndCaseClassesInMatchExpressions(): Unit = {
+        println("Using Enums and Case Classes in Match Expressions")
+        // Problem: You want to match enums, case classes, or case objects in a match expression.
+
+        // The following example demonstrates how to usw patterns to match enums in different ways,
+        // depending on what information you need on the right side of each case statement. First, 
+        // here's an enum named Animal that has three instances- Dog, Cat, and Woodpecker:
+        enum Animal:
+            case Dog(name: String)
+            case Cat(name: String)
+            case Woodpecker
+        
+        // vvv Note below is how this was done in Scala 2.
+
+        // sealed trait Animal
+        // case class Dog(name: String) extends Animal
+        // case class Cat(name: String) extends Animal
+        // case class Woodpecker extends Animal
+
+
+        // Given that enum, this getInfo method shows the different ways you can match the enum
+        // types in a match expression.
+        import Animal.*
+
+        def getInfo(a: Animal): String = a match
+            case Dog(moniker) => s"Got a Dog, name = ${moniker}"
+            case _: Cat       => s"Got a Cat (ignoring the name)"
+            case Woodpecker   => s"That was a Woodpecker"
+        
+        println(getInfo(Dog("Fido")))
+        println(getInfo(Cat("Maurice")))
+        println(getInfo(Woodpecker))
+
+        val violet = Dog("Violet")
+        println(getInfo(violet))
+    }
+    // Adding If Expressions (Guards) to Case Statements
+    def addingIfExpressionsGuardsToCaseStatements(): Unit = {
+        println("Adding If Expressions (Guards) to Case Statements")
+        // Problem: You want to add qualifying logic to a case statement in a match expression, 
+        // such as allowing a range of numbers or matching a pattern, but only if that 
+        // pattern matches some additional criteria
+        
+        // Add an if guard to your case statement. Use it to match a range of numbers
+        def addIfGuard(i: Matchable) =
+            i match
+                case a if 0 to 9 contains a   => println("0-9 range: " + a)
+                case b if 10 to 19 contains b => println("10-19 range: " + b)
+                case c if 20 to 29 contains c => println("20-29 range: " + c)
+                case _                        => println("Hmmm...")
+        end addIfGuard
+
+        addIfGuard(25)
+
+        // Use it to match different values of an object:
+        def matchObject(x: Matchable) =
+            x match
+                case x if x == 1             => println("one, a lonely number")
+                case x if (x == 2 || x == 3) => println(x)
+                case _                       => println("some other value")
+
+        matchObject(1)
+
+        // As long as your class has an unapply method, you can reference 
+        // class fields in your if guards. For instance, becuase a case class 
+        // has an automatically generated unapply method, 
+        // given this Stock class and instance:
+        case class Stock(symbol: String, price: BigDecimal)
+        val stock = Stock("AAPL", BigDecimal(132.50))
+
+
+        // stock match
+            // case s if s.symbol == "AAPL" && s.price < 140 => buy(s)
+            // case s if s.symbol == "AAPL" && s.price > 160 => sell(s)
+            // case _ => //do nothing
+        
+        // You can also extract fields from case classes0 and classes that have 
+        // properly implemented unapply methods- and use those in your guard conditions. 
+        // For example, the case statements in this match expression
+
+        // extract the 'name' in the 'case' and then use that value
+        def speak(p: Person): Unit = p match
+            case Person(name) if name == "Fred"    => println("Yabba Dabba Do")
+            case Person(name) if name == "Bam Bam" => println("Bam Bam!")
+            case _                                 => println("Watch the Flintstones")
+        // will work if Person is defined as a case class
+        case class CaseClassPerson(aName: String)
+
+        // or as a class with a properly implemented unapply method
+        class Person(val aName: String)
+        object Person:
+            // 'unapply' deconstructs a Person. It's also known as an
+            // extractor, and Person is an "extractor object"
+            def unapply(p: Person): Option[String] = Some(p.aName)
+        
+        // not this example is a little contrived because Scala allows you to 
+        // write the cases like this:
+        def speak2(p: Person): Unit = p match
+            case Person("Fred") =>  println("Yabba Dabba Do")
+            case Person("Bam Bam") => println("Bam Bam!")
+            case _ => println("Watch the Flintstones")
+
+        // I wrote these match expressions in a couple different ways to show how they can be written
+        val fred = Person("Fred")
+        
+        speak(fred) // Yabba Dabba Do
+
+    }
+    // Using a Match Expression Instead of isInstanceOf
+    def usingAMatchExpressionInsteadOfisInatanceOf(): Unit = {
+        println("Using a Match Expression Instead of isInstanceOf")
+        // Problem: You want to write a block of code to match one type, or multiple different types
+        case class Person(name: String)
+        val person = Person("John")
+
+        // can use isInstanceOf
+        val isPerson1 = if person.isInstanceOf[Person] then true else false
+        println(isPerson1)
+
+        // can also use  a match expression
+        def isPerson(m: Matchable): Boolean = m match
+            case p: Person => true
+            case _ => false
+        end isPerson
+
+        println(isPerson(person)) // true1
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        // A more common scenario is that you'll have a model like this
+        enum Shape:
+            case Circle(x0: Double, y0: Double, radius: Double)
+            case Square(x0: Double, y0: Double, length: Double)
+        
+        import Shape.*  // Note: we dont have to import in this case, but likely you will
+
+        def area(s: Shape): Double = s match 
+            case Circle(_, _, r) => Math.PI * r * r 
+            case Square(_, _, l) => l * l
+        
+        // examples
+        println(area(Square(0, 0, 2.0))) //4.0
+        println(area(Circle(0, 0, 2.0))) //12.566370614359172
+
+        // Side note Practice
+        def typeCheck(x: Matchable) = x match
+            case s: String => println("string")
+            case i: Int => println("integer")
+            case b: Boolean => println("boolean")
+        
+        typeCheck(1) //integer
+        typeCheck(true) //boolean
+        typeCheck("Hello World!") //string
+
+        // //////////////////////////////////////////////////////////////////
+    }
+    
 
 
 }

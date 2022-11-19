@@ -1,15 +1,5 @@
-[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E161] Naming Error: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/src/main/scala/04_ControlStructures/ControlStructures.scala:325:12 [0m[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m325 |[0m        [33mdef[0m [36mabs[0m([36mx[0m: [35mInt[0m) =[0m
-[0m[[0m[31merror[0m] [0m[0m[31m[31m    |[0m        ^[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m    |[0mabs is already defined as [33mmethod[0m [35mabs[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m    |[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m    |[0mNote that overloaded methods must all be defined in the same group of toplevel definitions[0m
-[0m[[0m[31merror[0m] [0m[0m[31m326 |[0m            [33mif[0m x >= [31m0[0m [33mthen[0m x [33melse[0m -x[0m
-[0m[[0m[31merror[0m] [0m[0m[31m[31m-- [E161] Naming Error: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/src/main/scala/04_ControlStructures/ControlStructures.scala:328:12 [0m[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m328 |[0m        [33mdef[0m [36mmax[0m([36ma[0m: [35mInt[0m, [36mb[0m: [35mInt[0m) = [0m
-[0m[[0m[31merror[0m] [0m[0m[31m[31m    |[0m        ^[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m    |[0mmax is already defined as [33mmethod[0m [35mmax[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m    |[0m[0m
-[0m[[0m[31merror[0m] [0m[0m[31m    |[0mNote that overloaded methods must all be defined in the same group of toplevel definitions[0m
-[0m[[0m[31merror[0m] [0m[0m[31m329 |[0m            [33mif[0m a > b [33mthen[0m a [33melse[0m b[0m
-[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m[33m-- [E121] Pattern Match Warning: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/src/main/scala/04_ControlStructures/ControlStructures.scala:800:17 [0m[0m[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m800 |[0m            [33mcase[0m _ => [31mfalse[0m[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m[33m    |[0m                 ^[0m[0m
+[0m[[0m[33mwarn[0m] [0m[0m[33m    |[0mUnreachable case except for [31mnull[0m (if this is intentional, consider writing [33mcase[0m [31mnull[0m => instead).[0m
+[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
