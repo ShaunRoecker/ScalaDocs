@@ -1,5 +1,2 @@
-[0m[[0m[33mwarn[0m] [0m[0m[33m[33m-- [E121] Pattern Match Warning: /Users/shaunroecker/SCR/gitHub/Scala Development/ScalaWalkthrough/src/main/scala/04_ControlStructures/ControlStructures.scala:800:17 [0m[0m[0m
-[0m[[0m[33mwarn[0m] [0m[0m[33m800 |[0m            [33mcase[0m _ => [31mfalse[0m[0m
-[0m[[0m[33mwarn[0m] [0m[0m[33m[33m    |[0m                 ^[0m[0m
-[0m[[0m[33mwarn[0m] [0m[0m[33m    |[0mUnreachable case except for [31mnull[0m (if this is intentional, consider writing [33mcase[0m [31mnull[0m => instead).[0m
+[0m[[0m[33mwarn[0m] [0m[0mthere were 5 deprecation warnings; re-run with -deprecation for details[0m
 [0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
