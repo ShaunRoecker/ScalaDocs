@@ -20,7 +20,7 @@ object NumbersAndDates extends App {
         // creatingNewDateAndTimeInstances()
         // CalculatingTheDifferenceBetweenTwoDates()
         // formattingDates()
-        // parsingStringsIntoDates()
+        parsingStringsIntoDates()
 
     }
     scalaNumDate()

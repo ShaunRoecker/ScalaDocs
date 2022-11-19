@@ -748,6 +748,11 @@ object ControlStructures extends App {
         // properly implemented unapply methods- and use those in your guard conditions. 
         // For example, the case statements in this match expression
 
+
+        // //////////////////////////////////////////////////////////////////
+        // This next example deconstructs a case class so that you can use 
+        // the class's attributes in the match expression business logic
+        
         // extract the 'name' in the 'case' and then use that value
         def speak(p: Person): Unit = p match
             case Person(name) if name == "Fred"    => println("Yabba Dabba Do")
@@ -823,7 +828,7 @@ object ControlStructures extends App {
 
         // //////////////////////////////////////////////////////////////////
     }
-    
+
 
 
 }
