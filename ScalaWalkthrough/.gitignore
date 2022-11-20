@@ -41,3 +41,6 @@ bin/
 
 # general
 *.class
+
+#if files were already in the repo before adding this .gitignore:
+#git rm -r --cached . && git add . && git commit -am "Remove ignored files"

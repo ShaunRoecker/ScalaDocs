@@ -985,13 +985,14 @@ object ControlStructures extends App {
         catch
             case ioe: IOException => ioe.printStackTrace
             case fnf: FileNotFoundException => fnf.printStackTrace
-        finally
-            sourceOption match
-                case none => 
-                    println("bufferedSource == None")
-                case Some(s) => 
-                    println("closing the bufferedSource...")
-                    s.close
+        // finally
+        //     sourceOption match
+        //         case none => 
+        //             println("bufferedSource == None")
+        //         case Some(s) => 
+        //             println("closing the bufferedSource...")
+        //             s.close
+                
         
         // This example is contrived, 16.1 "Reading Text Files" is better
         // But this shows the approach
