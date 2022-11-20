@@ -1,0 +1,3 @@
+object ClassesPartOne extends App {
+  
+}

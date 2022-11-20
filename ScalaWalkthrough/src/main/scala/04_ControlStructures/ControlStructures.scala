@@ -28,7 +28,11 @@ object ControlStructures extends App {
         // usingPatternMatchingInMatchExpressions()
         // usingEnumsAndCaseClassesInMatchExpressions()
         // addingIfExpressionsGuardsToCaseStatements()
-        usingAMatchExpressionInsteadOfisInatanceOf()
+        // usingAMatchExpressionInsteadOfisInatanceOf()
+        // workingWithAListInAMatchExpression()
+        // matchingOneOrMoreExceptionsWithTryCatch()
+        // declaringAVariableBeforeUsingItInATryCatchFinallyBlock()
+        creatingYourOwnControlStructures()
 
 
     }
@@ -827,6 +831,234 @@ object ControlStructures extends App {
         typeCheck("Hello World!") //string
 
         // //////////////////////////////////////////////////////////////////
+    }
+    // Working with a list in a Match Expression
+    def workingWithAListInAMatchExpression(): Unit = {
+        println("Working with a list in a Match Expression")
+        // Problem: You know that a List data structure is a little different 
+        // than other sequential data structures: it's built from 'cons' cells 
+        // and ends in a Nil element. You want to use this to your advantage when 
+        // working with a match expression, such as when writing a recursive function.
+
+        // You can create a list like this
+        val xs = List(1, 2, 3)
+        // or like this
+        val ys = 1 :: 2 :: 3 :: Nil
+
+        val ls = List("one", "two", "three")
+
+        // SCALA "Lists" are Linked-Lists under the hood. 
+        // This class is optimal for last-in-first-out (LIFO), 
+        // stack-like access patterns. If you need another access pattern, 
+        // for example, random access or FIFO, consider using a collection 
+        // more suited to this than List.
+
+        // As shown in in the second example, a List ends with a Nil element, 
+        // and you can take advantage of that when writing match expressions to work on lists, 
+        // especially when writing recursive algorithms
+
+        def listToString(list: List[String]): String = list match
+            case s :: rest => s + " " + listToString(rest)
+            case Nil => ""
+        
+        println(listToString(ls)) //one two three 
+
+        // A match and recursion sum method for List[Int]
+        def sum(list: List[Int]): Int = list match
+            case Nil => 0
+            case n :: rest => n + sum(rest)
+        
+        println(sum(xs)) //6
+
+        // Similarly, this is a product algorithm
+        def product(list: List[Int]): Int = list match
+            case Nil => 0
+            case n :: rest => n * sum(rest)
+        
+        println(product(xs)) //6
+
+        // While recurion is great don't forget Scala's reduce and fold functions
+        // long form
+        def sumReduceLong(list: List[Int]): Int = list.reduce((x, y) => x + y)
+        // short form
+        def sumReduceShort(list: List[Int]): Int = list.reduce(_ + _)
+        println(sumReduceShort(xs)) // 6
+        println(sumReduceLong(xs)) // 6
+
+    }
+    // Matching One or More Exceptions with try/catch
+    def matchingOneOrMoreExceptionsWithTryCatch(): Unit = {
+        println("Matching One or More Exceptions with try/catch")
+        // Problem: You want to catch one or more exceptions in a try/catch block
+
+        // When you need to catch and handle multiple exceptions, 
+        // just add the exception types as different case statements
+        // def tryCatchExample() =
+        //     try 
+        //         openAndReadFile(filename)
+        //     catch 
+        //         case e: FileNotFoundException => 
+        //             println(s"Couldn't find ${filename}")
+        //         case e: IOException => 
+        //             println(s"Han an IOException trying to read ${filename}")
+            
+
+        // If you don't care about any specific exception, 
+        //      but still want to use them, such as log them:
+        
+        // try 
+        //     openAndReadFile()
+        // catch 
+        //     case t: Throwable => logger.log(t)
+
+        //If you even don't care about the value of the exception:
+        // try 
+        //     openAndReadFile()
+        // catch 
+        //     case _: Throwable => println("Nothing to worry about, just an exception")
+    
+        // Methods based on try/catch
+        import scala.io.Source
+        import java.io.{FileNotFoundException, IOException}
+
+        def readFile(filename: String): Option[String] =
+            try
+                Some(Source.fromFile(filename).getLines.mkString)
+            catch
+                case _: (FileNotFoundException | IOException) => None
+        
+        // ^^ this shows one way to return a value with a try/catch block
+
+        // The "Scala" way is to never throw an exception
+        // Instead, you should use Option, or use Try/Success/Failure 
+            // if you don't want to return None
+
+        import scala.io.Source
+        import java.io.{FileNotFoundException, IOException}
+        import scala.util.{Try, Success, Failure}
+
+        def readFile2(filename: String): Try[String] =
+            try
+                Success(Source.fromFile(filename).getLines.mkString)
+            catch
+                case t: Throwable => Failure(t)
+        
+        
+        // Whenever an exception message is involved, 
+        // I always prefer using Try or Either instead of Option,
+        // because they give you access to the message in Failure
+        // or Left, when Option only returns None.
+
+        // 
+        import scala.util.control.Exception.allCatch
+        // OPTION
+        allCatch.opt("42".toInt) // Option[Int] = Some(42)
+        allCatch.opt("foo".toInt) // Option[Int] = None
+
+        // TRY
+        allCatch.toTry("42".toInt) // Matchable = 42
+        allCatch.toTry("foo".toInt) // Matchable = Failure(NumberFormatException: For input string: "foo")
+        
+        // EITHER
+        allCatch.either("42".toInt) // Either[Throwable, Int] = Right(42)
+        allCatch.either("foo".toInt) // Either[Throwable, Int] = Left(NumberFormatException: For input string: "foo")
+
+    }
+    // Declaring a Variable Before Using It in a try/catch/finally Block
+    def declaringAVariableBeforeUsingItInATryCatchFinallyBlock(): Unit = {
+        println("// Declaring a Variable Before Using It in a try/catch/finally Block")
+        // Problem: You want to use an object in a try block and need to access it 
+        // in the 'finally' portion of the block, such as when you need to call a 
+        // 'close' method on an object
+
+        import scala.io.Source
+        import java.io.*
+
+        var sourceOption: Option[Source] = None
+
+        try
+            sourceOption = Some(Source.fromFile("/etc/passwd"))
+            sourceOption.foreach { source =>
+                // do whatever you need to do with the 'source' here
+                for line <- source.getLines do println(line.toUpperCase)
+            }
+        catch
+            case ioe: IOException => ioe.printStackTrace
+            case fnf: FileNotFoundException => fnf.printStackTrace
+        finally
+            sourceOption match
+                case none => 
+                    println("bufferedSource == None")
+                case Some(s) => 
+                    println("closing the bufferedSource...")
+                    s.close
+        
+        // This example is contrived, 16.1 "Reading Text Files" is better
+        // But this shows the approach
+
+        var in: Option[FileInputStream] = None
+        var out: Option[FileOutputStream] = None
+        // Dont use Null
+
+
+
+
+
+    }
+    // Creating Your Own Control Structures
+    def creatingYourOwnControlStructures(): Unit ={
+        println("Creating Your Own Control Structures")
+        // Problem: You want to define your own control structures to customize the Scala language,
+        // simplify your code, or create a domain-specific language (DSL)
+
+        // Thanks to features like 'multiple parameter lists', 'by-name parameters', 'extension methods',
+        // 'higher-order functions', and more, you can create your own code that works just like 
+        // a control structure
+
+        import scala.annotation.tailrec
+        object WhileTrue:
+            @tailrec
+            def whileTrue(testCondition: => Boolean)(codeBlock: => Unit): Unit =  // uses 1) by-name parameters(call-by-name)
+                if (testCondition) then                                                 //2) multiple parameter lists ()()
+                    codeBlock
+                    whileTrue(testCondition)(codeBlock)
+                end if 
+            end whileTrue
+        
+        
+        import WhileTrue.whileTrue
+        var i = 0
+        whileTrue (i < 5) {
+            println(i)
+            i += 1
+        }
+
+        // Further Reading: https://oreil.ly/KOAHI
+        // "How to use By-name parameters in scala: https://oreil.ly/fuWGM"
+        // "Scala call-by-name parameters" : https://oreil.ly/shdre
+        // "The using control structure in Beginning Scala" : https://oreil.ly/fiLHH
+        // "Scala: How to use break and continue in for and while loops": https://oreil.ly/KOAHI
+        // Breaks class source code: https://oreil.ly/xI78S
+
+        // Another Example
+        // create a control structure whose expression looks like this, a double-if statement
+
+        // doubleIf(age > 18)(numAccidents == 0){ println("Discount!") }
+
+        def doubleIf(testCondition1: => Boolean)(testCondition2: => Boolean)(codeBlock: => Unit) = 
+            if (testCondition1) && (testCondition2) then
+                codeBlock
+            end if
+        end doubleIf
+
+        val age = 20
+        val numAccidents = 0
+        doubleIf(age > 18)(numAccidents == 0){ println("Discount!") } // Discount!
+
+        def doubleIfshorter(testCondition1: => Boolean)(testCondition2: => Boolean)(codeBlock: => Unit) =
+            if testCondition1 && testCondition2 then codeBlock
+        
+
     }
 
 
