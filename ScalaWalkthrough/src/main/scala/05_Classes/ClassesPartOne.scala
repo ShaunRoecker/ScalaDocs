@@ -17,7 +17,10 @@ object ClassesPartOne extends App {
         // callingASuperclassConstructor()
         // definingAnEqualsMethod()
         // overridingDefaultAccessorAndMutators()
-        assigningABlockOrFunctionToALazyField()
+        // assigningABlockOrFunctionToALazyField()
+        // settingUnitializedVarFieldTypes()
+        // generatingBoilerplateCodeWithCaseClasses()
+        definingAuxiliaryConstructorsForCaseClasses()
     }
     chapter5PartOne()
     // To provide flexibility to model the world around you, 
@@ -760,6 +763,113 @@ object ClassesPartOne extends App {
         // In general, the best approach is to define the field as an Option
         // for certain types (String and numeric fields, 
         // you can specify default initial values.)
+
+        case class Person(var username: String, var password: String):
+            var age = 0
+            var firstName = ""
+            var lastName = ""
+            var address: Option[Address] = None
+        
+
+        case class Address(city: String, state: String, zip: String)
+
+        val p = Person("john123", "secret")
+        
+        p.address = Some(Address("Talo", "AR", "75098"))
+
+        p.address.foreach( a =>
+            println(s"${a.city}, ${a.state}, ${a.zip}")
+        )
+
+    }
+    // 5.14 Generating Boilerplate Code with Case Classes
+    def generatingBoilerplateCodeWithCaseClasses(): Unit = {
+        // You're working with match expressions, Akka actors, or other situations 
+        // where you want to use the case class syntax to generate boilerplate code, 
+        // including accessor and mutator methods, along with apply, unapply, toString, 
+        // equals, and hashCode methods, and more.
+
+        // When you want you class to have many additional built-in features- 
+        // such as creating classes in functional programming -
+        //  define your class as a case class, declaring any 
+        // parameters it needs in its constructor:
+        
+        // name and relation are "val" by default
+        case class Person(name: String, relation: String)
+        // case classes come with the following benefits:
+            // 1- Accessor methods are generated for the constructor parameters because 
+            // case class constructor parameters are val by default. Mutator methods are also 
+            // generated for parameters that are declared as var.
+
+            // 2- A good default toString method is generated
+
+            // 3- An unapply method is generated, making it easy to use case classes in match expressions.
+
+            // 4- equals and hashCode are generated, so instances can easily be compared and used in collections.
+
+            // 5- A copy method is generated, which makes it easy to create new instances from existing instances 
+                // (a technique used in functional programming)
+
+        val p1 = Person("John", "Parent")
+        val p2 = Person("John", "Parent")
+        println(p1 == p2) // true
+
+        println(p1.toString) //Person(John,Parent)
+
+        // The copy method is useful in FP because its helpful when you
+        // need to clone an object and change some of the fields during the cloning process.
+        case class Dog(name: String, color: String)
+        val violet = Dog("Violet", "chocolate")
+        val brown = violet.copy(name="Brown", color="brown")
+        println(violet) //Dog(Violet,chocolate)
+        println(brown) //Dog(Brown,brown)
+        //  ^^ this technique is commonly used in FP, "update as you copy"
+
+        
+        val red = violet.copy(name="Big Red")
+        println(red.name)
+
+        // Just playing with matches below (:\)
+        violet match
+            case Dog(n, c) => println("true")
+        
+        violet match 
+            case v if violet.name == "Violet" => println(s"Hey Violet! ${v}")
+            case _ => println("Everything else")
+        
+
+        // It's important to note that while case classes are very convienient, 
+        // there isn't anything in them that you couldn't code yourself.
+
+    }
+    // Defining Auxiliary Constructors for Case Classes
+    def definingAuxiliaryConstructorsForCaseClasses(): Unit = {
+        // Problem: Similar to the previous recipe, 
+        // you want to define one or more auxiliary constructors 
+        // for a case class rather than a plain class
+
+        // initial case class
+        case class Person(var name: String, var age: Int)
+        val p = Person("John Smith", 30)
+        // this ^^ is the same as this vv
+        val p2 = Person.apply("John Smith", 30)
+
+        
+        // So to create default constructor values, you can create a companion
+        // object and use the apply method
+    
+        case class Person2(name: String, age: Int)
+        object Person2:
+            def apply() = new Person2("default", 0)
+            def apply(name: String) = new Person2(name, 0)
+        
+        val a = Person2() //Person2(default,0)
+        val b = Person2("John") //Person2(John,0)
+        val c = Person2("John", 20) //Person2(John,20)
+        println(a) 
+        println(b)
+        println(c)
+
     }
 
 

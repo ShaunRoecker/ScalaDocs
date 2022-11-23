@@ -127,6 +127,15 @@ object NumbersAndDates extends App {
         // Problem: When using an implicit type declaration style, Scala automatically assigns
         // types based on their numeric values, and you need to override the default type declaration   
         // when you create a numeric field.
+        // If you assign 1 to a variable without explicitly declaring its type, Scala automatically
+        // assigns it to type Int
+        val a = 1
+        // a: Int = 1
+        // to assign to some other type
+        val b: Long = 1
+        val c: Double = 1
+        val d: Short = 1
+        //... Float, Byte ...
 
     }
     // Comparing Floating Point Numbers
