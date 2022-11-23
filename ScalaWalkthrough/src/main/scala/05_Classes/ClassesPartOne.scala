@@ -9,7 +9,15 @@ object ClassesPartOne extends App {
         println("Classes")
         // choosingFromDomainModelingOptions()
         // creatingAPrimaryConstructor()
-        controllingTheVisibiltyOfConstructorFields()
+        // controllingTheVisibiltyOfConstructorFields()
+        // definingAuxiliaryConstructorsForClasses()
+        // definingAPrivatePrimaryConstructor()
+        // providingDefaultValuesForConstructorParameters()
+        // handlingConstructorParametersWhenExtendingAClass()
+        // callingASuperclassConstructor()
+        // definingAnEqualsMethod()
+        // overridingDefaultAccessorAndMutators()
+        assigningABlockOrFunctionToALazyField()
     }
     chapter5PartOne()
     // To provide flexibility to model the world around you, 
@@ -258,7 +266,7 @@ object ClassesPartOne extends App {
         // so it can't be accessed from outside the class
         // e.salary  //<Exception>
     }  
-    // Controlling the Visiblity of Constructor Fields
+    // Controlling the Visiblity of Constructor Fields (var, val, private)
     def controllingTheVisibiltyOfConstructorFields(): Unit = {
         println("Controlling the Visiblity of Constructor Fields")
         // Problem: You want to control the visibility of fields that are 
@@ -337,12 +345,60 @@ object ClassesPartOne extends App {
 
 
     }
-    // Defining Auxiliary Constructors for Classes
+    // Defining Auxiliary Constructors for Classes (this())
     def definingAuxiliaryConstructorsForClasses(): Unit = {
         println("Defining Auxiliary Constructors for Classes")
         // Problem: You want to define one or more auxiliary constructors 
         // for a class so that consumers of the class can have multiple 
         // ways to create object instances
+
+        // Auxiliary Constructors are a way for you to set up the class so that when you create
+        // a new instance, you don't have to define all of the params for that class.  If you didn't
+        // have auxillary Constructors, you have to input values for whatever class fields are in the class. 
+        // //////////////////////////////////////////////////////////////////////////////////////////////////
+        // Example 1:
+        class Car (val color: String)
+        //  VVVVVVVVVVVVVVVVVVVV
+        // val civic = Car() //missing argument for parameter color of constructor Car in class Car: (color: String): Car
+        // This results in an error however if we create an auxillary constructor for car
+
+        object CarAC:
+            val DefaultColor = "gray"
+        
+        class CarAC (val color: String):
+            def this() = this(CarAC.DefaultColor)
+        
+        val civic2 = CarAC()
+        println(civic2.color)
+
+        // //////////////////////////////////////////////////////////////////////////////////////////////////
+        // Example 2:
+        object Cup:
+            val DefaultColor = "white"
+            val DefaultIsFull = false
+            val DefaultLiquidType = "water"
+            
+        class Cup (
+            val color: String,
+            var isFull: Boolean, 
+            var liquidType: String
+        ):
+            def this() = this(Cup.DefaultColor, Cup.DefaultIsFull, Cup.DefaultLiquidType)
+            
+            def this(color: String) = this(color, Cup.DefaultIsFull, Cup.DefaultLiquidType)
+        
+        val cup = Cup("red", true, "milk")
+        println(cup.liquidType)
+
+        val cup2 = Cup()
+        println(cup2.liquidType)
+
+        val cup3 = Cup("purple")
+        println(cup3.liquidType)
+
+
+        // //////////////////////////////////////////////////////////////////////////////////////////////////
+        // Example 3:
         enum CrustSize:
             case Small, Medium, Large
         
@@ -381,11 +437,330 @@ object ClassesPartOne extends App {
         println(p30)
         println(p40)
 
+        // Important notes:
+            // Auxillary constructors are defined by creating methods named this
+            // Each auxillary constructor must begin with a call to a previously defined constructor
+            // Each constructor must have a different parameter list
+            // One constructor calls another constructor using the method name this and
+            //  specifies the desired parameters
+        
+    }
+    // Defining A Private Primary Constructor
+    def definingAPrivatePrimaryConstructor(): Unit = {
+        println("Defining A Private Primary Constructor")
+        // Problem: You want to make a primary constructor of a class private, 
+        // such as to enforce the Singleton pattern
+
+        // To make the primary constructor of a class private, insert the private keyword in between
+        // the class name and any parameters the constructor accepts:
+            // a private one-arg primary constructor
+        class Person786 private (var name: String)
+        // This keeps you from being able to create an instance of the class:
+        // val person786 = new Person786("Names Nameson")   //constructor Person786 cannot be accessed as a member of Person786
+        // "This is a class Person786 with a private constructor"
+
+        // To enforce the Singleton pattern in Scala, make the primary constructor 'private'
+        // and the create a getInstance method in the 'companion' object of the class
+
+        // a private constructor that takes no parameters
+        class Brain private:
+            override def toString = "This is the brain"
+        
+        object Brain:
+            val brain = Brain()
+            def getInstance = brain
+        
+        def singletonTest =
+            val brain = Brain.getInstance
+            println(brain)
+        singletonTest
+        // you don't have to name the accessor method "getInstance", it's just a Java convention
+
+        // Utility classes
+        // depending on what you are trying to accomplish, you may not need to create a private constructor.
+        // In some cases, you can do the same thing by putting methods in an object
+
+        object FileUtils:
+            def readfile(filename: String): String = ???
+            def writefile(filename: String, contents: String): Unit = ???
+        
+        // This lets consumers of your code call those methods without
+        //  needing to create an instance of the FileUtils class:
+        
+        // val contents = FileUtils.readFile("input.txt")
+        // FileUtils.writeFile("output.txt", contents)
+
+        // In a case like this, theres no need for a private class constructor; just don't define a class
+    }
+    // Providing Default Values for Constructor Parameters (instead of Auxiliary Constructors)
+    def providingDefaultValuesForConstructorParameters(): Unit = {
+        println("Providing Default Values for Constructor Parameters")
+        // Problem: You want to provide a default value for a constructor parameter, 
+        // which gives consumers of your class the option of specifying that parameter 
+        // when calling the constructor or not
+
+        class Socket (val timeout: Int = 10_000)
+
+        // Because the parameter is defined with a default value, 
+        // you can call the constructor without specifying a timeout calue,
+        //  in which case you get the default value:
+        val s = Socket()
+        println(s.timeout)
+
+        // This eliminates the need for auxillary constructors
+
+        // Multiple Parameters
+        class Socket2(val timeout: Int = 1000, val port: Int = 8080)
+    }
+    // Handling Constructor Parameters When Extending a Class
+    def handlingConstructorParametersWhenExtendingAClass(): Unit = {
+        println("Handling Constructor Parameters When Extending a Class")
+        // Problem: You want to extend a base class that has constructor parameters,
+        //  and your new subclass may take additional parameters
+
+        // Working with val constructor parameters
+        // first, define a base class
+        class Person(val name: String)
+
+        // Next, define a subclass
+        class Employee(name: String, val age: Int) extends Person(name):
+            override def toString = s"${name} is ${age} years old"
+            def apply() = s"${name}: ${age}"
+        
+        val joe = Employee("Joe", 34)
+        println(joe) // Joe is 34 years old
+        println(joe()) // Joe: 34
+        // This works because the fields are immutable
+
+        // Extending var fields
+        // 2 options:
+            // Use a different name for the field in the subclass
+            // Implement the subclass constructor as an apply method in a companion object
+        
+        class Persona(var name: String)
+
+        // note the use of '_name' 
+        class Employa(_name: String, var age: Int) extends Persona(_name)
+        // ****** So, when extending a class that has a var constructor parameter,
+        // use a different name for that field in the subclass
+
+        // Solution 2 /////////////////////////////////////////////////////////////////
+        // Use an apply method in a companion object
+
+        class Person2(var name: String):
+            override def toString = s"$name"
+        
+        // now create the employee class with a private constructor
+        class Employee2 private extends Person2(""):
+            var age = 0
+            println("Employee Constructor Called")
+            override def toString = s"$name is $age"
+
+        // companion object Employee2
+        object Employee2:
+            def apply(_name: String, _age: Int) =
+                val e = new Employee2()
+                e.name = _name
+                e.age = _age
+                e
+        
+        val jane = Employee2("JANE", 32)
+
+        print(jane)
 
     }
+    // Calling a Superclass Constructor
+    def callingASuperclassConstructor(): Unit = {
+        println("Calling a Superclass Constructor")
+        // Problem: You want to control the superclass constructor that's called
+        // when you define constructors in a subclass.
 
 
+    }
+    // Defining an equals Method(Object Equality) in a New Class (With and Without Inheritance)
+    def definingAnEqualsMethod(): Unit = {
+        println("Defining an equals Method(Object Equality)")
+        // Problem: You want to define an equals method for a class 
+        // so you can compare object instances to each other
 
+        // Scala uses "==" to compare instances, unlike java.
+        // "==" method is defined on the "Any" class so (a) its inherited by all other 
+        // classes and (b) it calls the 'equals' method that's defined for the class.
+        // What happens is that when you write 1 == 2, that code is the same as writing 1.==(2), 
+        // and then that == method invokes the equals method on the 1 object, 
+        // which is an instance of Int in this example.
+
+        // "foo" == "foo" //true
+        // "foo" == "bar" //false
+        // "foo" == null //false
+        // null == "foo" //false
+        // 1 == 1 //true
+        // 1 == 2 //false
+        
+ 
+        // dont implement equals method unless necessary
+        
+        // Why is this important?
+        // Because Scala doesn't recognize 2 instances of a class as equal if all their parameters are equal,
+        // like a human would intuitively think.  If we want to be able to compare two instances of a class,
+        // and consider them equal if their parameters are the same(for logic in our program or something else), 
+        // then we need to write an equals method for the 
+        // class
+
+        // 7-Steps to implementing an equals method for a class in Scala
+        // 1. Create a canEqual method with the proper signature, taking an Any parameter and returning a boolean.
+        // 2. canEqual should return true if the arguement passed into it is an instance of the current class , false otherwise.
+        // 3. Implement the equals method with the proper signature, taking an Any parameter and returning a Boolean.
+        // 4. Write the body of equals as a single match expression.
+        // 5. The match expression should have two cases, As you'll see in the following code, 
+        //      the first case should be a typed pattern for the current class.
+        // 6. In the body of this first case, implement a series of logical "and" tests for all the tests in this class 
+        //      that must be true. If this class extends anything other than AnyRef, you'll want to invoke 
+                // your superclass equals method as part of these tests. One of the "and" tests must also be a call to canEqual.
+        // 7. For the second case, just specify a wildcard pattern that yields false.
+
+
+        class Person1 (var name: String, var age: Int)
+        val person1 = Person1(name="John", age=20)
+        val person2 = Person1(name="John", age=20)
+        // Human logic says person1 == person2 = true
+        println(person1 == person2) //false
+        // Nope, see you're not thinking like a computer.
+        // That's why we have to write an equals method for 
+            // any class we want to use human logic in our program.
+
+        // here's how...
+        class Person2 (var name: String, var age: Int):
+            // step 1: prepare signature for 'canEqual'
+            // Step 2: compare 'a' to the current class
+            // (isInstanceOf returns true or false)
+            def canEqual(a: Any): Boolean = a.isInstanceOf[Person2]
+            // step 3: proper signature of 'equals'
+            // step 4 thru 7: implement a 'match' expression
+            override def equals(that: Any): Boolean = 
+                that match 
+                    case that: Person2 => 
+                        that.canEqual(this) &&
+                        this.name == that.name &&
+                        this.age == that.age
+                    case _ => 
+                        false
+            // step 8 (optional): implement a corresponding hashCode method
+            override def hashCode: Int =
+                val prime = 31
+                var result = 1
+                result = prime * result + age
+                result = prime * result + (if name == null then 0 else name.hashCode)
+                result
+        end Person2
+
+        val personA = Person2(name="John", age=20)
+        val personB = Person2(name="John", age=20)
+        println(personA == personB) // true
+
+        // Scaladocs for equals: "https://oreil.ly/mOc4r"
+        println(personA.getClass())
+
+        // Example 2:
+        // How to do the same thing when inheritance is involved
+        class Employee (name: String, age: Int, var role: String) 
+        extends Person2(name, age):
+            override def canEqual(a: Any): Boolean = a.isInstanceOf[Employee]
+            override def equals(that: Any): Boolean =
+                that match
+                    case that: Employee => 
+                        that.canEqual(this) &&
+                        this.role == that.role &&
+                        super.equals(that)
+                    case _ => 
+                        false
+            override def hashCode(): Int =
+                val prime = 31
+                var result = 1
+                result = prime * result + (if role == null then 0 else role.hashCode)
+                result + super.hashCode
+        end Employee
+
+        // Beware equals methods with var fields and mutable collections
+        val eNimoy = Employee("Leonard Nimoy", 81, "Actor")
+        val set = scala.collection.mutable.Set[Employee]()
+        set += eNimoy
+        println(set.contains(eNimoy)) // true
+        eNimoy.age = 82
+        println(set.contains(eNimoy)) // false
+        // ^^^ In this case ^^^
+        // You should override hashCode and should name your equality method 
+        // something else so that you still have use of the default equality method 
+        // that would work in this case
+
+        // further reading: Programming in Scala: Martin Odersky et al.
+    }
+    // Preventing Accessor and Mutator Methods from Being Generated
+    def preventingAccessorAndMutatorMethodsFromBeingGenerated(): Unit = {
+        // Problem: When you define a class field as a var, Scala automatically generates 
+        // accessor (getter) and mutator (setter) methods for it, and defining a field as a val 
+        // automatically generates an accessor method, but you don't want either 
+        // an accessor or a mutator
+
+        // The solution is to either 1) add the 'private' access modifier to the val or var declaration so it 
+        // can only be accessed by instances of the current class
+        // 2) add the potected access modifier so it can be accessed by classes that extend the current class
+
+        // The private modifier
+        class Animal:
+            private var _numLegs = 2
+            def numLegs = _numLegs    // getter
+
+            def numLegs_=(numLegs: Int): Unit =  //setter
+                _numLegs = numLegs
+            // Note we can access the '_numLegs' fieldof another Animal instance 'that'
+            def iHaveMoreLegs(that: Animal): Boolean =
+                this._numLegs > that._numLegs            
+   
+        // // The protected modifier
+        // class Dog extends Animal:
+        //     _numLegs = 4
+        
+        // numLegs still can't be accessed from outside the class   
+    }
+    // Overriding Default Accessors and Mutators
+    def overridingDefaultAccessorAndMutators(): Unit = {
+        // Problem: You want to override the getter or setter methods that Scala generates for you
+    }
+    // Assigning a Block or Function to A (Lazy) Field
+    def assigningABlockOrFunctionToALazyField(): Unit = {
+        // Problem: You want to initailize a field in a class using a block of code, 
+        // or by calling a method or function
+        import scala.io.Source
+        class FileReader(filename: String):
+            // assign this block of code to the 'text' field
+            lazy val text = 
+                // 'fileContents' will either contain the file contents,
+                // or the exception message as a string
+                val fileContents = 
+                    try
+                        Source.fromFile(filename).getLines.mkString
+                    catch
+                        case e: Exception => e.getMessage
+                println(fileContents) //print the contents
+                fileContents // return the contents
+        
+        val reader = FileReader("/etc/passwd")
+        reader.text
+
+
+    }
+    // Setting Uninitialized var Field Types
+    def settingUnitializedVarFieldTypes(): Unit = {
+        // Problem: You want to set the type for an uninitialized 
+        // var field in a class, so you begin to write code like this:
+            // var x =
+        // and then wonder how to finish writing the expression
+
+        // In general, the best approach is to define the field as an Option
+        // for certain types (String and numeric fields, 
+        // you can specify default initial values.)
+    }
 
 
 
