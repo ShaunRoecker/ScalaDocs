@@ -1,5 +1,5 @@
 val scala3Version = "3.2.0"
-
+libraryDependencies += "org.scalafx" %% "scalafx" % "16.0.0-R24"
 
 lazy val root = project
   .in(file("."))
