@@ -12,7 +12,9 @@ object TraitsAndEnums extends App {
         // ensuringATraitCanOnlyBeAddedToATypeThatHasASpecificMethod()
         // limitingWhichClassesCanUseATraitByInheritance()
         // workingWithParameterizedTraits()
-        usingTraitParameters()
+        // usingTraitParameters()
+        // usingTraitsToCreateModules()
+        howToCreateSetsOfNamedValuesWithEnums()
 
 
     }
@@ -558,7 +560,352 @@ object TraitsAndEnums extends App {
     }
     // Using Trait Parameters
     def usingTraitParameters(): Unit = {
+        // Problem: In Scala 3, you want to create a trait that takes one or more parameters, 
+        // in the same way that a class or abstract class takes constructor parameters.
+        // Scala 3 Docs: https://oreil.ly/loZU3
 
+            //1     If a class C extends a parameterized trait T, 
+            // and its superclass does not, C must pass arguments to T.
+
+            //2     If a class C extends a parameterized trait T, 
+            // and its superclass does as well, C must not pass arguments to T.
+
+            //3      Traits must never pass arguments to parent traits.
+
+        trait Pet(val name: String):
+            def msg = s"How are you, Miss ${name}?"
+        
+        class A extends Pet("Violet")
+
+        val violet = A()
+        println(violet.msg)
+
+        
+        trait Greeting(val name: String):
+            def msg = s"How are you, $name"
+
+        class C extends Greeting("Bob"):
+            println(msg)
+
+        // class D extends C, Pet("Bill") // error: parameter passed twice
+
+        trait FormalGreeting extends Greeting:
+            override def msg = s"How do you do, $name"
+
+        // class E extends FormalGreeting // error: missing arguments for `Greeting`.
+
+        class E extends Greeting("Bob"), FormalGreeting
+
+        // Traits With Context Parameters
+        case class ImpliedName(name: String):
+            override def toString = name
+
+        trait ImpliedGreeting(using val iname: ImpliedName):
+            def msg = s"How are you, $iname"
+
+        trait ImpliedFormalGreeting extends ImpliedGreeting:
+            override def msg = s"How do you do, $iname"
+
+        
+        trait Pet2(val name: String)
+
+        // a class can extend a trait with a parameter
+        class Dog(override val name: String) extends Pet2(name):
+            override def toString(): String = s"dog name: $name"
+        
+        // use the Dog class
+        val d = Dog("Fido")
+
+        // Later in your code, another class can also extend the Dog class
+        class SiberianHusky(override val name: String) extends Dog(name)
+
+        // In a world where all cats are named "Morris," a class can extend
+        // a trait with parameters like this:
+        class Cat extends Pet2("Morris"):
+            override def toString = s"Cat: $name"
+            
+        
+        // use the Cat class
+        val c = Cat()
+        println(c.toString)
+
+        // ONE TRAIT CAN EXTEND ANOTHER, WITH LIMITS:
+        // trait Pet(val name: String):
+        //     def msg = s"How are you, Miss ${name}?"
+        // Dont pass the parameter when extending a trait with parameters
+        trait FeatheredPet extends Pet
+
+        // Then, when a class later extends FeatheredPet, the correct approach is this:
+        class Bird(override val name: String) extends Pet(name), FeatheredPet:
+            override def toString = s"bird name: $name"
+        
+        // create a new Bird"
+        val b = Bird("Tweety")
+
+    }
+    // Using Traits to Create Modules
+    def usingTraitsToCreateModules(): Unit = {
+        // Problem: You've heard that traits are "the way" to implement modules in Scala,
+        // and you want to understand how to use them in this manner.
+
+        // Imagine that you've defined a trait to implement a method that adds two integers
+        trait AddService:
+            def add(a: Int, b: Int) = a + b
+        
+        // The basic technique to create a module is to create a singleton object from that trait.
+        // The syntax for doing this:
+        object AddService extends AddService
+
+        // You can do this without implementing methods in the object because the add method
+        // in the trait is concrete
+        // Note: the process of implementing an abstract method in an object that extends the trait
+        // is known as "reifying the trait", think of it at "real-ifying the trait".
+
+        // The way you use the AddService module- a singleton object- in the rest of your code looks like this:
+        // import AddService.*
+        // println(add(1, 1)) //2
+
+        // Another example:
+        trait MultiplyService:
+            def multiply(a: Int, b: Int) = a * b
+        
+        object MathService extends AddService, MultiplyService
+
+        // The rest of your application uses this module in the same way
+
+        import MathService.*
+        println(add(2, 2)) //4
+        println(multiply(3, 2)) //6
+
+        // While these examples are simple, they demonstrate the essence of the technique:
+            // 1. Create traits to model small, logically grouped areas of the business domain.
+            // 2. The public interface of those traits contains only pure functions
+            // 3. When it makes sense, mix those traits together into larger logical groups,
+                // such as MathService
+            // 4. Build Singleton objects from those traits (reify them)
+            // 5. Use the pure functions from those objects to solve problems
+        
+        
+        
+
+        // Code for it
+        // First, start by creating some pizaa-related ADTs using the Scala 3 enum construct:
+        enum CrustSize:
+            case Small, Medium, Large
+        
+        enum CrustType:
+            case Thin, Thick, Regular
+        
+        enum Topping:
+            case Cheese, Pepperoni, Olives
+        
+        // Next, create a Pizza class in a functional style - meaning that its a case class
+        // with immutable fields
+        case class Pizza(
+            crustSize: CrustSize,
+            crustType: CrustType,
+            toppings: Seq[Topping]
+        )
+
+        // This approach is similar to using a 'struct' in other 
+        // programming languages like C, Rust, Go
+
+        // create a class for Order:
+        case class Order(items: Seq[Pizza])
+
+        // This example also handles the concept of a database, so I create
+        // a database 'interface' (Scala trait in this case) that looks like this
+        trait OrderDao:  //interface
+            def addItem(p: Pizza): Unit
+            def getItems: Seq[Pizza]
+
+        // create a mock data access object (DAO) for testing purposes that
+        // simply stores items in an ArrayBuffer in memory:
+        
+        trait MockOrderDao extends OrderDao:   // mock database implementation from OrderDao interface
+            import scala.collection.mutable.ArrayBuffer
+            private val items = ArrayBuffer[Pizza]()
+
+            def addItem(p: Pizza) = items += p
+            def getItems: Seq[Pizza] = items.toSeq
+
+        // to make things a little more complex lets create a separate log every time we 
+        // create a receipt. 
+        // Same Pattern - first create an interface, then the implementation of that interface
+        trait Logger:
+            def log(s: String): Unit
+        
+        // implementation of the above interface
+        trait ConsoleLogger extends Logger:
+            def log(s:String) = println(s"LOG: ${s}")
+
+        // Other implementations might include a FileLogger, DataBaseLogger, etc.
+
+        // only thing left in this example is to create an OrderController
+        trait OrderController:
+            this: Logger =>         // declares a self-type
+            def orderDao: OrderDao  // abstract
+
+            def addItemToOrder(p: Pizza) = orderDao.addItem(p)
+            def printReceipt(): Unit =
+                val receipt = generateReceipt
+                println(receipt)
+                log(receipt)  // from logger
+            
+            // this is an example of a private method in a trait
+            private def generateReceipt: String = 
+                val items: Seq[Pizza] = for p <- orderDao.getItems yield p
+                s"""
+                YOUR ORDER
+                ----------
+                ${items.mkString("\n")}""".stripMargin
+        
+
+        // A LARGER EXAMPLE:
+        import CrustSize.*
+        import CrustType.*
+        import Topping.*
+
+        // Create some mock objects for testing
+        object MockOrderDao extends MockOrderDao
+        object MockOrderController extends OrderController, ConsoleLogger:
+            // specifiy a concrete instance of an OrderDoa
+            val orderDao = MockOrderDao
+        
+        val smallThinCheesePizza = Pizza(
+            Small, Thin, Seq(Cheese)
+        )
+
+        val largeThickWorks = Pizza(
+            Large, Thick, Seq(Cheese, Pepperoni, Olives)
+        )
+
+        MockOrderController.addItemToOrder(smallThinCheesePizza)
+        MockOrderController.addItemToOrder(largeThickWorks)
+        MockOrderController.printReceipt()
+
+    }
+    // How to Create Sets of Named Values with Enums
+    def howToCreateSetsOfNamedValuesWithEnums(): Unit = {
+        // Problem: You want to create a set of constants to model something in the world,
+        // such as directions (north, south, west, east), positions on a display (top, bottom, left , right)
+        // toppings on a pizza, and other finite sets of values.
+
+        enum CrustSize:
+            case Small, Medium, Large
+        
+        enum CrustType:
+            case Thin, Thick, Regular
+        
+        enum Topping:
+            case Cheese, Pepperoni, Mushrooms, GreenPeppers, Olives
+
+        enum Direction:
+            case North, South, East, West
+        
+        // Once you have created an Enum, first import it's instances, and then use them in expressions
+        // and parameters, just like a class, trait, or other type:
+        import CrustSize.*
+
+        // if currentCrustSize == Small then ...
+
+        // currentCrustSize match
+        //     case Small => ...
+        //     case Medium => ...
+        //     case Large => ...
+        import scala.collection.mutable.ArrayBuffer
+        case class Pizza(
+            crustSize: CrustSize, 
+            crustType: CrustType, 
+            toppings: ArrayBuffer[Topping]
+        )
+
+        // like traits and classes, enums can take parameters and have members, 
+        // such as fields and methods. This example shows how a parameter named 
+        // code is used in an enum:
+
+        enum HttpResponse(val code: Int): 
+            case Ok extends HttpResponse(200)
+            case MovedPermanently extends HttpResponse(301)
+            case InternalServerError extends HttpResponse(500)
+        
+        // Instances of enums are similar to case objects, so just like anyother
+        // object, you can access the 'code' field directly on the object
+        // (like a static member in Java)
+
+        import HttpResponse.*
+        println(Ok.code) //200
+        println(MovedPermanently.code) //301
+        println(InternalServerError.code) //500
+
+        // Enums, like the class Set, all the values must be unique
+
+        // An enum is a shortcut for defining 
+        // a) a sealed class or trait along with
+        // b) values defined as members of the class's companion object.
+        // For example this enum:
+        enum Display:
+            case Top, Bottom, Left, Right
+        
+        // is a shortcut for writing this more verbose code
+        // sealed class Display 
+        // object Display:
+        //     case object Top extends Display
+        //     case object Bottom extends Display
+        //     case object Left extends Display
+        //     case object Right extends Display
+
+        // Enums can have members, i.e. fields and methods
+        // https://docs.scala-lang.org/scala3/reference/enums/enums.html
+        enum Planet(mass: Double, radius: Double):
+            private final val G = 6.67300E-11
+            def surfaceGravity = G * mass / (radius * radius)
+            def surfaceWeight(otherMass: Double) = otherMass * surfaceGravity
+
+            case Mercury extends Planet(3.303e+23, 2.4397e6)
+            case Venus   extends Planet(4.869e+24, 6.0518e6)
+            case Earth   extends Planet(5.976e+24, 6.37814e6)
+            case Mars    extends Planet(6.421e+23, 3.3972e6)
+            case Jupiter extends Planet(1.9e+27,   7.1492e7)
+            case Saturn  extends Planet(5.688e+26, 6.0268e7)
+            case Uranus  extends Planet(8.686e+25, 2.5559e7)
+            case Neptune extends Planet(1.024e+26, 2.4746e7)
+        end Planet
+
+        println(Planet.Mercury.surfaceGravity) //3.7030267229659395
+        println(Planet.Earth.surfaceWeight(10)) //98.02652743337129
+
+        // It is also possible to define an explicit companion object for an enum:
+
+        object Planet:
+            def main(args: Array[String]) =
+                val earthWeight = args(0).toDouble
+                val mass = earthWeight / Earth.surfaceGravity
+                for p <- values do
+                println(s"Your weight on $p is ${p.surfaceWeight(mass)}")
+        end Planet
+
+
+
+
+        // When to use enums:
+        // It can seem like the line is blurry about when to use traits, classes, and enums, 
+        // but a thing to remember about enums is that they're typically used to model a small, 
+        // finite set of possible values. For instance, in the planet example, 
+        // there are only eight planets in the solar system. Becausethis is a small, 
+        // finite set of constant values, using an enum is a good choice to model the planets.
+        
+
+
+
+
+    }
+    // Modeling Algebraic Data Types with Enums
+    def modelingAlgebraicDataTypesWithEnums(): Unit = {
+        // Problem: When programming in a functional style, 
+        // you want to model an algebraic data type using Scala 3
+        
     }
   
 }
+
