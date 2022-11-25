@@ -726,7 +726,7 @@ object ClassesPartOne extends App {
         
         // numLegs still can't be accessed from outside the class   
     }
-    // Overriding Default Accessors and Mutators
+    // Overriding Default Accessors and Mutators(getter and setter methods)
     def overridingDefaultAccessorAndMutators(): Unit = {
         // Problem: You want to override the getter or setter methods that Scala generates for you
     }

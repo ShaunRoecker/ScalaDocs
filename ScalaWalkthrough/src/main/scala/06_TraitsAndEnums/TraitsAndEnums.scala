@@ -14,7 +14,8 @@ object TraitsAndEnums extends App {
         // workingWithParameterizedTraits()
         // usingTraitParameters()
         // usingTraitsToCreateModules()
-        howToCreateSetsOfNamedValuesWithEnums()
+        // howToCreateSetsOfNamedValuesWithEnums()
+        modelingAlgebraicDataTypesWithEnums()
 
 
     }
@@ -905,6 +906,98 @@ object TraitsAndEnums extends App {
         // Problem: When programming in a functional style, 
         // you want to model an algebraic data type using Scala 3
         
+        // There are two main types of ADTs:
+            // Sum Types
+            // Product Types
+        
+        // Sum Types:
+        // A sum type is also referred to as an enumerated type because you simply
+        // enumerate all the possible instances of that type.  In Scala 3, this is 
+        // done with the enum constuct. For instance, to create your own boolean data type,
+        // start by defining a Sum type like this:
+        enum Bool:
+            case True, False
+
+        // This can be read as "Bool is a type that has two possible values, True and False" 
+        // Similarly, Position is a type with four possible values:
+        enum Position:
+            case Top, Bottom, Left, Right
+        
+        // Product Types:
+        // A Product type is created with a class constructor. The Product name comes from
+        //  the fact that the number of possible concrete instances of the class is determined 
+        // by multiplying the number of possibilities of all of its constructor fields.
+
+        // For example, this class named DoubleBoo has two Bool constructor parameters:
+        case class DoubleBoo(b1: Bool, b2: Bool)
+
+        // in a small example like this, you can enumerate the possible values that can be creates 
+        // from this constructor:
+        // DoubleBoo(True, True)
+        // DoubleBoo(True, False)
+        // DoubleBoo(False, True)
+        // DoubleBoo(False, False)
+
+        // As shown, there are four possible values. As implied by the name product, you can
+        // also derive this answer mathematically. This is covered in the Discussion.
+
+        // Informally, an Algebra can be thought of as consisting of two things:
+        // 1. A set of objects
+        // 2. The operations that can be applied to those objects to create new objects
+
+        // In the bool example the set of objects is True and False. The 'operations' consist
+        // of the methods you define for those objects.  For instance, you can define 'and'
+        // and 'or' operations to work with Bool like this:
+        import Bool.*
+
+        def and(a: Bool, b: Bool): Bool = (a, b) match
+            case(True, False) => False
+            case(False, False) => False
+            case(False, True) => False
+            case(True, True) => True
+        
+        def or(a: Bool, b: Bool): Bool = (a, b) match
+            case (True, _) => True
+            case (_, True) => True
+            case (_, _)    => False
+        
+        print(and(True, True)) //True
+        print(and(True, False)) //False
+        print(or(True, False)) //True
+        print(or(False, False)) //False
+
+        // The Sum Type
+        // A few important points about Sum Types:
+        // 1. In Scala 3 they're created as cases of the enum construct
+        // 2. The number of enumerated types you list are the only possible
+        //   instances of the type.  In the previous example, Bool is the type
+        //   and it has two possible values, True and False.
+        // 3. The phrases 'is a' and 'or a' are used when talking about Sum Types.
+        //   for example, True 'is' a Bool, and Bool is a True 'or' a False
+
+        // Note: people use differenct names for the concrete instances in a 
+        //  Sum Type, including 'value constructors', 'alternates', and 'cases'
+
+        // The Product Type
+        // Again, The Product name comes from
+        //  the fact that the number of possible concrete instances of the class is determined 
+        // by multiplying the number of possibilities of all of its constructor fields.
+
+        case class TripleBoo(b1: Bool, b2: Bool, b3: Bool)
+        // There are 8 possible instances for the above example
+
+        
+        
+
+
+
+
+
+
+
+
+
+
     }
   
 }
