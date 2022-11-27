@@ -1,3 +1,6 @@
+package scala.strings
+
+
 import scala.util.matching.Regex
 import scala.util.Random
 
@@ -12,6 +15,8 @@ object Strings extends App {
        splittingStrings()
     }
     scalaStrings()
+
+    val testString = "This is a test string for packaging practice"
     
     def testingStringEquality(): Unit = {
         val s1 = "Hello"

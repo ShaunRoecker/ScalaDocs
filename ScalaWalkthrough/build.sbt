@@ -1,5 +1,10 @@
 val scala3Version = "3.2.0"
-libraryDependencies += "org.scalafx" %% "scalafx" % "16.0.0-R24"
+
+libraryDependencies ++= Seq(
+  "org.apache.poi" % "poi" % "5.2.3",
+  "org.apache.poi" % "poi-ooxml" % "5.2.3",
+  "org.apache.poi" % "poi-ooxml-lite" % "5.2.3"
+)
 
 lazy val root = project
   .in(file("."))
