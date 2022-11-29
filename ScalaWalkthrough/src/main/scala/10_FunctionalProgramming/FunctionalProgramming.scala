@@ -9,7 +9,9 @@ object FunctionalProgramming extends App {
         // declaringMoreComplexHigherOrderFunctions()
         // usingPartiallyAppliedFunctions()
         // creatingAMethodThatReturnsAFunction()
-        creatingPartialFunctions()
+        // creatingPartialFunctions()
+        // implementingFunctionalErrorHandling()
+        passingFunctionsAroundInAnAlgorithm()
 
     }
     main()
@@ -640,7 +642,7 @@ object FunctionalProgramming extends App {
         val divide = (x: Int) => 42 / x
         // divide(0) //ArithmeticException: / by zero
 
-        val divideZero = new PartialFunction[Int, Int] {
+        val divideZero = new PartialFunction[Int, Int] {    //PartialFunction[INPUT TYPE, OUTPUT TYPE]
             def apply(x: Int) = 42 / x
             def isDefinedAt(x: Int): Boolean = x != 0
         }
@@ -664,7 +666,220 @@ object FunctionalProgramming extends App {
 
         // Partial Functions Scaladoc: https://oreil.ly/hpqyJ
 
+        // The divide2 function transforms an input Int into an output Int,
+        // so it's signature looks like this:
 
+            // val divide2 : PartialFunction[Int, Int] = ...
+        
+        // But if it returned a String instead, it would be declared like this:
+
+            // val divide2 : PartialFunction[Int, String] = ...
+
+        // As an example, the following method uses that signature:
+        
+        // converts 1 to "one", etc., up to 5
+        val convertLowNumToString = new PartialFunction[Int, String] {
+            val nums = Array("one", "two", "three", "four", "five")
+            def apply(i: Int) = nums(i - 1)
+            def isDefinedAt(i: Int) = i > 0 && i < 6
+        }
+
+        // A terrific feature of partial functions is that you can chain them together.
+        // For instance, one method may only work with even numbers, and another method may only 
+        // work with odd numbers, and together they can solve all integer problems.
+
+        // To demeonstrate this approach, the following example shows two functions that can 
+        // each handle a small number of Int inputs and convert them to String results
+
+        val convert1to5 = new PartialFunction[Int, String] {
+            val nums = Array("one", "two", "three", "four", "five")
+            def apply(i: Int) = nums(i - 1)
+            def isDefinedAt(i: Int) = i > 0 && i < 6
+        }
+
+        val convert6to10 = new PartialFunction[Int, String] {
+            val nums = Array("six", "seven", "eight", "nine", "ten")
+            def apply(i: Int) = nums(i - 6)
+            def isDefinedAt(i: Int) = i > 5 && i < 11
+        }
+
+        // Taken separately they can handle only five numbers. But combined with
+        // orElse, the resulting function can handle 10
+
+        val handle1to10 = convert1to5 orElse convert6to10
+
+        println(handle1to10(3)) //three
+        println(handle1to10(9)) //nine
+
+        // One example of where you'll run into partial functions is with the collect
+        // method on collections classes.  The collect method takes a partial function as 
+        // input.  collect builds a new collection by applying a partial function to
+        // all the elements of the collection of which the function is defined.
+
+        // For instance, the divide2 function shown earlier is a partial function that
+        // is not defined at the Int value zero. Here's that function again:
+            // val divide2 : PartialFunction[Int, Int] = 
+            //      case d if d != 0 => 42 / d
+
+        // If you attempt to use this partial function with the map method and a list that
+        // contains 0, it will explode with a MatchError
+
+        // println(List(0,1,2).map(divide2))
+        
+        // However, if you use the same function with the collect method, it wont throw an error:
+        
+        println(List(0,1,2).collect(divide2)) //List(42, 21)
+
+        // This is because the collect method is written to test the isDefinedAt method for 
+        // each element it's given. Conceptually, it's similar to this:
+        
+        List(0,1,2).filter(divide2.isDefinedAt(_)).map(divide2)
+
+        // As a result, the collect method doesn't run the algorithm for elements
+        // that are not defined by the partial function.
+
+        // You can see the collect method work in other situations, such as passing it a List
+        // that contains a mix of data types, with a function that works only with Int values:
+
+        println(List(42, "cat").collect{ case i: Int => i + 1 })  //List(43)
+
+        // Because it checks the isDefinedAt method under the hood, collect can handle 
+        // the fact that your anonymous function can't work with a string as an input
+
+        // Another use of collect is when a list contains a series of Some and None values
+        // and you want to extract all the Some values
+
+        val possibleNums = List(Some(1), None, Some(3), None) 
+
+        println(possibleNums.collect{ case Some(x) => x })  //List(1, 3)
+
+        // Another approach to reducing a Seq[Option] to only the values inside its Some elements
+        // is to call flatten on the list
+
+        val onlySome = List(Some(1), Some(3), Some(10), None, Some(9), None).flatten
+        println(onlySome) //List(1, 3, 10, 9)
+
+        // side note: flatten's purpose in life is to take a list of lists and "flatten" it
+        // to one list:
+            val flattenList = List(List(1,2,3), List(4,5,6), List(7,8,9), List(10,11,12)).flatten
+            println(flattenList) //List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
+
+
+
+
+        // Partial function article: https://oreil.ly/IVR6U
+        List(41, 34) map { case i: Int => i + 1 } // <- notice this syntax, it works
+        List(41, "cat") collect { case i: Int => i + 1 } 
+
+
+
+    }
+    // Implementing Functional Error Handling
+    def implementingFunctionalErrorHandling(): Unit = {
+        // Problem: You've started to write code in a functional programming style, but
+        // you're not sure how to handle exceptions and other errors when writing pure functions.
+
+        // Pure functions don't throw exceptions, instead you handle errors with Scala's
+        // error handling types:
+            // -Option/Some/None
+            // -Try/Success/Failure
+            // -Either/Left/Right
+
+        def makeInt(str: String): Option[Int] =
+            try
+                Some(Integer.parseInt(str)) 
+            catch 
+                case e: NumberFormatException => None
+
+        println(makeInt("5"))
+
+        makeInt("6") match 
+            case Some(i) => println(s"i = ${i}") 
+            case None => println("Could not create Integer")
+        
+        // Given a list of strings that may or may not convert to integers, you can
+        // also use makeInt like this:
+
+        val listOfStrings: List[String] = List("1", "2", "3", "four", "five", "6")
+
+        val optionalListOfInts: Seq[Option[Int]] =
+            for s <- listOfStrings yield makeInt(s)
+        
+        println(optionalListOfInts)  //List(Some(1), Some(2), Some(3), None, None, Some(6))
+        println(optionalListOfInts.flatten) //List(1, 2, 3, 6)
+
+        // In addition to using the Option types, you can use the Try and Either types:
+        
+        import scala.util.control.Exception.*
+        import scala.util.{Try, Success, Failure}
+        // Option Version
+        def makeIntOption(s: String): Option[Int] = allCatch.opt(Integer.parseInt(s))
+        // Try Version
+        def makeIntTry(s: String): Try[Int] = Try(Integer.parseInt(s))
+        // Either
+        def makeIntEither(s: String): Either[Throwable, Int] = allCatch.either(Integer.parseInt(s))
+
+        // The key to these approaches is that you don't throw an exception; instead, you
+        // return these error-handling types.
+
+        // 2 benefits of using Either are that (a) it's more flexible than Try, because
+        // you can control the error type and (b) it gets you ready to use FP libraries 
+        // like ZIO, which use Either and similar approaches extensively.
+
+        // A BAD (non-FP) approach to this problem is to write the method like this
+        // to throw an exception:
+
+        // don't write code like this!
+        @throws(classOf[NumberFormatException])
+        def makeIntBAD(s: String): Int =
+            try
+                Integer.parseInt(s)
+            catch
+                case e: NumberFormatException => throw e
+        
+        // Basically we never want to throw exceptions
+
+
+    }
+    // Real-World Example: Passing Functions Around in an Algorithm
+    def passingFunctionsAroundInAnAlgorithm(): Unit = {
+        
+        def newtonsMethod(
+            fx: Double => Double,
+            fxPrime: Double => Double,
+            x: Double,
+            tolerance: Double
+        ): Double =
+                var x1 = x
+                var xNext = newtonsMethodHelper(fx, fxPrime, x1)
+                while math.abs(xNext - x1) > tolerance do
+                    x1 = xNext
+                    print(xNext)
+                    xNext = newtonsMethodHelper(fx, fxPrime, x1)
+                end while
+                // >>
+                xNext
+        end newtonsMethod
+
+        def newtonsMethodHelper(
+            fx: Double => Double,
+            fxPrime: Double => Double,
+            x: Double
+        ): Double = 
+            x - fx(x) / fxPrime(x)
+        end newtonsMethodHelper
+
+        // @main
+        def fx(x: Double): Double = 3*x + math.sin(x) - math.pow(math.E, x)
+        def fxPrime(x: Double): Double = 3 + math.cos(x) - math.pow(math.E, x)
+
+        val initialGuess = 0.0
+        val tolerance = 0.00005
+
+        val answer = newtonsMethod(fx, fxPrime, initialGuess, tolerance)
+        println(answer)
+
+        
     }
 
 
