@@ -11,7 +11,8 @@ object FunctionalProgramming extends App {
         // creatingAMethodThatReturnsAFunction()
         // creatingPartialFunctions()
         // implementingFunctionalErrorHandling()
-        passingFunctionsAroundInAnAlgorithm()
+        // passingFunctionsAroundInAnAlgorithm()
+        functionalDomainModeling()
 
     }
     main()
@@ -843,7 +844,7 @@ object FunctionalProgramming extends App {
     }
     // Real-World Example: Passing Functions Around in an Algorithm
     def passingFunctionsAroundInAnAlgorithm(): Unit = {
-        
+
         def newtonsMethod(
             fx: Double => Double,
             fxPrime: Double => Double,
@@ -879,7 +880,144 @@ object FunctionalProgramming extends App {
         val answer = newtonsMethod(fx, fxPrime, initialGuess, tolerance)
         println(answer)
 
+
         
+    }
+    // Real-World Example: Functional Domain Modeling
+    def functionalDomainModeling(): Unit = {
+        // FP-style order entry application for a pizza store
+
+        // place the following code in a file called Nouns.scala
+        /////////////////////////////////////////////////////////////////////////////
+        // Nouns.scala
+        enum Topping:
+            case Cheese, Pepperoni, Sausage, Mushrooms, Onions
+
+        enum CrustSize: 
+            case Small, Medium, Large
+
+        enum CrustType:
+            case Regular, Thin, Thick
+
+        // Next, add this class to Nouns.scala
+        case class Pizza(
+            crustSize: CrustSize,
+            crustType: CrustType,
+            toppings: Seq[Topping]
+        )
+        // Finally, these classes are used to model the concepts of customers and orders:
+        case class Customer(
+            name: String,
+            phone: String,
+            address: Address,
+        )
+
+        case class Address(
+            street1: String,
+            street2: Option[String],
+            city: String,
+            state: String,
+            zipCode: String
+        )
+
+        case class Order(
+            pizzas: Seq[Pizza],
+            customer: Customer
+        )
+        // Thats all there is to the data model. Notice that the classes are simple,
+        // immutable data structures, defined with enums and case classes.  Unlike OOP classes,
+        // You don't encapsulate the behaviors (methods) inside the classes. As a result, this
+        // approach feels a lot like defining a database schema.
+
+        // Now all you have to do is create a series of pure functions to operate on those 
+        // immutable data structures.  A good way to do this is to first sketch out the desired
+        // interface using one or more traits. 
+        /////////////////////////////////////////////////////////////////////////////
+        // Place this code in a file named:
+        // Verbs.scala
+        trait PizzaServiceInterface:
+            def addTopping(p: Pizza, t: Topping): Pizza
+            def removeTopping(p: Pizza, t: Topping): Pizza
+            def removeAllToppings(p: Pizza): Pizza
+
+            def updateCrustSize(p: Pizza, cs: CrustSize): Pizza
+            def updateCrustType(p: Pizza, ct: CrustType): Pizza
+
+        // Once you create a concrete implementation of that trait - which you'll do in a few
+        // moments- you can write code like this:
+
+        import ListUtils.dropFirstMatch
+
+        trait PizzaService extends PizzaServiceInterface:
+            def addTopping(p: Pizza, t: Topping): Pizza =
+                val newToppings = p.toppings :+ t  // :+ appends to a collection
+                p.copy(toppings = newToppings)
+
+            def removeTopping(p: Pizza, t: Topping): Pizza = 
+                val newToppings = dropFirstMatch(p.toppings, t)
+                p.copy(toppings = newToppings)
+
+            def removeAllToppings(p: Pizza): Pizza = 
+                val newToppings = Seq[Topping]()
+                p.copy(toppings = newToppings)
+
+            def updateCrustSize(p: Pizza, cs: CrustSize): Pizza = 
+                p.copy(crustSize = cs)
+
+            def updateCrustType(p: Pizza, ct: CrustType): Pizza =
+                p.copy(crustType = ct)
+            
+        end PizzaService
+
+        // That code requires a method named dropFirstMatch that drops the first matching 
+        // element in a list, which can be placed in a ListUtils object:
+        object ListUtils:
+            def dropFirstMatch[A](xs: Seq[A], value: A): Seq[A] =
+                val idx = xs.indexOf(value)
+                for 
+                    (x, i) <- xs.zipWithIndex
+                    if i != idx
+                yield
+                    x
+
+        
+
+
+
+
+
+
+
+        /////////////////////////////////////////////////////////////////////////////
+        // Driver.scala
+
+        import Topping.*, CrustType.*, CrustSize.*
+
+        // PizzaService is a trait that extend PizzaServiceInterface
+        import PizzaService.*
+        object PizzaService extends PizzaServiceInterface
+
+        // an initial pizza
+        val p = Pizza(Medium, Regular, Seq(Cheese))
+
+        // demostrating the PizzaService functions
+        val p1 = addTopping(p, Pepperoni)
+        val p2 = addTopping(p1, Mushrooms)
+        val p3 = updateCrustType(p2, Thick)
+        val p4 = updateCrustSize(p3, Large)
+
+        // this is *not* a functional approach to printing output.
+        // result
+        println(p4)
+        /////////////////////////////////////////////////////////////////////////////
+
+        // 
+
+
+
+
+
+
     }
 
 
