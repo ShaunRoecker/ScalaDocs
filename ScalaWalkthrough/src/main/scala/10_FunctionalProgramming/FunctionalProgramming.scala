@@ -969,6 +969,8 @@ object FunctionalProgramming extends App {
             
         end PizzaService
 
+        
+
         // That code requires a method named dropFirstMatch that drops the first matching 
         // element in a list, which can be placed in a ListUtils object:
         object ListUtils:
@@ -981,13 +983,11 @@ object FunctionalProgramming extends App {
                     x
 
         
-
-
-
-
-
-
-
+        // For our purposes, this method works to drop the first occurence of a Topping
+        // that's found in a list of toppings:
+        // val a = List(Topping.Pepperoni, Topping.Mushrooms, Topping.Pepperoni)
+        // val b = dropFirstMatch(a, Topping.Pepperoni)
+        // println(b)
         /////////////////////////////////////////////////////////////////////////////
         // Driver.scala
 
@@ -995,7 +995,7 @@ object FunctionalProgramming extends App {
 
         // PizzaService is a trait that extend PizzaServiceInterface
         import PizzaService.*
-        object PizzaService extends PizzaServiceInterface
+        object PizzaService extends PizzaService
 
         // an initial pizza
         val p = Pizza(Medium, Regular, Seq(Cheese))
@@ -1008,14 +1008,131 @@ object FunctionalProgramming extends App {
 
         // this is *not* a functional approach to printing output.
         // result
-        println(p4)
+        println(p4) //Pizza(Large,Thick,List(Cheese, Pepperoni, Mushrooms))
         /////////////////////////////////////////////////////////////////////////////
 
-        // 
+        // USE TRAITS TO CREATE A DEPENDENCY INJECTION FRAMEWORK
 
+        // One benefit of using a trait as an interface and then implementing it 
+        // in another trait (or object) is that you can use the design to create a 
+        // dependency injection framework.  
 
+        // 1. Create a DAO interface
 
+        trait PizzaDaoInterface:
+            def getToppingPrices(): Map[Topping, BigDecimal]
+            def getCrustSizePrices(): Map[CrustSize, BigDecimal]
+            def getCrustTypePrices(): Map[CrustType, BigDecimal]
 
+        // In the real world, because accessing a database can fail, these methods
+        // will return a type like Option, Try, or Either wrapped around each Map,
+        // but I omit those to make the code a little simpler
+
+        // 2. Create Multiple Implementations of that DAO
+        // For Development, Test, And Production environments.
+        // We will just have a "mock" Dev one here
+
+        // The purpose of this is to have a fast, simulated database during your 
+        // local development (and Testing) process. To do this, place the code in
+        // Dao.scala
+
+        object DevPizzaDao extends PizzaDaoInterface:
+            def getToppingPrices(): Map[Topping, BigDecimal] = 
+                Map(
+                    Cheese    -> BigDecimal(1),  //simulating $1 each
+                    Pepperoni -> BigDecimal(1),
+                    Sausage   -> BigDecimal(1),
+                    Mushrooms -> BigDecimal(1)
+                )
+            
+            def getCrustSizePrices(): Map[CrustSize, BigDecimal] = 
+                Map(
+                    Small  -> BigDecimal(0), 
+                    Medium -> BigDecimal(1),
+                    Large  -> BigDecimal(2)
+                )
+
+            def getCrustTypePrices(): Map[CrustType, BigDecimal] = 
+                Map(
+                    Regular  -> BigDecimal(0),
+                    Thick    -> BigDecimal(1),
+                    Thin     -> BigDecimal(1)
+                )
+        end DevPizzaDao
+
+        // In the real world you might use this DOA for development and testing
+        // and use a ProductionPizzaDao for your production environment.  Or you might
+        // use a separate DAO for your Test environment, or wherever you test
+        // your code against a test database.
+
+        // 3. Create a "Pizza Pricer" trait:
+        // Create this in Verbs.scala, and create a "pizza pricer" trait that
+        // references PizzaDaoInterface:
+        
+        trait PizzaPricerTrait:
+            // this base trait references the DAO interface
+            def pizzaDao: PizzaDaoInterface
+
+            def calculatePizzaPrice(p: Pizza): BigDecimal = 
+                // the key thing here is the use of 'pizzaDao'
+                val crustSizePrice: BigDecimal =
+                    pizzaDao.getCrustSizePrices()(p.crustSize)
+                val crustTypePrice: BigDecimal =
+                    pizzaDao.getCrustTypePrices()(p.crustType)
+                val toppingPrices: Seq[BigDecimal] = 
+                    for 
+                        topping <- p.toppings
+                        toppingPrice = pizzaDao.getToppingPrices()(topping)
+                    yield
+                        toppingPrice
+                val totalToppingPrice: BigDecimal = toppingPrices.reduce(_ + _) //sum
+                val totalPrice: BigDecimal = 
+                    crustSizePrice + crustTypePrice + totalToppingPrice
+                totalPrice
+        
+            // other price related functions
+        end PizzaPricerTrait
+
+        // Two keys of this part of the solution are:
+            //1. declare the pizzaDao reference as a def of type PizzaDaoInterface.
+            // It will be replaced by val fields in the concrete objects that you'll develop
+            // next
+
+            // 2. As shown, calculatePizzaPrice can be shown in this base trait. This 
+            // way you only need to implement it in one place, and it will be available in
+            // the concrete objects that extend PizzaPricerTrait.
+
+        // 4. Create Specific Pricers for Your Environments
+        // Create concrete pizza pricer objects:
+
+        object DevPizzaPricerService extends PizzaPricerTrait:
+            val pizzaDao = DevPizzaDao
+        
+        // object TestPizzaPricerService extends PizzaPricerTrait:
+        //     val pizzaDao = TestPizzaDao
+        
+        // object ProductionPizzaPricerService extends PizzaPricerTrait:
+        //     val pizzaDao = ProductionPizzaDao
+        
+        // Because PizzaPricerTrait completely implements its calculatePizzaPrice
+        // method, all these objects need to do is connect to their respective data
+        // access objects
+
+        // 5.  Create Unit Tests or a Driver App
+        // create a pizza
+        import DevPizzaPricerService.*
+
+        val pizza = Pizza(
+            Medium,
+            Regular,
+            Seq(Cheese, Pepperoni, Mushrooms)
+        )
+
+        // determine the pizza price
+        val pizzaPrice = calculatePizzaPrice(pizza)
+
+        println(s"Pizza: ${pizza}")
+        println(s"Price: ${pizzaPrice}")
 
 
     }
