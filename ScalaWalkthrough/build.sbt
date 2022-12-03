@@ -1,9 +1,7 @@
 val scala3Version = "3.2.0"
 
 libraryDependencies ++= Seq(
-  "org.apache.poi" % "poi" % "5.2.3",
-  "org.apache.poi" % "poi-ooxml" % "5.2.3",
-  "org.apache.poi" % "poi-ooxml-lite" % "5.2.3"
+  "com.lihaoyi" %% "fansi" % "0.4.0"
 )
 
 lazy val root = project

@@ -10,7 +10,8 @@ object Sequences extends App {
         // array()
         // makingVectorYourGoToImmutableSequence()
         // creatingAndPopulatingAList()
-        addingElementsToAList()
+        // addingElementsToAList()
+        deletingElementsFromAList()
     }
     main()
     // VECTORS
@@ -86,10 +87,10 @@ object Sequences extends App {
         // // You append and prepend elements to a Vector just like other immutable sequences,
         // // with the following methods:
 
-        // // - The +: method, which is an aliea for 'prepended'
-        // // - The ++: method, which is an aliea for 'prependedAll'
-        // // - The :+ method, which is an aliea for 'appended'
-        // // - The :++ method, which is an aliea for 'appendedAll'
+        // // - The +: method, which is an alias for 'prepended'
+        // // - The ++: method, which is an alias for 'prependedAll'
+        // // - The :+ method, which is an alias for 'appended'
+        // // - The :++ method, which is an alias for 'appendedAll'
 
         // // Here are some examples where I use a var variable and assign the results of 
         // // each operation back to that variable:
@@ -315,20 +316,66 @@ object Sequences extends App {
 
         // In Scala , any method that ends with a : character is evaluated from right to left
         val hh = List(1)
-        val nn = 5 +: hh
-        println(nn) //List(5, 1)
+        val nn = 5 +: hh                    // +:
+        println(nn)                         //List(5, 1)
         
         val hh2 = List(1)
-        val nn2 = hh2 :+ 5
-        println(nn2) //List(1, 5)
+        val nn2 = hh2 :+ 5                  // :+
+        println(nn2)                        //List(1, 5)
 
         val hh3 = List(1)
-        val nn3 = hh3 :+ List(6, 7)
-        println(nn3) //List(1, List(6, 7))
+        val nn3 = hh3 :+ List(6, 7)         // :+
+        println(nn3)                        //List(1, List(6, 7))
 
         val hh4 = List(1)
-        val nn4 = hh4 :++ List(6, 7)
-        println(nn4) //
+        val nn4 = hh4 :++ List(6, 7)        // :++
+        println(nn4)                        //List(1, 6, 7)
+
+        
+
+
+
+    }
+    // Deleting Elements From a List
+    def deletingElementsFromAList(): Unit = {
+        // Problem: You want to delete elements from a List or ListBuffer
+        // Use methods like filter, take, and drop to filter the elements in a List,
+        // and methods like -=, --=, and remove to delete elements in a ListBuffer
+
+        // LIST
+        // A List is immutable, so you cant delete elements from it, but you can filter
+        // out the elements you don't want while you assign the result to a new variable:
+         
+        val a = List(5, 1, 4, 3, 2) //List(5, 1, 4, 3, 2)
+        val b = a.filter(_ > 2) //List(5, 4, 3)
+        val c = a.take(2) //List(5, 1)
+        val d = a.takeRight(3) //List(4, 3, 2)
+        val e = a.drop(2) //List(4, 3, 2)   <-drops the left elements
+        val f = a.dropRight(2) //List(5, 1, 4)  <-drops the right elements
+        
+        // Rather than continually assigning the result of operations to a new variable
+        // you can declare your variable as a var and reassign the result of the 
+        // operation back to itself
+        val g = a diff List(1)
+        println(g)
+        val h = a diff List(1, 4)
+        println(h)
+
+        val i = a diff List(3)
+        println(i)
+
+        
+
+        val array1 = Array.fill(100)(0)
+        println(List.tabulate(10)(_ * 2)) //List(0, 2, 4, 6, 8, 10, 12, 14, 16, 18)
+        
+        val fansiStr: fansi.Str = fansi.Color.Red("This should be a red string")
+        println(fansiStr) //This should be a red string(in red in the terminal)
+
+        
+
+
+
 
 
 
