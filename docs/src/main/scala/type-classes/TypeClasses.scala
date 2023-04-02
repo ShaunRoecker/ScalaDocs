@@ -1,7 +1,7 @@
 package typeclasses
 
 
-object TypeClasses extends App {
+object TypeClasses {
   
 
     // Type classes are a way to extend the functionality of a type (trait) 
@@ -261,6 +261,7 @@ object TypeClasses extends App {
         println(feed.toJSON.stringify)
 
 }
+
 
 }
 

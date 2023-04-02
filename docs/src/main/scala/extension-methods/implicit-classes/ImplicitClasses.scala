@@ -4,6 +4,7 @@ package extensionmethods.implicitclasses
 object ImplicitClasses {
     // Implicit classes give us the ability to extend the functionality of existing types
     object Implicits {
+        // The type of the val value is the type that we extend functionality to:
         implicit class IntExtender(val value: Int) extends AnyVal { self =>
             // we can then create methods in this class that the compiler will turn to
             // if it can't find the method on the Int companion object.

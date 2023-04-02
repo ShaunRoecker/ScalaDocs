@@ -1,6 +1,6 @@
 package patternmatching
 
-object PatternMatching extends App {
+object PatternMatching {
     // Some examples of pattern matching and some of the operators used
     // in pattern matching.
 
@@ -112,6 +112,7 @@ object PatternMatching extends App {
     }
     println(person2Match) //Name: John, Age: 22
 
+    
 
 
 

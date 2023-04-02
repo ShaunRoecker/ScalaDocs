@@ -1,6 +1,6 @@
 package extensionmethods.scala3extmethods
 
-object ExtensionMethods extends App {
+object ExtensionMethods {
     // Extensions methods are the Scala 2 equivelent of implicit classes, which "extends"
     // the functionality of a type by defining one or more methods that act on that type,
     // without making changes to the original types themselves.
