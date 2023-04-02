@@ -1,4 +1,4 @@
-package langfeat.`implicits-givens`
+package topics.implicitsgivens
 
 object Implicitly {
     // implicitly

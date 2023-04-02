@@ -1,4 +1,4 @@
-package langfeat.`extension-methods`.`scala3-ext-methods`
+package topics.extensionmethods.scala3extmethods
 
 object ExtensionMethods {
     // Extensions methods are the Scala 2 equivelent of implicit classes, which "extends"

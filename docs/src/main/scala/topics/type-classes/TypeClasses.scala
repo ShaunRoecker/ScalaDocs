@@ -1,4 +1,4 @@
-package langfeat.`type-classes`
+package topics.typeclasses
 
 
 object TypeClasses {
