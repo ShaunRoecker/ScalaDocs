@@ -1,4 +1,4 @@
-package extensionmethods.implicitclasses
+package langfeat.`extension-methods`.`implicit-classes`
 
 
 object ImplicitClasses {

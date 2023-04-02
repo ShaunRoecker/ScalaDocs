@@ -1,4 +1,4 @@
-package typeclasses
+package langfeat.`type-classes`
 
 
 object TypeClasses {

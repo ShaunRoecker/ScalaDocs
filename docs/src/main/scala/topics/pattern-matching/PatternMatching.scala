@@ -1,4 +1,4 @@
-package patternmatching
+package langfeat.`pattern-matching`
 
 object PatternMatching {
     // Some examples of pattern matching and some of the operators used
