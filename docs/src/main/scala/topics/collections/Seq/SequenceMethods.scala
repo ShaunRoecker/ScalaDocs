@@ -71,7 +71,157 @@ object SequenceMethods extends App {
         case Some(value) => value
         case None => 0
     }
-    println(x006)
+    println(x006) // 10
+
+    /////////////////////////////////////////////////////////////////////////
+    // combinations
+
+    // Iterates over all possible combinations of a sequence in groups of "n"
+    val list2 = List("a", "b", "c", "d")
+
+    val combo1 = list2.combinations(2)
+    println(combo1) // <iterator>
+    println(combo1.toList) // List(List(a, b), List(a, c), List(a, d), List(b, c), List(b, d), List(c, d))
+
+    val combo2 = list2.combinations(3)
+    println(combo2.toList) // List(List(a, b, c), List(a, b, d), List(a, c, d), List(b, c, d))
+
+     /////////////////////////////////////////////////////////////////////////
+    //  contains
+
+    // Tests whether the sequence contains a given value as an element
+    val x007 = Seq(1, 2, 3, 4).contains(3) // true
+    val x008 = Seq(1, 2, 3, 4).contains(5) // false
+
+    val x009 = Seq('a', 'b', 'c').contains('b') // true
+    val x010 = Seq('a', 'b', 'c').contains('f') // false
+
+    /////////////////////////////////////////////////////////////////////////
+    //  containsSlice
+
+    // Tests whether the sequence contains a given sequence as an slice
+    val x011 = Seq(1, 2, 3, 4).containsSlice(Seq(2,3)) // true
+    val x012 = Seq(1, 2, 3, 4).containsSlice(List(4, 5)) // false
+    
+    val x013 = "abcde".containsSlice("bcd") // true
+
+    /////////////////////////////////////////////////////////////////////////
+    //  corresponds
+
+    // Tests whether every element of this collections iterator relates to 
+    // the corresponding element of another collection by satisfying a test 
+    // predicate
+
+    val firstTen = (1 to 10).toList
+    val nextTen = (10 to 19).toList
+
+    val x014 = firstTen.corresponds(nextTen) { (x, y) =>
+        y == x + 9    
+    }
+    println(x014) // true
+
+    /////////////////////////////////////////////////////////////////////////
+    //  count
+
+    // Counts the number of elements in the sequence which satisfy a predicate
+    val x015 = List(1, 2, 3, 2, 1, 2, 3, 4, 2, 3).count(_ == 2)
+    println(x015)
+
+    def charCounts(str: String): List[(Char, Int)] = {
+        str.distinct.map( char => (char, str.count(_ == char))).toList
+    }
+    println(charCounts("abracadabra"))
+    // List((a,5), (b,2), (r,2), (c,1), (d,1))
+
+    /////////////////////////////////////////////////////////////////////////
+    // diff
+
+    // Compose the multiset difference between this sequence and another sequence
+
+    // Multiset difference - 
+        // multiset difference is the set of all elements that are in the first 
+        // multiset but not in the second multiset.
+
+    val x016 = "foo bar baz"
+    val x017 = x016.diff("foo")
+    println(x017) // " bar baz"
+
+    // Means "what is in the first sequence that is NOT in the second sequence"
+
+    /////////////////////////////////////////////////////////////////////////
+    //  distinct
+
+    // Selects all the elements of this sequence ignoring the duplicates
+
+    val x018 = List(1, 2, 3, 4, 3, 2, 1, 2, 3, 4).distinct
+    println(x018) // List(1, 2, 3, 4)
+
+    val x019 = List("a", "b", "c", "d", "e", "b", "c", "d", "e").distinct
+    println(x019) // List(a, b, c, d, e)
+
+    /////////////////////////////////////////////////////////////////////////
+    //  distinctBy
+
+    // Selects all the elements of this sequence ignoring the duplicates as 
+    // determined by == after applying the transforming function f.
+
+    val x020 = List(("a", 2.7), ("b", 2.1), ("a", 5.4)).distinctBy(_._2.floor)
+    println(x020) // List((a,2.7), (a,5.4))
+
+    // Basically, distinctBy allows us to select the criteria we use to
+    // apply the distinct method.  If there are more than one occurrences
+    // of elements that match this criteria, the first occurrence is included
+    // in the resulting sequence.
+
+    case class Person(name: String, age: Int)
+    val people = List(
+        Person("John", 25),
+        Person("Sarah", 20),
+        Person("John", 20),
+        Person("Vinny", 22),
+        Person("Vinny", 22)
+    )
+
+    val x021 = people.distinctBy(_.name)
+    println(x021) // List(Person(John,25), Person(Sarah,20), Person(Vinny,22))
+
+    val x022 = people.distinctBy(_.age)
+    println(x022) // List(Person(John,25), Person(Sarah,20), Person(Vinny,22))
+
+    // sequence.distinctBy(identity) is the same as sequence.distinct
+    println(people.distinctBy(identity))
+    // List(Person(John,25), Person(Sarah,20), Person(John,20), Person(Vinny,22))
+
+    // You can use this to incorperate more complex logic into how elements are 
+    // considered distinct...
+    val x023 = people.distinctBy{(p: Person) => if (p.age > 21) p.name else identity}
+    println(x023) // List(Person(John,25), Person(Sarah,20), Person(John,20), Person(Vinny,22))
+
+    /////////////////////////////////////////////////////////////////////////
+    //   drop
+
+    // Selects all elements except the FIRST n elements
+
+    val x024 = List(1, 2, 3, 4, 5, 6).drop(3)
+    println(x024) // List(4, 5, 6)
+
+    /////////////////////////////////////////////////////////////////////////
+    //  dropRight
+
+    // Selects all elements except the LAST n elements
+
+    val x025 = List(1, 2, 3, 4, 5, 6).dropRight(3)
+    println(x025)  // List(1, 2, 3)
+
+    /////////////////////////////////////////////////////////////////////////
+    // dropWhile
+
+    
+    
+
+
+
+
 
 
 
