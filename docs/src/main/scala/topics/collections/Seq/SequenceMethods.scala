@@ -297,17 +297,7 @@ object SequenceMethods extends App {
     // Selects all elements of this sequence which do NOT satisfy a predicate
 
     val x031 = people.filterNot(p => (p.name == "Vinny" && p.age >= 21))
-    println(x031) // 
+    println(x031) // List(Person(John,25), Person(Sarah,20), Person(John,20))
+
     
-    
-
-
-
-
-
-
-
-
-
-
 }
