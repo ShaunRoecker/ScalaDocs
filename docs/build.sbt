@@ -6,6 +6,7 @@ ThisBuild / organization     := "dev.scr"
 lazy val root = project
   .in(file("."))
   .settings(name := "Scala Documentation")
+  .aggregate(homegrown)
 
 lazy val homegrown = project
   .in(file("homegrown"))

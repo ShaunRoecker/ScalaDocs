@@ -216,6 +216,88 @@ object SequenceMethods extends App {
     /////////////////////////////////////////////////////////////////////////
     // dropWhile
 
+    // Drops longest prefix of elements that satisfy a predicate
+
+    val mmmDrop = "  ab c".dropWhile(_ == ' ')
+    println(mmmDrop)  //ab c
+
+     def uniqueInOrder[T](xs: Iterable[T]): Seq[T] = {
+        def concat(list: List[T]): List[T] = {
+            list match {
+                case Nil => list 
+                case x :: xs => x :: concat(xs.dropWhile(_ == x))
+            }
+        }
+        concat(xs.toList)
+    }
+    println(uniqueInOrder("aaabbddddaabss")) // List(a, b, d, a, b, s)
+
+
+    /////////////////////////////////////////////////////////////////////////
+    //  empty
+
+    // Returns an empty iterable of the same type as this iterable
+
+    val emptyList = List(1, 2, 3).empty
+    println(emptyList)  //  List()
+
+    /////////////////////////////////////////////////////////////////////////
+    // endsWith
+
+    val endw1 = List(1, 2, 3).endsWith(List(3))
+    println(endw1) // true
+
+    val endw2 = "this is a string".endsWith("ring") 
+    println(endw2) // true
+
+    // case class Person(name: String, age: Int)
+    // val people = List(
+    //     Person("John", 25),
+    //     Person("Sarah", 20),
+    //     Person("John", 20),
+    //     Person("Vinny", 22),
+    //     Person("Vinny", 22)
+    // )
+
+    val endw3 = people.endsWith(List(Person("Vinny", 22)))
+    println(endw3) // true
+
+    val endw4 = people.endsWith(List(Person("Vincent", 22)))
+    println(endw4) // false
+
+    /////////////////////////////////////////////////////////////////////////
+    //  equals
+
+    // Same as '=='
+
+    val x026 = List(1, 2, 3).equals(List('1', '2', '3')) // false
+    val x027 = List(1, 2, 3).equals(List(1, 2, 3)) // false
+
+    /////////////////////////////////////////////////////////////////////////
+    //  exists
+
+    // Tests whether a predicate holds true for at least one element of this Sequence
+
+    val x028 = List(1, 2, 3).exists(_ == 2) // true
+    val x029 = List(1, 2, 3).exists(_ > 4) // false
+
+    
+    /////////////////////////////////////////////////////////////////////////
+    //  filter
+
+    // Selects all elements of this sequence which satisfy a predicate
+
+    val x030 = people.filter(p => (p.name == "Vinny" && p.age >= 21))
+    println(x030) // List(Person(Vinny,22), Person(Vinny,22))
+
+
+    /////////////////////////////////////////////////////////////////////////
+    //  filterNot
+
+    // Selects all elements of this sequence which do NOT satisfy a predicate
+
+    val x031 = people.filterNot(p => (p.name == "Vinny" && p.age >= 21))
+    println(x031) // 
     
     
 
