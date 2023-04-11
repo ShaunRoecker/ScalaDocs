@@ -299,5 +299,145 @@ object SequenceMethods extends App {
     val x031 = people.filterNot(p => (p.name == "Vinny" && p.age >= 21))
     println(x031) // List(Person(John,25), Person(Sarah,20), Person(John,20))
 
+
+    /////////////////////////////////////////////////////////////////////////
+    //  find
+
+    // Finds the FIRST element of the sequence that matches the predicate
+    // (returns an option value)
+
+    val x032 = List(1, 2, 3, 4, 5, 6).find(_ > 5)
+    println(x032)  // Some(6)
+
+    val x033 = people.find(p => p.name == "John" || p.age >= 21) match {
+        case Some(person) => person
+        case _ => None
+    }
+    println(x033) // Person(John,25)
+
+
+    /////////////////////////////////////////////////////////////////////////
+    //  findLast
+
+    // Finds the LAST element of the sequence that matches the predicate
+    // (returns an option value)
+
+    val x034 = List(1, 2, 3, 4, 2, 3, 4, 5).findLast(_ >= 4)
+    println(x034) // Some(5)
+
+
+    /////////////////////////////////////////////////////////////////////////
+    //  flatMap
+
+    //  def flatMap[B](f: (A) => IterableOnce[B]): Seq[B]
+
+    // Builds a new sequence by applying a function at all elements of this 
+    // sequence and using the elements of the resulting sequence
+
+    // It's good to think of flatMap as a 'map then flatten' operation or
+    // combinator, the operated-on sequence is first mapped over by applying a 
+    // function, and then the result is flattened.
+
+    val list035 = List("this", "is", "a", "list", "of", "strings")
+    val x035flatMap = list035.flatMap(_.toUpperCase)
+    println(x035flatMap) //  List(T, H, I, S, I, S, A, L, I, S, T, O, F, S, T, R, I, N, G, S)
+    // just like...
+
+    val x035map = list035.map(_.toUpperCase)
+    println(x035map) // List(THIS, IS, A, LIST, OF, STRINGS)
+
+    val x035flatten = x035map.flatten
+    println(x035flatten) // List(T, H, I, S, I, S, A, L, I, S, T, O, F, S, T, R, I, N, G, S)
+
+
+    /////////////////////////////////////////////////////////////////////////
+    //   flatten
+
+    // def flatten(implicit isIterable: (A) => IterableOnce[B]): Seq[B]
+
+    // Converts this sequence of traversable collections into a sequence formed
+    // by the elements of these traversable collections
+
+    val x036 = List.tabulate(3, 3)((a, b) => (a * 2) + (b * 2))
+    println(x036) // List(List(0, 2, 4), List(2, 4, 6), List(4, 6, 8))
+
+    val x036flatten = x036.flatten
+    println(x036flatten) // List(0, 2, 4, 2, 4, 6, 4, 6, 8)
+
+    /////////////////////////////////////////////////////////////////////////
+    //   fold
+
+    // Folds the elements of this sequence using the specified 
+    // associative binary operator
+
+    // - difference between fold and foldLeft is fold goes in no particular
+    // order or direction, so that's why the binary operation needs to be
+    // 'associative'  --> (A + B) + C == A + (B + C)
+
+    val x037 = List(1, 2, 3).fold(0)(_ + _)
+
+    /////////////////////////////////////////////////////////////////////////
+    //   foldLeft  (much more common than fold and foldRight)
+
+    // Applies a binary operator to a start value (usually the 'identity' value,
+    // like that of one of the rules of monoids and what separates them from
+    // semigroups) and all elements of this sequence, going LEFT to RIGHT.
+
+    // Once you truly understand the power of this method for solving common
+    // problems, it will become your best friend and will never leave your batbelt
+
+    def combineMaps(map1: Map[String, Int], map2: Map[String, Int]): Map[String, Int] =
+        map1.foldLeft(map2) { case (map, (key, value)) =>
+            map.get(key) match {
+                case Some(newValue) => map + (key -> (value + newValue))
+                case None => map + (key -> value)
+            }    
+        }
+
+    println(combineMaps(Map("a" -> 1, "b" -> 2, "c" -> 1), Map("a" -> 3, "c" -> 2)))
+    // Map(a -> 4, c -> 3, b -> 2)
+
     
+    /////////////////////////////////////////////////////////////////////////
+    //   foldRight
+
+    // Applies a binary operator to all elements of this sequence, 
+    // going RIGHT to LEFT
+
+    val x038 = List(1, 2, 3).foldRight(0)(_ + _)
+    println(x038) // 6
+
+    // 1 + (2 + (3 + 0))
+
+    // 0 is the identity value of integer additon, since foldRight (or any fold)
+    // starts with the identity value, we use it here because 
+    // 'identity' + integer == same integer
+    // -and thus doen't effect our result
+
+    
+    /////////////////////////////////////////////////////////////////////////
+    //   forall
+
+    //  - tests whether a predicate holds for all elements of this sequence
+
+    val x039 = List(2, 4, 6, 8).forall(x => x % 2 == 0)
+    println(x039)
+
+    val x040 = List(1, 2, 3, 4).forall(_ >= 2)
+    println(x040)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

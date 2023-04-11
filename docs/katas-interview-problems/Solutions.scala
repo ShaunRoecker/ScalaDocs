@@ -351,3 +351,54 @@ object SolutionBestTimeStock {
 			(Math.min(price, minPrice), Math.max(maxSell, price - minPrice))
         }._2
 }
+
+// //////////////////////////////////////////////////////////////////
+// LONGEST PALINDROME
+
+// Given a string s which consists of lowercase or uppercase letters, 
+// return the length of the longest palindrome that can be built with those letters.
+
+// Letters are case sensitive, for example, "Aa" is not considered a palindrome here.
+
+// Input: s = "abccccdd"
+// Output: 7
+// Explanation: One longest palindrome that can be built is "dccaccd", whose length is 7.
+
+// Input: s = "a"
+// Output: 1
+// Explanation: The longest palindrome that can be built is "a", whose length is 1.
+
+object Solution {
+    def longestPalindrome2(s: String): Int = {
+        val freq = s.groupMapReduce(identity)(k => 1)(_ + _).values  
+        val (ans, odd) = freq.foldLeft(0, false) {
+            case ((sum, odd), n) => 
+                if (n % 2 == 0)
+                   (sum + n, odd)
+                else (sum + n - 1, true)
+        }   
+        if (odd) ans + 1 else ans   
+   }
+}
+
+
+// //////////////////////////////////////////////////////////////////
+// N-ary TREE PREORDER TRAVERSAL
+
+// Given the root of an n-ary tree, return the preorder traversal of its nodes' values.
+
+// Nary-Tree input serialization is represented in their level order traversal. 
+// Each group of children is separated by the null value
+
+// Input: root = [1,null,3,2,4,null,5,6]
+// Output: [1,3,5,6,2,4]
+
+//Input: root = [1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]
+// Output: [1,2,3,6,7,11,14,4,8,12,5,9,13,10]
+
+object SolutionNaryTree {
+    def preorder(root: Node): List[Int] = {
+        if (root == null) List()
+		else root.value :: root.children.flatMap(node => preorder(node))
+  }
+}
