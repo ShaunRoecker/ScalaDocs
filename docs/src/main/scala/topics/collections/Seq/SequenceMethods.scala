@@ -533,7 +533,210 @@ object SequenceMethods extends App {
     // List(List(1, 2), List(3, 4), List(5, 6), List(7, 8), List(9, 10))
 
     /////////////////////////////////////////////////////////////////////////
+    // head
+
+    // selects the first element of a sequence, note** throws an exception
+    // if the sequence is empty
+
+    val firstPerson: Person = people.head
+    println(firstPerson) // Person(John,25)
+
+    /////////////////////////////////////////////////////////////////////////
     // headOption
+
+    // Optionally selects the first element of a sequence.  
+    val firstPersonOption: Option[Person] = people.headOption
+    println(firstPersonOption) // Some(Person(John,25))
+
+
+    /////////////////////////////////////////////////////////////////////////
+    //  indexOf
+
+    // def indexOf[B >: A](elem: B): Int
+    // def indexOf[B >: A](elem: B, from: Int): Int
+
+    // Finds the index of the first occurrence of some element in a sequence,
+    // can also have a starting place (from)
+
+    val x047 = List(1, 2, 3).indexOf(2)
+    println(x047) // 1
+
+    val x048 = List(1, 2, 3, 4, 1, 2, 3).indexOf(2, 3)
+    println(x048) // 5
+
+    //  indexOfSlice /////////////////
+
+    // finds the first index where this sequence contains a given sequence
+    // as a slice
+
+    val idxSlice = List(5, 4, 0, 3, 4, 2).indexOfSlice(List(0, 3, 4))
+    println(idxSlice) // 2
+
+    //  indexWhere ///////////////////
+
+    // def indexWhere(p: (A) => Boolean): Int
+    // def indexWhere(p: (A) => Boolean, from: Int): Int
+
+    // Finds the index of the first element that satisfies a predicate. 
+    // Optionally (from) a given index
+
+    val x049 = List(1, 2, 3, 4).indexWhere(_ > 2)
+    println(x049) // 2
+
+
+    /////////////////////////////////////////////////////////////////////////
+    //  indices
+
+    // def indices: immutable.Range
+
+    // Produces the range of all indices in a sequence
+
+    val x050 = 
+        for {
+            i <- List(1, 2, 3, 4, 5).indices
+        } do println(i)
+
+    // 0
+    // 1
+    // 2
+    // 3
+    // 4
+
+
+    /////////////////////////////////////////////////////////////////////////
+    // init
+
+    // def init: Seq[A]
+
+    // The initial elements of the sequence, expluding the last element
+
+    val x051 = List(1, 2, 3, 4).init
+    println(x051) // List(1, 2, 3)
+
+
+    /////////////////////////////////////////////////////////////////////////
+    // inits
+
+    // Iterates over the inits of this sequence
+
+    val x052 = List(1, 2, 3).inits
+    println(x052.toList) // List(List(1, 2, 3), List(1, 2), List(1), List())
+
+    /////////////////////////////////////////////////////////////////////////
+    //  intersect
+
+    // computes the multiset intersection between this sequence and another sequence
+    
+    // a multiset intersection of two multisets A and B is the multiset that 
+    // contains all elements that are in both A and B.
+
+    // For example, if A = {1, 2, 3} and B = {2, 3, 4}, then the multiset intersection is {2, 3}.
+
+    val intersection = List(1, 2, 3, 4).intersect(List(1, 2, 4, 5))
+    println(intersection) // List(1, 2, 4)
+
+
+    /////////////////////////////////////////////////////////////////////////
+    //  isDefinedAt
+
+    // Tests whether a sequence contains a given index
+
+    val x053 = List(1, 2, 3).isDefinedAt(2)  
+    println(x053)  // true
+
+    val x054 = List(1, 2, 3).isDefinedAt(5)  
+    println(x054)  // false 
+
+
+    /////////////////////////////////////////////////////////////////////////
+    //  isEmpty
+
+    // Tests whether the sequence is empty
+    println(List(1, 2, 3).isEmpty)  // false
+    println(List().isEmpty)  // true
+
+    def longestRepetition(s: String): Option[(Char, Int)] =
+      val xs = s.toList
+      if (xs.isEmpty) None
+      else 
+        val res = xs.tail.scanLeft(xs.head -> 1) { case ((prevChar, count), char) =>
+          val nextAcc = 
+            if (char == prevChar) 
+              count + 1 
+            else 1
+          char -> nextAcc
+        }
+        Some(res.maxBy(_._2))
+
+
+    println(longestRepetition("aabbbabbbccddbbbb"))
+    // Some((b,4))
+
+
+    /////////////////////////////////////////////////////////////////////////
+    //  isTraverableAgain
+
+    // Tests whether this seq can be traversed more than once
+
+    println(List(1, 2, 3).isTraversableAgain)  // true
+    println(Iterator.range(0, 1).isTraversableAgain) // false
+
+
+    /////////////////////////////////////////////////////////////////////////
+    // last
+
+    // selects the last element of a sequence, note** throws an exception
+    // if the sequence is empty
+
+    val lastPerson: Person = people.last
+    println(firstPerson) // Person(Vinny,22)
+
+    /////////////////////////////////////////////////////////////////////////
+    // lastOption
+
+    // Optionally selects the last element of a sequence.  
+    val lastPersonOption: Option[Person] = people.lastOption
+    println(lastPersonOption) // Some(Person(Vinny,22))
+
+
+    /////////////////////////////////////////////////////////////////////////
+    //  lastIndexOf
+
+    // def lastIndexOf[B >: A](elem: B): Int
+    // def lastIndexOf[B >: A](elem: B, from: Int): Int
+
+    // Finds the index of the last occurrence of some element in a sequence,
+    // can also have a starting place (from)
+
+    val x055 = List(1, 2, 3, 2).lastIndexOf(2)
+    println(x055) //  3
+
+    //  lastIndexOfSlice /////////////////
+
+    // finds the last index where this sequence contains a given sequence
+    // as a slice
+
+    val lastIdxSlice = List(5, 4, 0, 3, 4, 7, 0, 3, 4).lastIndexOfSlice(List(0, 3, 4))
+    println(lastIdxSlice) // 6
+
+    //  lastIndexWhere ///////////////////
+
+    // def lastIndexWhere(p: (A) => Boolean): Int
+    // def lastIndexWhere(p: (A) => Boolean, from: Int): Int
+
+    // Finds the index of the last element that satisfies a predicate. 
+    // Optionally (from) a given index
+
+    val x057 = List(1, 2, 3, 4, 2, 9).lastIndexWhere(_ > 2)
+    println(x057) // 5
+
+
+    /////////////////////////////////////////////////////////////////////////
+    //  lazyZip
+
+    
+
+
 
     
 
