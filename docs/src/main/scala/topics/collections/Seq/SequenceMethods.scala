@@ -421,21 +421,121 @@ object SequenceMethods extends App {
     //  - tests whether a predicate holds for all elements of this sequence
 
     val x039 = List(2, 4, 6, 8).forall(x => x % 2 == 0)
-    println(x039)
+    println(x039) // true
 
     val x040 = List(1, 2, 3, 4).forall(_ >= 2)
-    println(x040)
+    println(x040)  // false
 
 
+    /////////////////////////////////////////////////////////////////////////
+    //   foreach
+    //   def foreach(f: (A) => U): Unit 
+
+    // foreach iterates over and iterable and performs an effect to each element
+    // of the sequence.  Usually foreach it used to print each element.
+
+    val x041 = people.foreach(println)
+
+    // Person(John,25)
+    // Person(Sarah,20)
+    // Person(John,20)
+    // Person(Vinny,22)
+    // Person(Vinny,22)
+
+    /////////////////////////////////////////////////////////////////////////
+    //  groupBy
+
+    // Partitions this sequence into a map of sequences according to some discriminator
+    // function
+
+    val x042 = List("Scala", "Linux", "Tom")
+    val x043 = x042.groupBy(identity)
+    println(x043) // HashMap(Scala -> List(Scala), Tom -> List(Tom), Linux -> List(Linux))
+
+    val grpby = List(1, 2, 3, 4, 5, 6, 7).groupBy(x => x match {
+        case a if a % 2 == 0 => "groupA"
+        case b if b % 3 == 0 => "groupB"
+        case _ => "groupC"
+    })
+    println(grpby) // HashMap(groupA -> List(2, 4, 6), groupB -> List(3), groupC -> List(1, 5, 7))
 
 
+    /////////////////////////////////////////////////////////////////////////
+    //  groupMap 
+
+    // Partitions a sequence into a map of sequences according to a discriminator 
+    // function key
+
+    // sequence.groupMap('value to groupBy')('value to group')
+
+    val tuples1 = List((1, 10), (2, 20), (1, 30), (2, 40))
+    val groups1 = tuples1.groupMap(_._1)(_._2)
+    println(groups1) // Map(1 -> List(10, 30), 2 -> List(20, 40))
+
+    val grpPeepsBy = people.groupMap(_.name)(_.age)
+    println(grpPeepsBy) // Map(Sarah -> List(20), John -> List(25, 20), Vinny -> List(22, 22))
 
 
+    /////////////////////////////////////////////////////////////////////////
+    //  groupMapReduce
+
+    // Partitions this sequence into a map according to a discriminator 
+    // function key. All the values that have the same discriminator are 
+    // then transformed by the f function and then reduced into a single 
+    // value with the reduce function.
+
+    // It is equivalent to groupBy(key).mapValues(_.map(f).reduce(reduce)), 
+    // but more efficient.
+
+    // sequence.groupMapReduce('what to group by')('count value of each occurence')('function to combine')
+    
+
+    List("sam", "alex", "sam").groupMapReduce(identity)(_ => 1)(_ + _)
+    //Map(alex -> 1, sam -> 2)
+
+    val x044 = "aabbbdddbbccc".groupMapReduce(identity)(_ => 10)(_ * _)
+    println(x044) // Map(a -> 100, b -> 100000, c -> 1000, d -> 1000)
 
 
+    /////////////////////////////////////////////////////////////////////////
+    //   grouped
+
+    // Partitions elements in fixed size sequences.
+    //  returns an Iterator
+
+    val listToGroup = List(1, 2, 3, 4, 5, 6, 7, 8)
+    val group3 = listToGroup.grouped(3)
+    println(group3.toList) // List(List(1, 2, 3), List(4, 5, 6), List(7, 8))
 
 
+    /////////////////////////////////////////////////////////////////////////
+    //   sliding
 
+    // sliding(3, 3) means they are iterators of 3, and it takes 3 steps each
+    // iterator
+
+    // sequence.sliding('size of groups')('steps between groups')
+
+    // I convert to list to display results, but these are actually returned
+    // as Iterators
+
+    println(list001) // List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+    val slid3 = list001.sliding(3, 3)
+    println(slid3.toList)
+    // List(List(1, 2, 3), List(4, 5, 6), List(7, 8, 9), List(10))
+
+    val slid23 = list001.sliding(2, 3)
+    println(slid23.toList)
+    // List(List(1, 2), List(4, 5), List(7, 8), List(10))
+
+    val slid22 = list001.sliding(2, 2)
+    println(slid22.toList)
+    // List(List(1, 2), List(3, 4), List(5, 6), List(7, 8), List(9, 10))
+
+    /////////////////////////////////////////////////////////////////////////
+    // headOption
+
+    
 
 
 
