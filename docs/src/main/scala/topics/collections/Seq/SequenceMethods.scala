@@ -732,9 +732,124 @@ object SequenceMethods extends App {
 
 
     /////////////////////////////////////////////////////////////////////////
-    //  lazyZip
+    //  max, maxOption, min, minOption
+
+    // def max[B >: A](implicit ord: Math.Ordering[B]): A
+
+    implicit val personAgeOrdering: Ordering[Person] = 
+        Ordering.fromLessThan((a, b) => a.age < b.age)
+
+    // max
+    val oldestPerson: Person = people.max
+    println(oldestPerson)  // Person(John,25)
+    // maxOption
+    val oldestPersonOption: Option[Person] = people.maxOption
+    println(oldestPersonOption)  // Some(Person(John,25))
+
+    // min
+    val youngestPerson: Person = people.min
+    println(youngestPerson)  // Person(Sarah,20)
+    // minOption
+    val youngestPersonOption: Option[Person] = people.minOption
+    println(youngestPersonOption)  // Some(Person(Sarah,20))
+
+    /////////////////////////////////////////////////////////////////////////
+    //  maxBy, maxByOption, minBy, minByOption
+
+    // def maxBy[B](f: (A) => B)(implicit ord: Math.Ordering[B]): A
+
+    // maxBy
+    val maxByAge: Person = people.maxBy(_.age)
+    println(maxByAge) // Person(John,25)
+
+    // maxByOption
+    val maxByNameOption: Option[Person] = people.maxByOption(_.name)
+    println(maxByNameOption) // Some(Person(Vinny,22))
+
+    // minBy
+    val minByAge: Person = people.minBy(_.age)
+    println(minByAge) // Person(Sarah,20)
+
+    // minByOption
+    val minByNameOption: Option[Person] = people.minByOption(_.name)
+    println(minByNameOption) // Some(Person(John,25))
+
+    /////////////////////////////////////////////////////////////////////////
+    //  mkString
+
+    // Creates a String from all elements of this sequence
+
+    val mkstring1 = List("A", "B", "C").mkString
+    println(mkstring1) // "ABC"
+
+    val mkstring2 = List("A", "B", "C").mkString("-->")
+    println(mkstring2) // "A-->B-->C"
+
+    val mkstring3 = List("A", "B", "C").mkString("[{", "-->", "}]")
+    println(mkstring3) // "[{A-->B-->C}]"
+
+
+    /////////////////////////////////////////////////////////////////////////
+    //   padTo
+
+    // A copy of this sequence with an element value appended until a given target
+    // length is reached
+
+    // If you use Char as the pad value, you get back a String
+
+    val padTenA = "aloha".padTo(10, 'a')
+    println(padTenA) // "alohaaaaaa"
+
+    val padOnLeft = "1234".reverse.padTo(6, '0').reverse
+    println(padOnLeft) // "001234"
+
+    // If you use a String value as the pad value, you get back a Vector by default.
+
+    val padTenAVector = "aloha".padTo(10, "a")
+    println(padTenAVector) // Vector(a, l, o, h, a, a, a, a, a, a)
+
+
+    /////////////////////////////////////////////////////////////////////////
+    //  partition
+
+    //  def partition(p: (A) => Boolean): (Seq[A], Seq[A])
+
+    // The default implementation needs to traverse the collection twice,
+    // but strict collects have overridden the method to only traverse once
+
+    // partition returns: a pair of first- all elements that satisfy pred p
+    // and second, all elements that don't
+
+    val words = List("the", "quick", "brown", "fox")
+    val partitioned = words.partition(_.contains("brown"))
+    println(partitioned) // (List(brown),List(the, quick, fox))
+
+    // partition is analogous to (sequence.filter(x), sequence.filterNot(x))
+
+    /////////////////////////////////////////////////////////////////////////
+    // partitionMap
+
+    // Applies a function f to each element of the Seq and returns a pair of sequences:
+        // The first one made of those values returned by f that were wrapped in
+        // scala.util.Left, the second of those values wrapped in Right
+
+    val (strings, ints) =
+        List("a", 1, 2, "b", 19).partitionMap {
+            case s: String => Left(s)
+            case x: Int => Right(x)
+        }
+    println(strings) // List(a, b)
+    println(ints) // List(1, 2, 19)
+
+
 
     
+
+
+
+
+
+
 
 
 
