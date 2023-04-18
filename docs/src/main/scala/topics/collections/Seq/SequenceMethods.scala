@@ -655,24 +655,6 @@ object SequenceMethods extends App {
     println(List(1, 2, 3).isEmpty)  // false
     println(List().isEmpty)  // true
 
-    def longestRepetition(s: String): Option[(Char, Int)] =
-      val xs = s.toList
-      if (xs.isEmpty) None
-      else 
-        val res = xs.tail.scanLeft(xs.head -> 1) { case ((prevChar, count), char) =>
-          val nextAcc = 
-            if (char == prevChar) 
-              count + 1 
-            else 1
-          char -> nextAcc
-        }
-        Some(res.maxBy(_._2))
-
-
-    println(longestRepetition("aabbbabbbccddbbbb"))
-    // Some((b,4))
-
-
     /////////////////////////////////////////////////////////////////////////
     //  isTraverableAgain
 
@@ -842,8 +824,138 @@ object SequenceMethods extends App {
     println(ints) // List(1, 2, 19)
 
 
+    /////////////////////////////////////////////////////////////////////////
+    //  permutations
+
+    // def permutations: Iterator[Seq[A]]
+
+    // Iterates over distinct permutations.
+    // Note: Even when apploed to a view or a lazy collection,
+    // it will always force the elements
+
+    val x058 = List(1, 2, 3).permutations
+    println(x058.toList)
+
+    // List(List(1, 2, 3), List(1, 3, 2), List(2, 1, 3), List(2, 3, 1), List(3, 1, 2), List(3, 2, 1))
+
+    val x059 = "abc".permutations
+    println(x059.toList) // List(abc, acb, bac, bca, cab, cba)
+
+    val x060 = "abb".permutations
+    println(x060.toList) // List(abb, bab, bba)
 
     
+    /////////////////////////////////////////////////////////////////////////
+    //   product
+
+    // multiplies up the product of this sequence
+
+    val x061 = List(1, 2, 3).product
+    println(x061)  // 6
+
+    /////////////////////////////////////////////////////////////////////////
+    //  reduce / reduceLeft / reduceLeftOption
+
+    // def reduce[B >: A](op: (B, B) => B): B
+
+    // Reduces the elements of this sequence using the specified associative binary operator.
+    // Essentially the same thing as foldLeft, without the parameter for an identity element.
+    
+    val x062 = List(1, 2, 3, 4).reduce(_ + _)
+    println(x062) // 10
+
+    /////////////////////////////////////////////////////////////////////////
+    //  reverse
+
+    // Returns new sequence with elements in reversed order.
+
+    val x063 = List(1, 2, 3, 4).reverse
+    println(x063)  // List(4, 3, 2, 1)
+
+    val x064 = "abcd".reverse
+    println(x064)  // dcba
+
+    
+    /////////////////////////////////////////////////////////////////////////
+    //   scan,  scanLeft,  scanRight
+
+    // def scanLeft[B](z: B)(op: (B, A) => B): Seq[B]
+
+    // Produces a sequence containing cumulative results of applying the 
+    // operator going left to right, including the initial value.
+
+    // Very similar to foldLeft, but instead it returns the result of the
+    //  binary operation for each iteration of the sequence.
+
+    // Note: will not terminate for infinite-sized collections.
+    val abcdList = List("a", "b", "c", "d")
+    val x065 = abcdList.scanLeft("")(_ + _)
+    println(x065) // List(, a, ab, abc, abcd)
+
+    // One trick to get make this method more useful, since as it it has to return
+    // something for the first parameter, which goes to the first elements, is
+    // to scanLeft from the tail of your sequence and put the head as the first parameter
+
+    // don't forget to check the Seq is not empty, or head with throw exception
+
+    val x066: List[String] = 
+        if (abcdList.isEmpty) abcdList
+        else abcdList.tail.scanLeft(abcdList.head)(_ + _)
+    
+    println(x066) // List(a, ab, abc, abcd)
+
+
+    val x067: List[String] = {
+        val rev = abcdList.reverse
+        rev.init.scanRight(rev.last) {_ + _}
+    }
+    println(x067) // List(dcba, cba, ba, a)
+
+
+    val x068: List[String] = {
+        val rev = abcdList.reverse
+        rev.tail.scanLeft(rev.head) {_ + _}
+    }
+    println(x068)  // List(d, dc, dcb, dcba)
+
+
+    def longestRepetition(s: String): Option[(Char, Int)] =
+      val xs = s.toList
+      if (xs.isEmpty) None
+      else 
+        val res = xs.tail.scanLeft(xs.head -> 1) { case ((prevChar, count), char) =>
+          val nextAcc = 
+            if (char == prevChar) 
+              count + 1 
+            else 1
+          char -> nextAcc
+        }
+        Some(res.maxBy(_._2))
+
+
+    println(longestRepetition("aabbbabbbccddbbbb"))
+    // Some((b,4))
+
+    /////////////////////////////////////////////////////////////////////////
+    //   segmentLength
+        //  ** overloaded
+    // def segmentLength(p: (A) => Boolean, from: Int): Int
+    // def segmentLength(p: (A) => Boolean): Int
+
+    // Computes the length of the longest segment that starts from some index 
+    // and whose elements ALL satisfy some predicate.
+
+    val x070 = List(1, 2, 3, 4, 5, 6, 7, 8, 9).segmentLength(_ * 2 >= 10, 4)
+    println(x070) // 5
+
+
+    /////////////////////////////////////////////////////////////////////////
+    //  sizeCompare
+
+    
+
+    
+
 
 
 

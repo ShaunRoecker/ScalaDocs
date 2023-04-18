@@ -445,7 +445,7 @@ object Solution {
 
 
 // //////////////////////////////////////////////////////////////////
-// BINARY SEARCH
+// FIRST BAD VERSION
 
 // You are a product manager and currently leading a team to develop a new product. 
 // Unfortunately, the latest version of your product fails the quality check. 
@@ -472,14 +472,19 @@ object Solution {
 
 object SolutionBadVersion {
     def firstBadVersion(n: Int): Int = {
-        @annotation.tailrec
-        def go(min: Int, max: Int): Int = {
-            if (min == max) min 
-            else {
-                val mid = min + (max - min) / 2
-                if (isBadVersion(mid)) go(min, mid)
-                else go(mid + 1, max)
-            }
+        check(n, 1, n)
+    }
+    def check(n: Int, low: Int, high: Int): Int = {
+        val mid = (high-low)/2 + low
+        
+        isBadVersion(mid) match{
+            case true =>
+                if(low == mid)
+                    low
+                else
+                    check(n, low, mid-1)
+            case false =>
+                check(n, mid+1, high)
         }
-    }   
+    } 
 }

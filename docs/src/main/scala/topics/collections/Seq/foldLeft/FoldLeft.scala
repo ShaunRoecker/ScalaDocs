@@ -1,7 +1,7 @@
 import scala.annotation.tailrec
 
 
-object FoldLeft extends App {
+object FoldLeft {
     // Some examples of how to use foldLeft, how powerful it can be,
     // and how it can replace most of the use cases for creating 
     // recursive methods in a more concise manner.
