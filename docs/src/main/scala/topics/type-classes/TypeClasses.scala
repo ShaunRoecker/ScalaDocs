@@ -37,8 +37,8 @@ object TypeClasses {
 
     // The type class consists of these things:
         // 1. A parameterized type (or trait) - this is called the "type class"
-        // 2. A "type class instance" or implementation of this trait
-        // 3. An interface that uses an implicit parameter
+        // 2. A "type class instance" or implementation of this trait for a specific type
+        // 3. An interface that uses an implicit parameter that grabs the type-class instance
 
     // the type class...
     trait Equal[T] {
