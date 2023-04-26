@@ -1,6 +1,6 @@
 
 
-object SequenceMethods {
+object SequenceMethods extends App {
     //////////////////////////////////////////////////////////////////////////////
     // andThen
 
@@ -950,9 +950,12 @@ object SequenceMethods {
 
 
     /////////////////////////////////////////////////////////////////////////
-    //  sizeCompare
+    //  slice
 
-    //
+    // Selects an interval of elements from this sequence
+        //  sequence.slice(from, to)  <- from is inclusive, to is not
+    val x071 = List(1, 2, 3, 4, 5, 6, 7, 8).slice(2, 4)
+    println(x071) // List(3, 4)
 
     
 
