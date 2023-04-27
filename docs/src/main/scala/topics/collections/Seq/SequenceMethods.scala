@@ -498,7 +498,7 @@ object SequenceMethods extends App {
 
 
     /////////////////////////////////////////////////////////////////////////
-    //   grouped
+    //   grouped  -- also see sliding
 
     // Partitions elements in fixed size sequences.
     //  returns an Iterator
@@ -956,6 +956,34 @@ object SequenceMethods extends App {
         //  sequence.slice(from, to)  <- from is inclusive, to is not
     val x071 = List(1, 2, 3, 4, 5, 6, 7, 8).slice(2, 4)
     println(x071) // List(3, 4)
+
+
+    /////////////////////////////////////////////////////////////////////////
+    //  sliding
+
+    // Groups the elements of a sequence as well as the option to shift
+    // the start of each grouping
+
+    //    sequence.sliding(groupSize, groupStep)
+    // groupStep - starts count from the first element of the previous group
+
+    val list92 = List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+
+    val x072 = list92.sliding(3, 3)
+    // .toList is for presentation (returns an Iterator)
+    println(x072.toList) 
+    // List(List(1, 2, 3), List(4, 5, 6), List(7, 8, 9), List(10))
+
+    val x073 = list92.sliding(3, 2)
+    println(x073.toList) 
+    //List(List(1, 2, 3), List(3, 4, 5), List(5, 6, 7), List(7, 8, 9), List(9, 10))
+
+    val x074 = list92.sliding(2, 5)
+    println(x074.toList) 
+    // List(List(1, 2), List(6, 7))
+    //      (1, 2)        (6, 7)
+    //      v- 1 -2 -3 -4 -5
+    // List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 
     
 
