@@ -22,7 +22,7 @@ object KMPSubstringSearch:
                 case ((foundIndex, m), i) if foundIndex > 0 => (foundIndex, 0) // This perpetuates the result if greater than -1 (default)
                 case ((foundIndex, m), i) => // This part is the while loop and below (while (m > 0 and pattern(m)...))
                     val streamOfPrevMs = LazyList.iterate(m)(m => prefixTable(m - 1))  // This part is the 'm = prefixTable(m - 1)' 
-                                                                               // but keeps a lazy list of all the previous m values
+                                                                                // but keeps a lazy list of all the previous m values
                     val lowerM = streamOfPrevMs.find(m => m == 0 || pattern(m) == text(i)).get
                     val newM = if (pattern(lowerM) == text(i)) lowerM + 1 else lowerM
                     if (newM == pattern.length) (i - newM + 1, 0) else (-1, newM)
