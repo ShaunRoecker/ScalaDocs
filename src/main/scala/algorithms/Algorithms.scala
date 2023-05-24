@@ -6,10 +6,10 @@ import sorting.quick.QuickSort._
 import algorithms.searching.naive.NaiveSubstringSearch._
 import algorithms.searching.kmp.KMPSubstringSearch._
 
-import algorithms.hashtables.immutable.{HashTable => IHashTable}
-import algorithms.hashtables.mutable.{HashTable => MHashTable}
+import datastructures.immutable.hashtables.{HashTable => IHashTable}
+import datastructures.immutable.hashtables.{HashTable => MHashTable}
 
-import algorithms.hashtables.Hash._
+
 
 // SORTING ALGORITHMS
 /*
@@ -123,39 +123,7 @@ object Searching:
         println(text3.kMPSubstringSearch(pattern3)) // 12
 
 
-object HashT:
-    def runHashTable(): Unit =
 
-        // val table: MHashTable[Int, String] = null
-
-        // table.insert(33456723, "Sam")
-        // table.insert(33366328, "Joe")
-        // table.insert(14356523, "Chris")
-        // table.insert(34563457, "Leslie")
-
-        // println(s"This should be Sam ${table.search(33456723)}")
-        // println(s"This should be Joe ${table.search(33366328)}")
-        // println(s"This should be Chris ${table.search(14356523)}")
-        // println(s"This should be Leslie ${table.search(34563457)}")
-        // println(s"This should be None ${table.search(11111111)}")
-
-        // val immutableTable: IHashTable[Int, String] = null
-
-        // val finalTable = 
-        //     immutableTable
-        //         .insert(33456723, "Sam")
-        //         .insert(33366328, "Joe")
-        //         .insert(14356523, "Chris")
-        //         .insert(34563457, "Leslie")
-
-        // println(s"This should be Sam ${finalTable.search(33456723)}")
-        // println(s"This should be Joe ${finalTable.search(33366328)}")
-        // println(s"This should be Chris ${finalTable.search(14356523)}")
-        // println(s"This should be Leslie ${finalTable.search(34563457)}")
-        // println(s"This should be None ${finalTable.search(11111111)}")
-
-        runHash()
-            
 
 
 

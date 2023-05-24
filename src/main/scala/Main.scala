@@ -1,7 +1,8 @@
 package documentation
 
 import scala.io.Source
-import algorithms.HashT._
+import datastructures.Hash._
+import datastructures.Tree.runTree
 
 object Documentation:
 
@@ -30,7 +31,9 @@ object Documentation:
                 )
             )
 
-        runHashTable()
+        runHash()
+
+        runTree()
         
 
 

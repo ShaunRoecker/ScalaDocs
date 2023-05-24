@@ -1,11 +1,12 @@
-package algorithms.hashtables.mutable
+package datastructures.mutable.hashtables
+import datastructures.mutable.hashtables.HashTable
 
 
-abstract class HashTableLive[K, V](initialSize: Int) extends HashTable[K, V] { self =>
+protected class HashTableLive[K, V](initialSize: Int) extends HashTable[K, V] { self =>
 
-    val hashArray = Array.fill(initialSize)(List[(K, V)])
+    private val hashArray = Array.fill(initialSize)(List[(K, V)]())
 
-    def hash[K](key: K) = 
+    private def hash[K](key: K) = 
         val h = key.## % initialSize
         if (h < 0) h + initialSize else h
 

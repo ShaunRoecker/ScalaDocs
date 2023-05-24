@@ -1,4 +1,4 @@
-package algorithms.hashtables.immutable
+package datastructures.immutable.hashtables
 
 
 
