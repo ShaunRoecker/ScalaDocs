@@ -7,5 +7,7 @@ trait BinarySearchTree[K, V]:
 
     def insert(key: K, value: V): BinarySearchTree[K, V]
 
-    
+
+
+
 

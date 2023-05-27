@@ -1,4 +1,4 @@
-package topics.patternmatching
+package language.features.patternmatching
 
 object PatternMatching {
     // Some examples of pattern matching and some of the operators used

@@ -263,6 +263,54 @@ object TypeClasses {
 }
 
 
+    object TypeClasses2:
+        
+        trait CompareT[T]:
+            def isSmaller(item1: T, item2: T): Boolean
+            def isLarger(item1: T, item2: T): Boolean
+
+
+        def insertSort[T](xs: List[T])(using compare: CompareT[T]) =
+            compare.isSmaller(xs.head, xs.tail.head)
+
+        
+        extension[T](xs: List[T])
+            def genInsert(item: T)(using cmp: CompareT[T]): List[T] =
+                xs match
+                    case Nil => 
+                        List(item)
+                    case head :: _ if cmp.isSmaller(item, head) => 
+                        item :: xs
+                    case head :: tail =>
+                        head :: tail.genInsert(item)
+
+            
+            def genSort(using cmp: CompareT[T]): List[T] =
+                xs match
+                    case Nil => Nil
+                    case head :: tail => tail.genSort.genInsert(head)
+
+        
+        case class Distance(feet: Int)
+
+        val distances: List[Distance] = List(
+            Distance(20),
+            Distance(15),
+            Distance(30),
+            Distance(90),
+        )
+
+        given compareDist: CompareT[Distance] with
+            override def isLarger(item1: Distance, item2: Distance): Boolean = 
+                item1.feet > item2.feet
+            override def isSmaller(item1: Distance, item2: Distance): Boolean = 
+                item1.feet < item2.feet
+
+        
+                
+
+            
+
 }
 
 

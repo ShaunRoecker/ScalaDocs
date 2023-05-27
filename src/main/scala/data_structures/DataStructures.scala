@@ -68,12 +68,15 @@ object Tree:
         } // Some(Hello there)
 
 
-        val tree = UnBalancedBinarySearch(10, "James")(Ordering.Int)
+        val tree = UnBalancedBinarySearch(10, "James")
             .insert(5, "Isabel")
             .insert(5, "Isabel")
             .insert(5, "Isabel")
 
-        println(tree)
+        
+        tree.foreachBFS((k, v) => println(s"$k $v"))
+
+        
 
     
 
