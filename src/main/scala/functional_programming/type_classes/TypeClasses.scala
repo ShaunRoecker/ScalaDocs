@@ -276,6 +276,7 @@ object TypeClasses {
         
         extension[T](xs: List[T])
             def genInsert(item: T)(using cmp: CompareT[T]): List[T] =
+                val cmp = implicitly[CompareT[T]]
                 xs match
                     case Nil => 
                         List(item)
@@ -290,12 +291,30 @@ object TypeClasses {
                     case Nil => Nil
                     case head :: tail => tail.genSort.genInsert(head)
 
+
+
+        def genInsertNonExt[T: CompareT](item: T, rest: List[T]): List[T] =
+                val cmp = implicitly[CompareT[T]]  // <-- finds an implicit for CompareT[T] from scope
+                rest match
+                    case Nil => 
+                        List(item)
+                    case head :: _ if cmp.isSmaller(item, head) => 
+                        item :: rest
+                    case head :: tail =>
+                        head :: genInsertNonExt(item, tail)
+
+        
+        def genSortNonExt[T: CompareT](xs: List[T]): List[T] =
+            xs match
+                case Nil => Nil
+                case head :: tail => genInsertNonExt(head, genSortNonExt(tail))
+
         
         case class Distance(feet: Int)
 
         val distances: List[Distance] = List(
             Distance(20),
-            Distance(15),
+            Distance(100),
             Distance(30),
             Distance(90),
         )

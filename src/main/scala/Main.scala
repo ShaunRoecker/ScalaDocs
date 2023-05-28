@@ -7,6 +7,11 @@ import datastructures.Tree.runTree
 import language.features.implicits.implicit_parameters.ImplicitParams._
 import functional.typeclasses.TypeClasses.TypeClasses2._
 
+import functional.typeclasses.json.JsonLibraryScala3._
+import functional.typeclasses.json.JsonLibraryScala3.JSONWrite
+
+import scala.reflect._
+import  language.features.types.classtag.ClassTagUsage.classTagRun
 object Documentation:
 
     @main
@@ -45,7 +50,13 @@ object Documentation:
             distances.genSort
 
         println(sortedDist)
-        // List(Distance(15), Distance(20), Distance(30), Distance(90))
+        // List(Distance(20), Distance(30), Distance(90), Distance(100))
+
+        val sortedDistNonExt: List[Distance] =
+            genSortNonExt(distances)
+
+        println(sortedDistNonExt)
+        // List(Distance(20), Distance(30), Distance(90), Distance(100))
 
 
         given hoursInADayOnEarth: Int = 24
@@ -61,3 +72,49 @@ object Documentation:
         println(list ++ Some(4) ++ None)   // List(1, 2, 3, 4)
         
         
+        // JSON
+
+        println(("Hello, World!").asJson)
+        println(42.asJson)
+        println(42.3.asJson)
+
+
+        println(List("Scala", "Python", "C++", "Rust").asJson)
+        // [Scala,Python,C++,Rust]
+
+        val map1 = Map("Scala" -> 1, "Python" -> 2, "C++" -> 3, "Rust" -> 4)
+
+        println(map1.asJson)
+        // {
+        //     Scala: 1,
+        //     Python: 2,
+        //     C++: 3,
+        //     Rust: 4
+        // }
+
+        val map2 = 
+            Map(
+                "Scala" -> Map("features" -> List(1, 2, 3, 4)), 
+                "Python" -> Map("features" -> List(1, 2, 3, 4)), 
+                "C++" -> Map("features" -> List(1, 2, 3, 4)), 
+                "Rust" -> Map("features" -> List(1, 2, 3, 4)), 
+            )
+
+        println(map2.asJson)
+        // {
+        //     Scala: {
+        //     features: [1,2,3,4]
+        // },
+        //     Python: {
+        //     features: [1,2,3,4]
+        // },
+        //     C++: {
+        //     features: [1,2,3,4]
+        // },
+        //     Rust: {
+        //     features: [1,2,3,4]
+        // }
+        // }
+
+            
+        classTagRun()

@@ -1,4 +1,4 @@
-package algorithms.sorting.bubble
+ package algorithms.sorting.bubble
 
 
 object BubbleSort:
