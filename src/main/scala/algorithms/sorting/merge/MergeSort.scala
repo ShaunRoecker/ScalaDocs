@@ -26,5 +26,13 @@ object MergeSort:
             merge(sortedLeft, sortedRight)
         
 
-                
-   
+ 
+// sudo merge
+// merge(left, right)
+//     merged = List()
+//     while (!left.isEmpty && !right.isEmpty)
+//         if (left.isEmpty)  right.head :: merged
+//         else if (right.isEmpty)  left.head :: merged
+//         else if (left.head < right.head)  left.head :: merged
+//         else  right.head :: merged
+//     return reverse(merged)

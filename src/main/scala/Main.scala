@@ -4,6 +4,8 @@ import scala.io.Source
 import datastructures.Hash._
 import datastructures.Tree.runTree
 
+import algorithms.sorting.merge.MergeSort
+
 import language.features.implicits.implicit_parameters.ImplicitParams._
 import functional.typeclasses.TypeClasses.TypeClasses2._
 
@@ -12,6 +14,11 @@ import functional.typeclasses.json.JsonLibraryScala3.JSONWrite
 
 import scala.reflect._
 import  language.features.types.classtag.ClassTagUsage.classTagRun
+
+import language.features.implicits.contraints.ImplicitContraints
+
+
+
 object Documentation:
 
     @main
@@ -100,6 +107,7 @@ object Documentation:
                 "Rust" -> Map("features" -> List(1, 2, 3, 4)), 
             )
 
+        
         println(map2.asJson)
         // {
         //     Scala: {
@@ -115,6 +123,21 @@ object Documentation:
         //     features: [1,2,3,4]
         // }
         // }
-
-            
+ 
         classTagRun()
+
+
+        val lista = IndexedSeq(1, 6, 4, 3, 6, 8, 0,5, 6,3, 44, 6, 55, 23)
+        val mergedLista = MergeSort.mergeSort(lista)
+
+        println(mergedLista)
+
+
+        ImplicitContraints.implConRun()
+
+
+        val intNum = implicitly[Numeric[Int]]
+
+        println(intNum.times(5, 8)) // 40
+
+        println(intNum.parseString("1")) // Some(1)
