@@ -45,7 +45,20 @@ object FoldLeft {
 
     println(camelCase(simpleStr)) // CamelCaser
 
+    def camelCaseScala(s: String): String =
+        if (s == "") s
+        else 
+            val trimmed = s.trim
+            val first = trimmed.head.toString 
+            val rest = trimmed
+                .tail
+                .split(" ")
+                .foldLeft("")((a, b) => a + b.capitalize)
+                .mkString
+            first + rest
 
+    
+    println(camelCase(simpleStr)) // camelCaser
     // Using foldLeft to combine two Maps...
     def addMaps(map1: Map[String, Int], map2: Map[String, Int]): Map[String, Int] =
       map1.foldLeft(map2) { case (map, (k, v)) =>
