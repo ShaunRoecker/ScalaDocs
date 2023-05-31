@@ -14,7 +14,9 @@ import language.features.implicits.contraints.ImplicitContraints
 import language.features.implicits.contraints.equivalence.Cell
 import algorithms.intersect.IntersectionAlgos._
 import algorithms.decimalbinary.BinaryToDecimal._
-
+import algorithms.sequences.arithprog.ArithmeticGenerator
+import algorithms.sequences.geoprog.GeometricGenerator
+import algorithms.sequences.generator.fib.FibonacciGenerator
 
 
 object PlayMethods1:
@@ -200,3 +202,54 @@ object PlayMethods1:
 
         // println(divByTwo.takeWhile(n => n > 0).toList.map(n => n % 2).reverse.mkString)
 
+
+        val arithGen = new ArithmeticGenerator(start = 0, difference = 5)
+        println(arithGen.generate(10))
+        // List(0, 5, 10, 15, 20, 25, 30, 35, 40, 45)
+
+        println(arithGen.generateStr(10)) 
+        // 0, 5, 10, 15, 20, 25, 30, 35, 40, 45
+
+
+        val genGen = new GeometricGenerator(start = 0, ratio = 5)
+
+        val fibGen = new FibonacciGenerator
+        println(fibGen.generate(10)) // List(1, 1, 2, 3, 5, 8, 13, 21, 34, 55)
+
+
+        val stream = 1 #:: 2 #:: 3 #:: Stream.empty
+
+        val streamRand = Stream.continually(math.random())
+
+        println(streamRand(1)) //  0.928393321058183
+        println(streamRand(3)) // 0.873618326520455
+
+        // Note below the values are the same as above despite being
+        // generated randomly, this is because a LazyList memoizes values
+        // previously computed
+        println(streamRand(1)) //  0.928393321058183
+        println(streamRand(3)) // 0.873618326520455
+
+
+        val list1 = List("A", "B", "C")
+
+        val list2 = List("a", "b", "c")
+
+        val zips = list1.zip(list2).map(t => t._1 + t._2)
+        println(zips) // List(Aa, Bb, Cc)
+
+        val zips2 = list1.zip(list2.tail).map(t => t._1 + t._2)
+        println(zips2) // List(Ab, Bc)
+
+        println(list1.zip(list2)) // List((A,a), (B,b), (C,c))
+
+
+        val listFib = List(1, 1, 2, 3, 5)
+        val x2 = listFib.zip(listFib.tail).map(t => t._1 + t._2) // List(2, 3, 5, 8)
+        println(x2)
+
+        // List(1, 1, 2, 3, 5)
+        // List(1, 2, 3, 5)
+
+
+        

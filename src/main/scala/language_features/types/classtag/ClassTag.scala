@@ -27,15 +27,15 @@ object ClassTagUsage:
         // Since types in Scala are erased at runtime,
         // this method appears to run but always returns
         // true incorrectly
-        def isAErasure[T](x: Any): Boolean =
-            x match
-                case _: T => true
-                case _ => false
+        // def isAErasure[T](x: Any): Boolean =
+        //     x match
+        //         case _: T => true
+        //         case _ => false
 
 
-        println(isAErasure[Int](10)) // true
-        println(isAErasure[String](10)) //true
-        println(isAErasure[String]("string")) //true
+        // println(isAErasure[Int](10)) // true
+        // println(isAErasure[String](10)) //true
+        // println(isAErasure[String]("string")) //true
 
 
         // We can use ClassTag to get a reliable answer 
