@@ -17,7 +17,7 @@ import algorithms.decimalbinary.BinaryToDecimal._
 import algorithms.sequences.arithprog.ArithmeticGenerator
 import algorithms.sequences.geoprog.GeometricGenerator
 import algorithms.sequences.generator.fib.FibonacciGenerator
-
+import algorithms.greedy.WhichReels
 
 object PlayMethods1:
 
@@ -164,8 +164,6 @@ object PlayMethods1:
 
         print(cellInt * cellInt2)  // Cell(84)
 
-
-
     def run3(): Unit =
         val aList: List[Int] = List(1, 5, 3, 8, 9, 5, 7, 3, 6, 4)
         val bList: List[Int] = List(10, 11, 3, 12, 9, 12, 7, 10, 16, 0)
@@ -252,4 +250,42 @@ object PlayMethods1:
         // List(1, 2, 3, 5)
 
 
+        val stream2 = 1 #:: 1 #:: Stream.empty
+        val stream2f = stream #:: Stream.empty
+        println(stream2f)
+
+
+        val fib = fibGen.streamFib
+        println(fib.take(10).toList)  // List(1, 1, 2, 3, 5, 8, 13, 21, 34, 55)
+
+
+        val matrix = List.tabulate(5, 5){ (a, b) => (a + 1) * (b + 1) }
+        println(matrix)
+
+        // List(
+        //     List(1, 2,  3,  4,  5), 
+        //     List(2, 4,  6,  8,  10), 
+        //     List(3, 6,  9,  12, 15), 
+        //     List(4, 8,  12, 16, 20), 
+        //     List(5, 10, 15, 20, 25))
+
+    def run4(): Unit = 
+        
+        def fizzbuzz(n: Int): List[String] =
+            val res =
+                for(i <- 1 to n) yield
+                    (i % 3, i % 5) match
+                        case (0, 0) => "fizzbuzz"
+                        case (0, _) => "fizz"
+                        case (_, 0) => "buzz"
+                        case _ => i.toString
+
+            res.toList
+
+        println(fizzbuzz(15))
+                    
+        import WhichReels._
+        // println(imperativeWhichReels(19493))
+
+        println(functionalWhichReels(34)) // List(3, 0, 2, 0)
         
