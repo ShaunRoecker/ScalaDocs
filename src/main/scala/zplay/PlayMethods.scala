@@ -18,6 +18,12 @@ import algorithms.sequences.arithprog.ArithmeticGenerator
 import algorithms.sequences.geoprog.GeometricGenerator
 import algorithms.sequences.generator.fib.FibonacciGenerator
 import algorithms.greedy.WhichReels
+import language.features.partialfunctions.PartialFunc
+import algorithms.shuntingyard.ShuntingYard._
+import fileio.filecontents1.FileContents1._
+import java.io.File
+
+
 
 object PlayMethods1:
 
@@ -289,3 +295,73 @@ object PlayMethods1:
 
         println(functionalWhichReels(34)) // List(3, 0, 2, 0)
         
+        def compareNeighbors(xs: List[Int], compare: (Int, Int) => Int): List[Int] =
+            val res =
+                for (pair <- xs.sliding(2)) yield
+                compare(pair(0), pair(1))
+            res.toList
+
+        println(List(1, 2, 3, 4, 5, 6, 7).sliding(2).toList)
+        // List(List(1, 2), List(2, 3), List(3, 4), List(4, 5), List(5, 6), List(6, 7))
+
+        val list1 = List(1, 2, 3, 4, 5, 6, 7, 8)
+        println(compareNeighbors(list1, (a,b) => a + b))   
+        // List(3, 5, 7, 9, 11, 13, 15)
+
+        val adder = (_: Int) + (_: Int) 
+
+        println(compareNeighbors(list1, adder))   
+
+        def compareTriplets(xs: List[Int], compare: (Int, Int, Int) => Int): List[Int] =
+            val res =
+                for (triplet <- xs.sliding(3)) yield
+                compare(triplet(0), triplet(1), triplet(2))
+            res.toList
+
+        PartialFunc.run()
+
+        def gravity = 9.81
+
+        def force(mass: Double = 1, acceleration: Double = gravity) =
+            mass * acceleration
+
+
+        println(force())
+
+
+        @annotation.tailrec
+        def factSeq(n: Int, acc: List[Long] = List(1L), ct: Int = 2): List[Long] =
+            if (ct > n) acc
+            else factSeq(n, acc = ct * acc.head :: acc, ct = ct + 1)
+
+
+    def run5(): Unit =
+        // highLow() // (List(/, *),List(+, -))
+
+        println(toPostfix("2 + 3")) // List(2, 3, +)
+
+        println(evaluateInfix("2 + 2 * 5")) // 20.0
+        println(evaluateInfix("4 / 3 * 6")) // 8.0
+        println(evaluateInfix("2 + 2 * 5 - 4 / 3 * 6 + 10 / 3 * 2")) // 28.0
+
+    
+    def run6(): Unit =
+        val testFile: File = new File("./data/example.txt")
+        println(testFile)
+
+        val question = fileContainsQuestion(testFile)
+        println(question) // false
+
+        val emphasize = emphasizeFileContents(testFile)
+        println(emphasize)
+
+
+        val wfc1 = withFileContents(testFile, { line =>
+            val letters = line.toLowerCase.filterNot(_ == ' ').toSeq
+            // val grouped = letters.groupBy(identity)
+            // grouped.maxBy { case (char, seq) => seq.length}._1
+            val grouped = letters.groupMapReduce(identity)(_ => 1)(_ + _)
+            grouped.maxBy(_._2)._1   
+        }, 'e')
+
+        println(wfc1)
