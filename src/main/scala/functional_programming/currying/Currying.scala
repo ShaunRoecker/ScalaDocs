@@ -1,7 +1,0 @@
-package functional.currying
-
-
-
-
-
-

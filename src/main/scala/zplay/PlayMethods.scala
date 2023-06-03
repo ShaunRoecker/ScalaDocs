@@ -9,7 +9,7 @@ import functional.typeclasses.TypeClasses.TypeClasses2._
 import functional.typeclasses.json.JsonLibraryScala3._
 import functional.typeclasses.json.JsonLibraryScala3.JSONWrite
 import scala.reflect._
-import  language.features.types.classtag.ClassTagUsage.classTagRun
+import language.features.types.classtag.ClassTagUsage.classTagRun
 import language.features.implicits.contraints.ImplicitContraints
 import language.features.implicits.contraints.equivalence.Cell
 import algorithms.intersect.IntersectionAlgos._
@@ -365,3 +365,68 @@ object PlayMethods1:
         }, 'e')
 
         println(wfc1)
+
+        val wfc2 = withFileContentsLoan(testFile, 'e') { line =>
+            line
+               .toLowerCase
+                .filterNot(_ == ' ')
+                 .toSeq
+                  .groupMapReduce(identity)(_ => 1)(_ + _)
+                   .maxBy(_._2)._1
+        }
+
+
+    def run7(): Unit = 
+        
+
+        extension[A](list: List[A])
+            def _contains(elem: A): Boolean =
+                list.foldLeft(false){ case (bool, i) =>
+                    bool match
+                        case true => true
+                        case false =>
+                            if (i == elem) true else false            
+                }
+        
+
+        val listInt = List(1, 2, 3, 4, 5)
+        println(listInt._contains(4)) // true
+        println(listInt._contains(6)) // false
+
+        val listChar = List('a', 'b', 'c', 'd', 'e')
+        println(listChar._contains('b')) // true
+        println(listChar._contains('z')) // false
+
+
+        println(new String("hello").eq(new String("hello"))) // false
+        // will always be false, eq means the same instance in memory
+        // 'eq' verifies if they point to the same memory location,
+        // similar to id() in python
+
+        println("hello" eq "hello") // true
+        // so strings in scala are automatically interned, unless
+        // the use the 'new' keyword on initiation
+
+
+
+        def allPrimes2(n: Int) =
+            val beforeFilter = List.tabulate(n)(n => n + 1)
+            val beforeFilterZWI = beforeFilter.zipWithIndex.map((x, i) => (x, i + 1)).drop(1)
+            beforeFilterZWI
+
+        println(allPrimes2(11))
+
+        
+
+
+                
+
+
+
+            
+
+            
+
+
+
+

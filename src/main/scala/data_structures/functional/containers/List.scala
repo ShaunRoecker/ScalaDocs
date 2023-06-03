@@ -54,6 +54,14 @@ object List:
 
 
     extension[A](xs: List[A])
+        def contains(elem: A): Boolean =
+            xs.foldLeft(false){ case (bool, i) =>
+                bool match
+                    case true => true
+                    case false =>
+                        if (i == elem) true else false            
+                }
+
         def headOption: Option[A] =
             xs match
                 case Nil => None

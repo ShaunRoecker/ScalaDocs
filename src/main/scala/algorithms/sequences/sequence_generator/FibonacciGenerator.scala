@@ -9,6 +9,7 @@ class FibonacciGenerator extends SequenceGenerator:
     // Functional Solution with LazyList (Stream)
     val streamFib: LazyList[Int] = 
         1 #:: 1 #:: streamFib.zip(streamFib.tail).map(t => t._1 + t._2)
+    
 
     override def generate(n: Int): List[Int] =
         streamFib.take(n).toList

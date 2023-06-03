@@ -38,6 +38,15 @@ object FileContents1:
             source.close()
 
 
+    // The loan pattern
+    def withFileContentsLoan[A](file: File, default: A)(fn: String => A): A =
+        val source = Source.fromFile(file)
+        try 
+            source.getLines().toSeq.headOption.map { line =>
+                fn(line)   
+            }.getOrElse(default)
+        finally 
+            source.close()
     
 
 
