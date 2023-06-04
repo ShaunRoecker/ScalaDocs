@@ -1,4 +1,4 @@
-package documentation.zplay
+package documentation.zzrun
 
 import scala.io.Source
 import datastructures.Hash._
@@ -22,10 +22,15 @@ import language.features.partialfunctions.PartialFunc
 import algorithms.shuntingyard.ShuntingYard._
 import fileio.filecontents1.FileContents1._
 import java.io.File
+import functional.typeclasses.TypeClasses3
+import functional.typeclasses.TypeClasses3.TypeClassInterface3._
+import language.features.types.hktypes.HigherKindedTypes1._
+import functional.typeclasses.TypeClasses3.CombinerInstances.mapCombo
+import language.features.types.hktypes.HigherKindedTypes1._
 
 
 
-object PlayMethods1:
+object Runner:
 
     def run1(): Unit =
 
@@ -416,7 +421,49 @@ object PlayMethods1:
 
         println(allPrimes2(11))
 
+
+    def run8(): Unit = 
+        println("run8")   
+
+       
+        case class Person(name: String)
+        val p1Hash = Person("A").hashCode
+        val p2Hash = Person("A").hashCode
+
+        println(p1Hash == p2Hash)
+
+        val anyList = List(true, 1, 1.1, None)
         
+
+
+        val map1 = Map("a" -> 10, "b" -> 3, "c" -> 2, "d" -> 2)
+        val map2 = Map("a" -> 1, "b" -> 1, "c" -> 1, "d" -> 2)
+
+        val mapsJoined = join(map1, map2)
+        println(mapsJoined)
+        // Map(a -> 11, b -> 4, c -> 3, d -> 4)
+
+        val joined = map1.joinWith(map2)
+        println(joined)
+        //  Map(a -> 11, b -> 4, c -> 3, d -> 4)
+
+        val joined2 = map1.join(map2)
+        println(joined2)
+        //  Map(a -> 11, b -> 4, c -> 3, d -> 4)
+
+        // Higher-Kinded Types
+
+        val monadList = new MonadList(List(1, 2, 3, 4, 5))
+        val monadList2 = monadList.map(x => x * 2)
+        val monadList3 = monadList.flatMap(x => List(x, x + 1))
+
+        println(monadList) // MonadList(List(1, 2, 3, 4, 5))
+        println(monadList2) // List(10, 8, 6, 4, 2)
+        println(monadList3) // List(1, 2, 2, 3, 3, 4, 4, 5, 5, 6)
+
+        
+
+
 
 
                 
