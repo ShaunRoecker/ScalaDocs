@@ -1,4 +1,4 @@
-package functional.typeclasses
+package functional.typeclasses.sorter
 
 
 trait Sorter[F[_], A]:
@@ -13,3 +13,11 @@ object SorterInstances:
             container.sortWith(_ > _)
     }
 
+
+object SorterInterface:
+
+    extension[A](xs: List[A])
+        def sortDesc(implicit ev: Sorter[List, A]): List[A] =
+            ev.sort(xs)
+
+    

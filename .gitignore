@@ -56,3 +56,4 @@ build.sbt
 
 data/
 
+.VSCodeCounter/

@@ -27,8 +27,9 @@ import functional.typeclasses.TypeClasses3.TypeClassInterface3._
 import language.features.types.hktypes.HigherKindedTypes1._
 import functional.typeclasses.TypeClasses3.CombinerInstances.mapCombo
 import language.features.types.hktypes.HigherKindedTypes1._
-
-
+import functional.typeclasses.sorter.SorterInterface._
+import functional.typeclasses.sorter.SorterInstances._
+import algorithms.divideconquer.MaxSubArrayNLogN._
 
 object Runner:
 
@@ -461,6 +462,12 @@ object Runner:
         println(monadList2) // List(10, 8, 6, 4, 2)
         println(monadList3) // List(1, 2, 2, 3, 3, 4, 4, 5, 5, 6)
 
+    def run9(): Unit =
+        val list = List(1, 8, 43, 6, 32, 7, 55, 3, 7)
+        println(list.sortDesc)
+        // List(55, 43, 32, 8, 7, 7, 6, 3, 1)
+
+        // DivideConquer
         
 
 
