@@ -11,6 +11,9 @@ class FibonacciGenerator extends SequenceGenerator:
         1 #:: 1 #:: streamFib.zip(streamFib.tail).map(t => t._1 + t._2)
     
 
+    
+
+
     override def generate(n: Int): List[Int] =
         streamFib.take(n).toList
 

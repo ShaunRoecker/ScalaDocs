@@ -468,6 +468,50 @@ object Runner:
         // List(55, 43, 32, 8, 7, 7, 6, 3, 1)
 
         // DivideConquer
+
+        def factorial(n: Int): Int =
+            @annotation.tailrec
+            def go(n: Int, acc: Int): Int =
+                if (n <= 0) acc
+                else go(n-1, n * acc)
+            go(n, 1)
+
+        println(factorial(5)) //120
+
+        def factorial2(n: Int) =
+            val xs = List.tabulate(n)(_ + 1)
+            xs.tail.foldLeft(xs.head){case (acc, i) => acc * i }
+
+        println(factorial2(5))
+
+        def factorial3(n: Int): Int =
+            List.tabulate(n)(_ + 1).foldLeft(1){ case (acc, i) => acc * i }
+
+        println(factorial3(5))
+
+
+        println(List.tabulate(5)(_ + 1))
+
+        def fib(n: Int): Int =
+            @annotation.tailrec
+            def go(n: Int, current: Int, next: Int): Int =
+                if n <= 0 then current
+                else go(n-1, next, current + next)
+            go(n, 0, 1)
+
+        println(fib(10)) // 55
+
+        extension[A](xs: List[A])
+            def listLength: Int =
+                xs.foldLeft(0){(acc, i) => acc + 1}
+
+
+        println(List(1, 2, 3, 4, 5, 6, 7).listLength)
+
+        println((2 to 10 by 2).toList)
+
+        
+                
         
 
 

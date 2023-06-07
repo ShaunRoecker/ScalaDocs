@@ -17,8 +17,6 @@ class UnBalancedBinarySearch[K, V](
     ord: Ordering[K]
 ) extends BinarySearchTree[K, V] { self =>
 
-    def search(key: K): Option[V] = search(key, root)
-
     private def search(key: K, node: BinaryNode[K, V]): Option[V] =
         key match
             case node.key => 
@@ -27,6 +25,9 @@ class UnBalancedBinarySearch[K, V](
                 node.left.flatMap(n => search(k, n))
             case k => 
                 node.right.flatMap(n => search(k, n))
+
+    
+    def search(key: K): Option[V] = search(key, root)
         
 
     private def insert(key: K, v: V, node: BinaryNode[K, V]): BinaryNode[K, V] = 

@@ -1,3 +1,3 @@
-package algorithms.divide_conquer
+package algorithms.divideconquer
 
 
