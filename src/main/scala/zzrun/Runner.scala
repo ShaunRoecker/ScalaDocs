@@ -510,9 +510,7 @@ object Runner:
 
         println((2 to 10 by 2).toList)
 
-        
-                
-        
+
 
 
 
