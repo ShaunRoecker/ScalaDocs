@@ -7,7 +7,7 @@ import org.apache.spark.sql.types._
 
 
 
-object SparkDataFramesBasics2 extends App {
+object SparkDataFramesBasics2 {
 
     val spark = 
         SparkSession
@@ -15,7 +15,6 @@ object SparkDataFramesBasics2 extends App {
             .appName("Spark DataFrames Basics 2")
             .config("spark.master", "local")
             .getOrCreate()
-
 
     // val smartphoneSchema =
     //     StructType(
@@ -52,7 +51,7 @@ object SparkDataFramesBasics2 extends App {
     println(s"The Movies DF has ${moviesDF.count()} rows")
     // The Movies DF has 3201 rows
 
-    
+
 
 
 
