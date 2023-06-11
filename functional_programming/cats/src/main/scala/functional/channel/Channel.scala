@@ -86,7 +86,7 @@ object ChannelWithByteEncodableInheritanceBetter {
 }
 
 
-object ChannelWithTypeClasses extends App {
+object ChannelWithTypeClasses {
 
     trait Channel {
         def write[A](obj: A)(implicit enc: ByteEncoder[A]): Unit
@@ -121,7 +121,7 @@ object ChannelWithTypeClasses extends App {
         
         implicit object switchEncoder extends ByteEncoder[Switch] {
             def encode(switch: Switch): Array[Byte] = 
-                Array(if (switch.isOn) "1".toByte else "0".toByte)
+                Array(if (switch.isOn) '1'.toByte else '0'.toByte)
             
         }
     }
@@ -161,13 +161,15 @@ object ChannelWithTypeClasses extends App {
 
     // import ByteEncImplicits.rotate3StringEncoder
     import ByteEncImplicits.intEncoder
+    import ByteEncImplicits._
+
 
 
 
     object FileChannel extends Channel {
         override def write[A](obj: A)(implicit enc: ByteEncoder[A]): Unit = {
             val bytes = enc.encode(obj)
-            Using(new FileOutputStream("./test3")) { os => 
+            Using(new FileOutputStream("./test")) { os => 
                 os.write(bytes)
                 os.flush()   
             }
@@ -176,18 +178,16 @@ object ChannelWithTypeClasses extends App {
     }
 
     
-    // FileChannel.write[Int](42) //
-
+    FileChannel.write(42) //
     // Because this type's (String) implicit instance is located in the
     // companion object, we don't need the type annotation for String
-    // FileChannel.write("a string")
+    FileChannel.write("a string")(rotate3StringEncoder)
 
-    // FileChannel.write(Switch(true))(switchEncoder)
+    FileChannel.write(Switch(true))
     
-    // FileChannel.write[String]
-    
-    // FileChannel.write[FullName](FullName("Alex", "Alexander"))
+    FileChannel.write[FullName](FullName("Alex", "Alexander"))
 
+    
     // This Method of Creating a Channel: =>
     // advantages: 
         // 1. can be instanced by any time, including ones we don't own
