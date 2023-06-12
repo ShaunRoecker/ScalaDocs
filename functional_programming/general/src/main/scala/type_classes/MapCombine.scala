@@ -1,6 +1,5 @@
 package functional.typeclasses
 
-import collections.seq.methods.SequenceMethods.combineMaps
 
 object TypeClasses3:
 
