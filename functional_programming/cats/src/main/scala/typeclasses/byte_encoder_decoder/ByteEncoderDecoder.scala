@@ -109,7 +109,7 @@ import ByteDecoderImplicits._
 import ByteEncoderImplicits._
 
 
-object ByteEncodeDecodeRun extends App {
+object ByteEncodeDecodeRun {
 
 
     implicit class ByteEncoderOps[A](val a: A) extends AnyVal {
