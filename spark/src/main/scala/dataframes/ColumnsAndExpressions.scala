@@ -3,7 +3,7 @@ package dataframes.columns
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions.{col, column, expr}
 
-object ColumnsAndExpressions extends App {
+object ColumnsAndExpressions {
     val spark = SparkSession.builder()
         .appName("Columns and Expressions")
         .config("spark.master", "local")

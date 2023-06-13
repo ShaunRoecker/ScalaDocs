@@ -11,7 +11,7 @@ object SparkDataFramesBasics2 {
 
     val spark = 
         SparkSession
-            .builder
+            .builder()
             .appName("Spark DataFrames Basics 2")
             .config("spark.master", "local")
             .getOrCreate()
