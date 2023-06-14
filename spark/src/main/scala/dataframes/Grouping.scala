@@ -7,6 +7,7 @@ import org.apache.spark.sql.functions._
 
 
 
+
 object Grouping extends App {
 
     val spark = SparkSession.builder()
