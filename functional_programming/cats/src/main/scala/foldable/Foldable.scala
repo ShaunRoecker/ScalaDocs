@@ -1,5 +1,8 @@
 package foldable
 
+import cats.Foldable
+import cats.Eval
+
 
 sealed trait MList[+A]
 
@@ -7,9 +10,33 @@ object MList { self =>
     case class MCons[+A](head: A, tail: MList[A]) extends MList[A]
     case object MNil extends MList[Nothing]
 
+    // smart constructors
+    def mnil[A]: MList[A] = MNil
+    def mcons[A](hd: A, tl: MList[A]): MList[A] = MCons(hd, tl)
+
     def apply[A](elems: A*): MList[A] = {
         if (elems.isEmpty) MNil
-        else MCons(elems.head, apply(elems.tail: _*))
+        else MCons(elems.head, apply(elems.tail: _*)) 
+        // or,
+        // elems.foldRight(mnil[A])((a, b) => MCons(a, b))
+    }
+
+    // implement Foldable typeclass
+    implicit val listFoldable: Foldable[MList] = new Foldable[MList] {
+        override def foldLeft[A, B](fa: MList[A], b: B)(f: (B, A) => B): B = 
+            fa match {
+                case MNil => b
+                case MCons(h, t) => foldLeft(t, f(b, h))(f)
+            }
+
+        override def foldRight[A, B](fa: MList[A], lb: Eval[B])(f: (A, Eval[B]) => Eval[B]): Eval[B] = {
+            def loop(as: MList[A]): Eval[B] =    
+                fa match {
+                        case MNil => lb
+                        case MCons(h, t) =>  f(h, Eval.defer(loop(t)))
+                    }
+            Eval.defer(loop(fa))
+        }
     }
 
     implicit class MListOps[A](mxs: MList[A]) {
@@ -63,6 +90,9 @@ object MList { self =>
                     if (h % 2 == 0) MCons(h, t.filterPositive)
                     else t.filterPositive
             }
+            // or
+            // mxs.foldRight(Eval.now(mnil[Int])) { (i, evalxs) => if(i > 0) mcons(i, evalxs.value) else evalxs } 
+
 
         def sum: Int = 
             mxs match {
@@ -88,6 +118,7 @@ object FoldableRun extends App {
 
     println(MList[Int]().filterPositive) // MNil
     println(MList[Int]().isEmpty) // true
+    println(mlist.reverse) //  MCons(7,MCons(6,MCons(5,MCons(4,MCons(3,MCons(2,MCons(1,MNil)))))))
 
 }
 
