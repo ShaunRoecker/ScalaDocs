@@ -23,6 +23,8 @@ object MList { self =>
         elems.foldRight(mnil[A])((a, b) => MCons(a, b))
     }
 
+    
+
     // implement Foldable typeclass
     implicit val listFoldable: Foldable[MList] = new Foldable[MList] {
         override def foldLeft[A, B](fa: MList[A], b: B)(f: (B, A) => B): B = 
