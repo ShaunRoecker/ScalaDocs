@@ -7,7 +7,7 @@ import cats._
 import cats.implicits._
 
 
-object TraversableRun extends App {
+object TraversableRun {
     case class Person(name: String)
 
     def findPersonByName(name: String): Option[Person] = {
