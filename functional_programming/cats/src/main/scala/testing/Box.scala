@@ -25,8 +25,4 @@ object Box {
 }
 
 
-object BoxRun extends App {
-
-}
-
 
